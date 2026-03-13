@@ -58,7 +58,7 @@ const footerNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <NavFooter v-if="footerNavItems.length" :items="footerNavItems" />
             <NavUser />
         </SidebarFooter>
     </Sidebar>
