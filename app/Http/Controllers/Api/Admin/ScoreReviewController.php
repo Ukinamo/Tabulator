@@ -22,7 +22,7 @@ class ScoreReviewController extends Controller
     {
         $eventId = $request->query('event_id');
         if (! $eventId) {
-            $event = \App\Models\Event::orderBy('event_date', 'desc')->first();
+            $event = Event::orderBy('event_date', 'desc')->first();
             $eventId = $event?->id;
         }
 
