@@ -34,72 +34,6 @@ class AuthController extends Controller
             ]);
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json([
-            'token' => $token,
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-            ],
-        ]);
-    }
-
-    public function logout(Request $request)
-    {
-        /** @var User $user */
-        $user = $request->user();
-
-        $user?->currentAccessToken()?->delete();
-
-        return response()->json([
-            'message' => 'Logged out successfully.',
-        ]);
-    }
-
-    public function me(Request $request)
-    {
-        /** @var User $user */
-        $user = $request->user();
-
-        return response()->json([
-            'data' => $user,
-        ]);
-    }
-}
-
-
-<?php
-
-namespace App\Http\Controllers\Api;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-
-class AuthController extends Controller
-{
-    /**
-     * Validate credentials, issue Sanctum token, return { token, user }.
-     */
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-        ]);
-
-        if (! Auth::attempt($request->only('email', 'password'))) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
-        }
-
-        $user = $request->user();
-        $user->tokens()->where('name', 'api')->delete();
         $token = $user->createToken('api')->plainTextToken;
 
         return $this->respond([
@@ -113,21 +47,19 @@ class AuthController extends Controller
         ], 'Authenticated.', 200);
     }
 
-    /**
-     * Revoke current token.
-     */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        /** @var User $user */
+        $user = $request->user();
+
+        $user?->currentAccessToken()?->delete();
 
         return $this->respond(null, 'Logged out.', 200);
     }
 
-    /**
-     * Return authenticated user profile with role.
-     */
     public function me(Request $request)
     {
+        /** @var User $user */
         $user = $request->user();
 
         return $this->respond([
