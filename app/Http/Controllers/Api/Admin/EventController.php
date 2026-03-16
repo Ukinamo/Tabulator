@@ -88,6 +88,10 @@ class EventController extends Controller
             'description' => ['nullable', 'string'],
             'venue' => ['nullable', 'string', 'max:255'],
             'event_date' => ['sometimes', 'date'],
+<<<<<<< HEAD
+=======
+            'status' => ['sometimes', Rule::in(['setup', 'ongoing', 'scoring', 'published'])],
+>>>>>>> 81bfbe3f352f53bb82dd50bd6bce7078f6524cb9
         ]);
 
         $event->update($data);
