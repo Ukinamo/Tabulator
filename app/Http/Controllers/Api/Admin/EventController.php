@@ -146,4 +146,24 @@ class EventController extends Controller
 
         return $this->respond(null, 'Judge scoring unlocked.');
     }
+
+    /**
+     * Admin delivers the prepared scoring system to judges by opening scoring.
+     */
+    public function startScoring(Request $request, Event $event)
+    {
+        if ($event->status === 'published') {
+            return $this->error('Published events cannot be moved back to scoring.', 422);
+        }
+
+        if ($event->status !== 'scoring') {
+            $event->update(['status' => 'scoring']);
+        }
+
+        return $this->respond([
+            'id' => $event->id,
+            'name' => $event->name,
+            'status' => $event->status,
+        ], 'Scoring opened for judges.');
+    }
 }

@@ -28,11 +28,13 @@ Route::prefix('v1')->group(function (): void {
             Route::apiResource('events', EventController::class);
             Route::post('events/{event}/publish', [EventController::class, 'publish']);
             Route::post('events/{event}/unlock/{judge}', [EventController::class, 'unlockScoring']);
+            Route::post('events/{event}/start-scoring', [EventController::class, 'startScoring']);
             Route::post('events/{event}/contestants/upload-photo', [ContestantController::class, 'uploadPhoto']);
             Route::apiResource('events.contestants', ContestantController::class);
             Route::get('scores/review', [ScoreReviewController::class, 'index']);
             Route::post('scores/{score}/approve', [ScoreReviewController::class, 'approve']);
             Route::post('events/{event}/scores/approve-all', [ScoreReviewController::class, 'approveAll']);
+            Route::delete('events/{event}/scores/delete-all', [ScoreReviewController::class, 'deleteAll']);
             Route::delete('scores/{score}', [ScoreReviewController::class, 'destroy']);
             Route::get('results/{event}', [ResultController::class, 'index']);
         });
@@ -42,6 +44,7 @@ Route::prefix('v1')->group(function (): void {
             Route::apiResource('categories', CategoryController::class);
             Route::apiResource('categories.criteria', CriterionController::class);
             Route::get('events/{event}/progress', [ProgressController::class, 'index']);
+            Route::post('events/{event}/open-scoring', [ProgressController::class, 'openScoring']);
             Route::get('events/{event}/results', [ResultController::class, 'index']);
         });
 

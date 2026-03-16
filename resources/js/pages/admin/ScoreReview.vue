@@ -30,8 +30,7 @@ const props = defineProps<Props>();
 const scores = ref<ScoreRow[]>([]);
 const loading = ref(true);
 const approveAllLoading = ref(false);
-const deleteTarget = ref<ScoreRow | null>(null);
-const showDeleteModal = ref(false);
+const deleteAllLoading = ref(false);
 const deleteLoading = ref(false);
 
 function contestantLabel(s: ScoreRow): string {
@@ -89,29 +88,46 @@ async function approveAll() {
     }
 }
 
-function openDelete(s: ScoreRow) {
-    deleteTarget.value = s;
-    showDeleteModal.value = true;
-}
+async function deleteAll() {
+    if (!props.event) return;
+    if (!window.confirm('Delete ALL submitted/approved scores for this event? This cannot be undone.')) {
+        return;
+    }
 
-function closeDelete() {
-    deleteTarget.value = null;
-    showDeleteModal.value = false;
-}
-
-async function confirmDelete() {
-    if (!deleteTarget.value) return;
-    deleteLoading.value = true;
+    deleteAllLoading.value = true;
     try {
-        const r = await fetch(`/api/v1/admin/scores/${deleteTarget.value.id}`, {
+        const r = await fetch(`/api/v1/admin/events/${props.event.id}/scores/delete-all`, {
             method: 'DELETE',
             credentials: 'include',
             headers: apiHeaders({ method: 'DELETE', contentType: false }),
         });
         if (r.ok) {
             await fetchScores();
+            toast.success('All scores deleted.');
+        } else {
+            const json = await r.json().catch(() => ({}));
+            toast.error(json.message || 'Could not delete all scores.');
+        }
+    } finally {
+        deleteAllLoading.value = false;
+    }
+}
+
+async function deleteScore(row: ScoreRow) {
+    if (!window.confirm('Delete this score? This will recalculate results and cannot be undone.')) {
+        return;
+    }
+
+    deleteLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/admin/scores/${row.id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'DELETE', contentType: false }),
+        });
+        if (r.ok) {
+            scores.value = scores.value.filter((s) => s.id !== row.id);
             toast.success('Score deleted.');
-            closeDelete();
         } else {
             const json = await r.json().catch(() => ({}));
             toast.error(json.message || 'Could not delete score.');
@@ -131,15 +147,24 @@ onMounted(() => { if (props.event) fetchScores(); });
         <div class="flex flex-col gap-6 p-4">
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-semibold text-white">Score Review</h1>
-                <button
-                    v-if="event"
-                    type="button"
-                    class="rounded-full bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] disabled:opacity-60"
-                    :disabled="approveAllLoading || scores.length === 0"
-                    @click="approveAll"
-                >
-                    {{ approveAllLoading ? 'Processing…' : 'Approve All' }}
-                </button>
+                <div v-if="event" class="flex items-center gap-3">
+                    <button
+                        type="button"
+                        class="rounded-full bg-red-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(239,68,68,0.5)] transition hover:bg-red-600 disabled:opacity-60"
+                        :disabled="deleteAllLoading || scores.length === 0"
+                        @click="deleteAll"
+                    >
+                        {{ deleteAllLoading ? 'Deleting…' : 'Delete All' }}
+                    </button>
+                    <button
+                        type="button"
+                        class="rounded-full bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] disabled:opacity-60"
+                        :disabled="approveAllLoading || scores.length === 0"
+                        @click="approveAll"
+                    >
+                        {{ approveAllLoading ? 'Processing…' : 'Approve All' }}
+                    </button>
+                </div>
             </div>
 
             <p v-if="!event" class="text-slate-400">No event selected.</p>
@@ -187,7 +212,7 @@ onMounted(() => { if (props.event) fetchScores(); });
                                     <button
                                         type="button"
                                         class="text-red-400 hover:text-red-300 hover:underline"
-                                        @click="openDelete(s)"
+                                        @click="deleteScore(s)"
                                     >
                                         Delete
                                     </button>
@@ -199,17 +224,6 @@ onMounted(() => { if (props.event) fetchScores(); });
                 <p v-if="scores.length === 0" class="p-6 text-center text-slate-400">No submitted scores to review.</p>
             </div>
 
-            <DecisionModal
-                :open="showDeleteModal"
-                title="Delete this score?"
-                :message="deleteTarget ? 'This score will be removed and results recalculated. This cannot be undone.' : ''"
-                confirm-label="Delete"
-                cancel-label="Cancel"
-                variant="danger"
-                :loading="deleteLoading"
-                @confirm="confirmDelete"
-                @cancel="closeDelete"
-            />
         </div>
     </AppLayout>
 </template>

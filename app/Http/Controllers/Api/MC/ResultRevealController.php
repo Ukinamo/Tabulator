@@ -176,4 +176,3 @@ class ResultRevealController extends Controller
         );
     }
 }
-

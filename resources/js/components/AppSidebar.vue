@@ -46,6 +46,7 @@ const mainNavItems = computed<NavItem[]>(() => {
             { title: 'Dashboard', href: '/admin/dashboard', icon: LayoutGrid },
             { title: 'Users', href: '/admin/users', icon: Users },
             { title: 'Event Setup', href: '/admin/event', icon: Target },
+            { title: 'Score Gateway', href: '/admin/gateway', icon: BookOpen },
             { title: 'Contestants', href: '/admin/contestants', icon: ListOrdered },
             { title: 'Score Review', href: '/admin/scores', icon: ClipboardList },
             { title: 'Results', href: '/admin/results', icon: Trophy },
@@ -122,7 +123,7 @@ const footerNavItems: NavItem[] = [];
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <NavFooter v-if="footerNavItems.length" :items="footerNavItems" />
             <NavUser />
         </SidebarFooter>
     </Sidebar>
