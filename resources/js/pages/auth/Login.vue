@@ -22,8 +22,8 @@ defineProps<{
 
 <template>
     <AuthBase
-        title="Log in to your account"
-        description="Enter your email and password below to log in"
+        title="Welcome back"
+        description="Sign in to manage events, scoring, and live results."
     >
         <Head title="Log in" />
 
@@ -88,7 +88,7 @@ defineProps<{
 
                 <Button
                     type="submit"
-                    class="mt-4 w-full"
+                    class="mt-4 w-full bg-[#F23892] hover:bg-[#d0206e]"
                     :tabindex="4"
                     :disabled="processing"
                     data-test="login-button"

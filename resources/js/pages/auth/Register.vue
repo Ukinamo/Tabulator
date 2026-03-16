@@ -15,7 +15,7 @@ import { store } from '@/routes/register';
 <template>
     <AuthBase
         title="Create an account"
-        description="Enter your details below to create your account"
+        description="Set up access for new judges, MCs, and organizers."
     >
         <Head title="Register" />
 
@@ -83,7 +83,7 @@ import { store } from '@/routes/register';
 
                 <Button
                     type="submit"
-                    class="mt-2 w-full"
+                    class="mt-2 w-full bg-[#F23892] hover:bg-[#d0206e]"
                     tabindex="5"
                     :disabled="processing"
                     data-test="register-user-button"

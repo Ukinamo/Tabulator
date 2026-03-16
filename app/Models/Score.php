@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Score extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     public const STATUS_DRAFT = 'draft';
     public const STATUS_SUBMITTED = 'submitted';
@@ -52,6 +54,16 @@ class Score extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function scopeForJudge($query, int $judgeId)
+    {
+        return $query->where('judge_id', $judgeId);
+    }
+
+    public function scopeForEvent($query, int $eventId)
+    {
+        return $query->where('event_id', $eventId);
     }
 }
 

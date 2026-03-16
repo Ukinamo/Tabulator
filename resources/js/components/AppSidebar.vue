@@ -1,6 +1,15 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-vue-next';
+import { Link, usePage } from '@inertiajs/vue3';
+import {
+    BookOpen,
+    ClipboardList,
+    LayoutGrid,
+    ListOrdered,
+    Target,
+    Trophy,
+    Users,
+} from 'lucide-vue-next';
+import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -15,28 +24,83 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
+import type { Auth, NavItem } from '@/types';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+const page = usePage<{ auth: Auth }>();
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#vue',
-        icon: BookOpen,
-    },
-];
+const mainNavItems = computed<NavItem[]>(() => {
+    const user = page.props.auth?.user;
+
+    if (!user?.role) {
+        return [
+            {
+                title: 'Dashboard',
+                href: dashboard(),
+                icon: LayoutGrid,
+            },
+        ];
+    }
+
+    if (user.role === 'super_admin') {
+        return [
+            { title: 'Dashboard', href: '/admin/dashboard', icon: LayoutGrid },
+            { title: 'Users', href: '/admin/users', icon: Users },
+            { title: 'Event Setup', href: '/admin/event', icon: Target },
+            { title: 'Contestants', href: '/admin/contestants', icon: ListOrdered },
+            { title: 'Score Review', href: '/admin/scores', icon: ClipboardList },
+            { title: 'Results', href: '/admin/results', icon: Trophy },
+        ];
+    }
+
+    if (user.role === 'organizer') {
+        return [
+            { title: 'Dashboard', href: '/organizer/dashboard', icon: LayoutGrid },
+            { title: 'Categories', href: '/organizer/categories', icon: Target },
+            { title: 'Criteria', href: '/organizer/criteria', icon: ClipboardList },
+            { title: 'Progress', href: '/organizer/progress', icon: BookOpen },
+        ];
+    }
+
+    if (user.role === 'admin') {
+        return [
+            { title: 'Dashboard', href: '/judge/dashboard', icon: LayoutGrid },
+            { title: 'Scoresheet', href: '/judge/scoresheet', icon: ClipboardList },
+        ];
+    }
+
+    if (user.role === 'mc') {
+        return [
+            { title: 'Reveal', href: '/mc/reveal', icon: Trophy },
+        ];
+    }
+
+    return [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+    ];
+});
+
+const homeHref = computed(() => {
+    const user = page.props.auth?.user;
+
+    switch (user?.role) {
+        case 'super_admin':
+            return '/admin/dashboard';
+        case 'organizer':
+            return '/organizer/dashboard';
+        case 'admin':
+            return '/judge/dashboard';
+        case 'mc':
+            return '/mc/reveal';
+        default:
+            return dashboard();
+    }
+});
+
+const footerNavItems: NavItem[] = [];
 </script>
 
 <template>
@@ -45,7 +109,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link :href="homeHref">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

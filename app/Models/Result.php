@@ -42,5 +42,15 @@ class Result extends Model
     {
         return $this->belongsTo(Contestant::class);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
+    }
+
+    public function scopeRevealed($query)
+    {
+        return $query->where('is_revealed', true)->orderBy('reveal_order', 'asc');
+    }
 }
 

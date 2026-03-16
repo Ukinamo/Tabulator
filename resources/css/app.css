@@ -9,7 +9,7 @@
 
 @theme inline {
     --font-sans:
-        Instrument Sans, ui-sans-serif, system-ui, sans-serif,
+        'Inter', 'Poppins', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -83,10 +83,21 @@
     body,
     html {
         --font-sans:
-            'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+            'Inter', 'Poppins', ui-sans-serif, system-ui, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
             'Noto Color Emoji';
     }
+}
+
+/* Tabulation brand palette */
+:root {
+    --tab-primary: #F23892;
+    --tab-secondary: #BCD1FF;
+    --tab-accent: #38F298;
+    --tab-sidebar-bg: #0F1A3E;
+    --tab-mc-bg: #07091A;
+    --tab-warning: #FFD166;
+    --tab-danger: #FF4D6D;
 }
 
 :root {
@@ -114,16 +125,21 @@
     --chart-3: hsl(197 37% 24%);
     --chart-4: hsl(43 74% 66%);
     --chart-5: hsl(27 87% 67%);
-    --radius: 0.5rem;
-    --sidebar-background: hsl(0 0% 98%);
-    --sidebar-foreground: hsl(240 5.3% 26.1%);
-    --sidebar-primary: hsl(0 0% 10%);
-    --sidebar-primary-foreground: hsl(0 0% 98%);
-    --sidebar-accent: hsl(0 0% 94%);
-    --sidebar-accent-foreground: hsl(0 0% 30%);
-    --sidebar-border: hsl(0 0% 91%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(0 0% 98%);
+    --radius: 0.75rem;
+    --radius-card: 1rem;
+    --radius-modal: 1.5rem;
+    --shadow-soft: 0 2px 8px rgb(0 0 0 / 0.06);
+    --shadow-card: 0 4px 20px rgb(0 0 0 / 0.08);
+    --sidebar-background: #0F1A3E;
+    --sidebar-foreground: #BCD1FF;
+    --sidebar-primary: #F23892;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #F23892;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-accent-foreground-inactive: #BCD1FF;
+    --sidebar-border: rgba(188, 209, 255, 0.15);
+    --sidebar-ring: #F23892;
+    --sidebar: #0F1A3E;
 }
 
 .dark {
@@ -151,15 +167,15 @@
     --chart-3: hsl(30 80% 55%);
     --chart-4: hsl(280 65% 60%);
     --chart-5: hsl(340 75% 55%);
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
-    --sidebar-primary: hsl(360, 100%, 100%);
-    --sidebar-primary-foreground: hsl(0 0% 100%);
-    --sidebar-accent: hsl(0 0% 15.9%);
-    --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-    --sidebar-border: hsl(0 0% 15.9%);
-    --sidebar-ring: hsl(217.2 91.2% 59.8%);
-    --sidebar: hsl(240 5.9% 10%);
+    --sidebar-background: #0F1A3E;
+    --sidebar-foreground: #BCD1FF;
+    --sidebar-primary: #F23892;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #F23892;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(188, 209, 255, 0.15);
+    --sidebar-ring: #F23892;
+    --sidebar: #0F1A3E;
 }
 
 @layer base {
@@ -169,4 +185,44 @@
     body {
         @apply bg-background text-foreground;
     }
+}
+
+/* Instagram-style utilities */
+.ig-card {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+.ig-modal {
+    border-radius: var(--radius-modal);
+    box-shadow: 0 24px 48px rgb(0 0 0 / 0.12);
+}
+.ig-btn-primary {
+    @apply rounded-xl font-semibold transition active:scale-[0.98];
+    background: linear-gradient(180deg, #F23892 0%, #d0206e 100%);
+    box-shadow: 0 2px 12px rgb(242 56 146 / 0.35);
+}
+.ig-btn-primary:hover {
+    box-shadow: 0 4px 20px rgb(242 56 146 / 0.45);
+}
+.ig-input {
+    @apply rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-slate-900 transition focus:border-[var(--tab-primary)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--tab-primary)]/20 dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:focus:border-[var(--tab-primary)] dark:focus:bg-slate-800;
+}
+
+/* Stat card left border accents */
+.stat-border-primary { border-left: 4px solid var(--tab-primary); }
+.stat-border-secondary { border-left: 4px solid var(--tab-secondary); }
+.stat-border-accent { border-left: 4px solid var(--tab-accent); }
+.stat-border-warning { border-left: 4px solid var(--tab-warning); }
+
+/* Sidebar: active = hot pink, inactive = soft blue */
+[data-sidebar="menu-button"][data-active="true"] {
+    background-color: var(--tab-primary) !important;
+    color: var(--sidebar-primary-foreground) !important;
+}
+[data-sidebar="menu-button"]:not([data-active="true"]) {
+    color: var(--tab-secondary);
+}
+[data-sidebar="menu-button"]:not([data-active="true"]):hover {
+    background-color: rgba(188, 209, 255, 0.15);
+    color: white;
 }
