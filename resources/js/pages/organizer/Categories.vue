@@ -36,6 +36,7 @@ const error = ref('');
 const deleteTarget = ref<Category | null>(null);
 const showDeleteModal = ref(false);
 const deleteLoading = ref(false);
+const deliverLoading = ref(false);
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Organizer', href: '/organizer/dashboard' },
@@ -56,6 +57,36 @@ async function fetchCategories() {
         totalWeight.value = categories.value.reduce((s, c) => s + Number(c.weight), 0);
     } finally {
         loading.value = false;
+    }
+}
+
+async function deliverToJudges() {
+    if (!props.event) return;
+
+    if (totalWeight.value !== 100) {
+        toast.error('Total weight must be exactly 100% before delivering to judges.');
+        return;
+    }
+
+    if (!window.confirm('Submit this scoring system for judges? Categories and weights should be final.')) {
+        return;
+    }
+
+    deliverLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/organizer/events/${props.event.id}/open-scoring`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'POST', contentType: false }),
+        });
+        const json = await r.json().catch(() => ({}));
+        if (r.ok) {
+            toast.success('Scoring system submitted to admins.');
+        } else {
+            toast.error(json.message || 'Could not submit scoring system.');
+        }
+    } finally {
+        deliverLoading.value = false;
     }
 }
 
@@ -156,13 +187,23 @@ onMounted(() => { if (props.event) fetchCategories(); });
                     <span :class="totalWeight === 100 ? 'text-[#38F298] font-medium' : 'text-amber-400'">{{ totalWeight }}%</span>
                     / 100%
                 </p>
-                <button
-                    type="button"
-                    class="rounded-xl bg-[#F23892] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
-                    @click="openCreate"
-                >
-                    Add category
-                </button>
+                <div class="flex items-center gap-3">
+                    <button
+                        type="button"
+                        class="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 shadow-[0_0_8px_rgba(15,23,42,0.4)] transition hover:bg-slate-600 disabled:opacity-60"
+                        :disabled="deliverLoading || categories.length === 0 || totalWeight !== 100"
+                        @click="deliverToJudges"
+                    >
+                        {{ deliverLoading ? 'Submitting…' : 'Submit scoring to admins' }}
+                    </button>
+                    <button
+                        type="button"
+                        class="rounded-xl bg-[#F23892] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
+                        @click="openCreate"
+                    >
+                        Add category
+                    </button>
+                </div>
             </div>
             <p v-if="!event" class="text-slate-400">No event selected.</p>
             <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">

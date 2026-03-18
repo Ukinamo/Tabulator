@@ -4,6 +4,7 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\Admin\ContestantsController as AdminContestantsController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EventSetupController as AdminEventSetupController;
+use App\Http\Controllers\Admin\GatewayController as AdminGatewayController;
 use App\Http\Controllers\Admin\ResultsController as AdminResultsController;
 use App\Http\Controllers\Admin\ScoreReviewController as AdminScoreReviewController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
             Route::get('/users', AdminUsersController::class)->name('users');
             Route::get('/event', AdminEventSetupController::class)->name('event');
+            Route::get('/gateway', AdminGatewayController::class)->name('gateway');
             Route::get('/contestants', AdminContestantsController::class)->name('contestants');
             Route::get('/scores', AdminScoreReviewController::class)->name('scores');
             Route::get('/results', AdminResultsController::class)->name('results');

@@ -104,6 +104,24 @@ class ScoreReviewController extends Controller
     }
 
     /**
+     * Delete all submitted/approved scores for an event; then recalculate.
+     */
+    public function deleteAll(Request $request, Event $event)
+    {
+        $scores = Score::where('event_id', $event->id)
+            ->whereIn('status', [Score::STATUS_SUBMITTED, Score::STATUS_APPROVED])
+            ->get();
+
+        foreach ($scores as $score) {
+            $score->delete();
+        }
+
+        $this->scoreService->recalculate($event);
+
+        return $this->respond(null, 'All scores deleted.');
+    }
+
+    /**
      * Delete (soft-delete) a single score; then recalculate event results.
      */
     public function destroy(Score $score)

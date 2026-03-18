@@ -32,7 +32,9 @@ class ScoresheetService
     {
         /** @var Event $event */
         $event = Event::with([
-            'contestants' => fn ($q) => $q->where('is_active', true)->orderBy('contestant_number'),
+            // Use all (non–soft-deleted) contestants for the event, regardless of is_active flag,
+            // so that judges always see the configured lineup.
+            'contestants' => fn ($q) => $q->orderBy('contestant_number'),
             'categories.criteria' => fn ($q) => $q->orderBy('sort_order'),
         ])->findOrFail($eventId);
 
