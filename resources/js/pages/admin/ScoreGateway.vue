@@ -3,10 +3,12 @@ import { Head } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { apiHeaders } from '@/lib/api';
 import AppLayout from '@/layouts/AppLayout.vue';
+import DecisionModal from '@/components/ui/DecisionModal.vue';
 import { useToast } from '@/composables/useToast';
 import type { BreadcrumbItem } from '@/types';
 
 const toast = useToast();
+const showDeliverModal = ref(false);
 
 type Criterion = { id: number; name: string; max_score: number; description: string | null };
 type Category = {
@@ -42,7 +44,7 @@ const totalWeight = computed(() => {
     return props.event.categories.reduce((sum, c) => sum + Number(c.weight ?? 0), 0);
 });
 
-async function deliverToJudges() {
+function requestDeliver() {
     if (!props.event) return;
 
     if (totalWeight.value !== 100) {
@@ -55,10 +57,11 @@ async function deliverToJudges() {
         return;
     }
 
-    if (!window.confirm('Open scoring for judges using this event, contestants, and scoring system?')) {
-        return;
-    }
+    showDeliverModal.value = true;
+}
 
+async function confirmDeliver() {
+    if (!props.event) return;
     deliverLoading.value = true;
     try {
         const r = await fetch(`/api/v1/admin/events/${props.event.id}/start-scoring`, {
@@ -74,6 +77,7 @@ async function deliverToJudges() {
         }
     } finally {
         deliverLoading.value = false;
+        showDeliverModal.value = false;
     }
 }
 </script>
@@ -97,7 +101,7 @@ async function deliverToJudges() {
                     type="button"
                     class="rounded-full bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] disabled:opacity-60"
                     :disabled="deliverLoading"
-                    @click="deliverToJudges"
+                    @click="requestDeliver"
                 >
                     {{ deliverLoading ? 'Delivering…' : 'Deliver to judges' }}
                 </button>
@@ -187,6 +191,18 @@ async function deliverToJudges() {
                 </div>
             </section>
         </div>
+
+        <DecisionModal
+            :open="showDeliverModal"
+            title="Deliver to judges?"
+            message="Open scoring for judges using this event, contestants, and scoring system?"
+            confirm-label="Deliver"
+            cancel-label="Cancel"
+            variant="primary"
+            :loading="deliverLoading"
+            @confirm="confirmDeliver"
+            @cancel="showDeliverModal = false"
+        />
     </AppLayout>
 </template>
 

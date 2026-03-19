@@ -16,7 +16,7 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $event = Event::latest('event_date')->first();
+        $event = Event::latest('updated_at')->first();
 
         $summary = null;
         $status = null;

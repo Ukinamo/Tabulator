@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request, ScoresheetService $scoresheet): Response
     {
-        $event = Event::latest('event_date')->first();
+        $event = Event::latest('updated_at')->first();
 
         $weights = null;
         $judgeProgress = [];
