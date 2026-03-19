@@ -70,13 +70,16 @@ class ResultPublishingService
      *
      * Returns the revealed result or null when no more remain.
      */
+    public const TOP_N = 5;
+
     public function revealNext(Event $event, int $mcId): ?Result
     {
         /** @var Result|null $next */
         $next = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', false)
-            ->orderBy('reveal_order', 'asc')
+            ->where('rank', '<=', self::TOP_N)
+            ->orderBy('rank', 'desc')
             ->lockForUpdate()
             ->first();
 

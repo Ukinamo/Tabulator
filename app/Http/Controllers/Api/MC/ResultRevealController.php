@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Result;
 use App\Services\ResultPublishingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResultRevealController extends Controller
 {
@@ -20,32 +21,38 @@ class ResultRevealController extends Controller
      */
     public function index(Request $request)
     {
-        $event = Event::orderBy('event_date', 'desc')->firstOrFail();
+        $event = Event::latest('updated_at')->firstOrFail();
+
+        $topN = ResultPublishingService::TOP_N;
 
         $revealed = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', true)
-            ->orderBy('reveal_order', 'asc')
+            ->where('rank', '<=', $topN)
+            ->orderBy('rank', 'asc')
             ->with('contestant')
             ->get()
-            ->map(function (Result $result) {
-                return [
-                    'id' => $result->id,
-                    'rank' => $result->rank,
-                    'contestant_name' => $result->contestant?->name,
-                    'contestant_number' => $result->contestant?->contestant_number,
-                    'final_score' => $result->final_score,
-                ];
-            })
+            ->map(fn (Result $r) => $this->formatResult($r))
             ->values()
             ->all();
 
         $hasMore = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', false)
+            ->where('rank', '<=', $topN)
             ->exists();
 
         $isPublished = Result::where('event_id', $event->id)->where('is_published', true)->exists();
+
+        $consolation = Result::where('event_id', $event->id)
+            ->where('is_published', true)
+            ->where('rank', '>', $topN)
+            ->orderBy('rank', 'asc')
+            ->with('contestant')
+            ->get()
+            ->map(fn (Result $r) => $this->formatResult($r))
+            ->values()
+            ->all();
 
         return $this->respond(
             [
@@ -53,6 +60,7 @@ class ResultRevealController extends Controller
                 'has_more' => $hasMore,
                 'is_published' => $isPublished,
                 'event_name' => $event->name,
+                'consolation' => $consolation,
             ],
             'Revealed results loaded.',
         );
@@ -63,7 +71,7 @@ class ResultRevealController extends Controller
      */
     public function reveal(Request $request)
     {
-        $event = Event::orderBy('event_date', 'desc')->firstOrFail();
+        $event = Event::latest('updated_at')->firstOrFail();
 
         $result = $this->publishing->revealNext($event, $request->user()->id);
 
@@ -77,20 +85,17 @@ class ResultRevealController extends Controller
             );
         }
 
+        $topN = ResultPublishingService::TOP_N;
+
         $hasMore = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', false)
+            ->where('rank', '<=', $topN)
             ->exists();
 
         return $this->respond(
             [
-                'result' => [
-                    'id' => $result->id,
-                    'rank' => $result->rank,
-                    'contestant_name' => $result->contestant?->name,
-                    'contestant_number' => $result->contestant?->contestant_number,
-                    'final_score' => $result->final_score,
-                ],
+                'result' => $this->formatResult($result),
                 'has_more' => $hasMore,
             ],
             'Next result revealed.',
@@ -98,41 +103,66 @@ class ResultRevealController extends Controller
     }
 
     /**
+     * Reset all revealed results so the MC can redo the reveal ceremony.
+     */
+    public function clearRevealed(Request $request)
+    {
+        $event = Event::latest('updated_at')->firstOrFail();
+
+        Result::where('event_id', $event->id)
+            ->where('is_published', true)
+            ->where('is_revealed', true)
+            ->where('rank', '<=', ResultPublishingService::TOP_N)
+            ->update([
+                'is_revealed' => false,
+                'revealed_at' => null,
+            ]);
+
+        return $this->respond(null, 'All reveals cleared. Ready to start over.');
+    }
+
+    /**
      * Return already-revealed results for a specific event (for Phase 4 checklist).
-     * GET /api/v1/mc/events/{event}/results
      */
     public function indexForEvent(Event $event)
     {
+        $topN = ResultPublishingService::TOP_N;
+
         $revealed = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', true)
-            ->orderBy('reveal_order', 'asc')
+            ->where('rank', '<=', $topN)
+            ->orderBy('rank', 'asc')
             ->with('contestant')
             ->get()
-            ->map(function (Result $result) {
-                return [
-                    'id' => $result->id,
-                    'rank' => $result->rank,
-                    'contestant_name' => $result->contestant?->name,
-                    'contestant_number' => $result->contestant?->contestant_number,
-                    'final_score' => $result->final_score,
-                ];
-            })
+            ->map(fn (Result $r) => $this->formatResult($r))
             ->values()
             ->all();
 
         $hasMore = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', false)
+            ->where('rank', '<=', $topN)
             ->exists();
 
         $isPublished = Result::where('event_id', $event->id)->where('is_published', true)->exists();
+
+        $consolation = Result::where('event_id', $event->id)
+            ->where('is_published', true)
+            ->where('rank', '>', $topN)
+            ->orderBy('rank', 'asc')
+            ->with('contestant')
+            ->get()
+            ->map(fn (Result $r) => $this->formatResult($r))
+            ->values()
+            ->all();
 
         return $this->respond(
             [
                 'revealed' => $revealed,
                 'has_more' => $hasMore,
                 'is_published' => $isPublished,
+                'consolation' => $consolation,
             ],
             'Revealed results loaded.',
         );
@@ -140,7 +170,6 @@ class ResultRevealController extends Controller
 
     /**
      * Reveal the next result for a specific event (for Phase 4 checklist).
-     * POST /api/v1/mc/events/{event}/results/reveal
      */
     public function revealForEvent(Request $request, Event $event)
     {
@@ -156,23 +185,32 @@ class ResultRevealController extends Controller
             );
         }
 
+        $topN = ResultPublishingService::TOP_N;
+
         $hasMore = Result::where('event_id', $event->id)
             ->where('is_published', true)
             ->where('is_revealed', false)
+            ->where('rank', '<=', $topN)
             ->exists();
 
         return $this->respond(
             [
-                'result' => [
-                    'id' => $result->id,
-                    'rank' => $result->rank,
-                    'contestant_name' => $result->contestant?->name,
-                    'contestant_number' => $result->contestant?->contestant_number,
-                    'final_score' => $result->final_score,
-                ],
+                'result' => $this->formatResult($result),
                 'has_more' => $hasMore,
             ],
             'Next result revealed.',
         );
+    }
+
+    private function formatResult(Result $result): array
+    {
+        return [
+            'id' => $result->id,
+            'rank' => $result->rank,
+            'contestant_name' => $result->contestant?->name,
+            'contestant_number' => $result->contestant?->contestant_number,
+            'photo_url' => $result->contestant?->photo_url,
+            'final_score' => $result->final_score,
+        ];
     }
 }

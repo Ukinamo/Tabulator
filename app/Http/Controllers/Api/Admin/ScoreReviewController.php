@@ -36,6 +36,7 @@ class ScoreReviewController extends Controller
                 'judge:id,name',
                 'contestant' => fn ($q) => $q->withTrashed()->select('id', 'contestant_number', 'name'),
                 'criterion:id,name,max_score,category_id',
+                'criterion.category:id,name,weight',
             ])
             ->orderBy('judge_id')
             ->orderBy('contestant_id')
@@ -51,6 +52,9 @@ class ScoreReviewController extends Controller
                 'contestant_name' => $s->contestant?->name ?? 'Contestant #'.$s->contestant_id,
                 'criterion_id' => $s->criterion_id,
                 'criterion_name' => $s->criterion?->name ?? 'Unknown',
+                'category_id' => $s->criterion?->category_id,
+                'category_name' => $s->criterion?->category?->name ?? 'Unknown',
+                'category_weight' => $s->criterion?->category?->weight ?? 0,
                 'max_score' => $s->criterion?->max_score ?? 0,
                 'score' => $s->score,
                 'status' => $s->status,

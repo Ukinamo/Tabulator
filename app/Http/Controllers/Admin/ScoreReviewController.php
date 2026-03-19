@@ -12,7 +12,7 @@ class ScoreReviewController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        $event = Event::latest('event_date')->first();
+        $event = Event::latest('updated_at')->first();
 
         return Inertia::render('admin/ScoreReview', [
             'event' => $event,

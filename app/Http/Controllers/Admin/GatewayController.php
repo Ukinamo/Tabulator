@@ -17,7 +17,7 @@ class GatewayController extends Controller
             'categories.criteria' => fn ($q) => $q->orderBy('sort_order'),
         ])
             ->whereIn('status', ['ongoing', 'scoring'])
-            ->latest('event_date')
+            ->latest('updated_at')
             ->first();
 
         return Inertia::render('admin/ScoreGateway', [

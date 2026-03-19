@@ -7,8 +7,10 @@ use App\Models\Contestant;
 use App\Models\Criterion;
 use App\Models\Event;
 use App\Models\Score;
+use App\Models\User;
 use App\Services\ScoresheetService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ScoreController extends Controller
 {
@@ -153,6 +155,22 @@ class ScoreController extends Controller
             ]);
 
         return $this->respond($scores->values()->all(), 'OK.');
+    }
+
+    /**
+     * Verify a super-admin password so the judge can unlock a locked contestant.
+     */
+    public function verifyAdminPassword(Request $request)
+    {
+        $request->validate(['password' => ['required', 'string']]);
+
+        $superAdmin = User::where('role', User::ROLE_SUPER_ADMIN)->first();
+
+        if (! $superAdmin || ! Hash::check($request->password, $superAdmin->password)) {
+            return $this->error('Invalid admin password.', 403);
+        }
+
+        return $this->respond(null, 'Password verified.');
     }
 
     private function guard()

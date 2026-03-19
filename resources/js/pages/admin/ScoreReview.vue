@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { apiHeaders } from '@/lib/api';
 import AppLayout from '@/layouts/AppLayout.vue';
+import DecisionModal from '@/components/ui/DecisionModal.vue';
 import { useToast } from '@/composables/useToast';
 import type { BreadcrumbItem } from '@/types';
 
 const toast = useToast();
+const showDeleteAllModal = ref(false);
+const showDeleteOneModal = ref(false);
+const deleteOneTarget = ref<ScoreRow | null>(null);
 
 type ScoreRow = {
     id: number;
@@ -18,6 +22,9 @@ type ScoreRow = {
     contestant_name: string;
     criterion_id: number;
     criterion_name: string;
+    category_id: number;
+    category_name: string;
+    category_weight: number;
     max_score: number;
     score: number;
     status: string;
@@ -32,6 +39,7 @@ const loading = ref(true);
 const approveAllLoading = ref(false);
 const deleteAllLoading = ref(false);
 const deleteLoading = ref(false);
+const activeTab = ref<'detailed' | 'summary'>('detailed');
 
 function contestantLabel(s: ScoreRow): string {
     if (s.contestant_number && s.contestant_name) return `${s.contestant_number} — ${s.contestant_name}`;
@@ -39,11 +47,73 @@ function contestantLabel(s: ScoreRow): string {
     return `Contestant #${s.contestant_id}`;
 }
 
+function fmt(n: number): string {
+    return Number(n).toFixed(2);
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Admin', href: '/admin/dashboard' },
     { title: 'Score Review', href: '/admin/scores' },
 ];
 
+// ---------------------------------------------------------------------------
+// Summary computed
+// ---------------------------------------------------------------------------
+type CategoryInfo = { id: number; name: string; weight: number };
+type ContestantSummary = {
+    contestant_id: number;
+    contestant_number: string;
+    contestant_name: string;
+    categories: Record<number, { score: number; max: number }>;
+    grandTotal: number;
+    grandMax: number;
+};
+
+const categories = computed<CategoryInfo[]>(() => {
+    const map = new Map<number, CategoryInfo>();
+    for (const s of scores.value) {
+        if (s.category_id && !map.has(s.category_id)) {
+            map.set(s.category_id, { id: s.category_id, name: s.category_name, weight: s.category_weight });
+        }
+    }
+    return [...map.values()];
+});
+
+const summaryRows = computed<ContestantSummary[]>(() => {
+    const map = new Map<number, ContestantSummary>();
+
+    for (const s of scores.value) {
+        let row = map.get(s.contestant_id);
+        if (!row) {
+            row = {
+                contestant_id: s.contestant_id,
+                contestant_number: s.contestant_number,
+                contestant_name: s.contestant_name,
+                categories: {},
+                grandTotal: 0,
+                grandMax: 0,
+            };
+            map.set(s.contestant_id, row);
+        }
+        if (!row.categories[s.category_id]) {
+            row.categories[s.category_id] = { score: 0, max: 0 };
+        }
+        row.categories[s.category_id].score += Number(s.score);
+        row.categories[s.category_id].max += Number(s.max_score);
+    }
+
+    const rows = [...map.values()];
+    for (const row of rows) {
+        row.grandTotal = Object.values(row.categories).reduce((sum, c) => sum + c.score, 0);
+        row.grandMax = Object.values(row.categories).reduce((sum, c) => sum + c.max, 0);
+    }
+    rows.sort((a, b) => (a.contestant_number ?? '').localeCompare(b.contestant_number ?? '', undefined, { numeric: true }));
+    return rows;
+});
+
+// ---------------------------------------------------------------------------
+// API calls
+// ---------------------------------------------------------------------------
 async function fetchScores() {
     if (!props.event) return;
     loading.value = true;
@@ -88,12 +158,13 @@ async function approveAll() {
     }
 }
 
-async function deleteAll() {
+function requestDeleteAll() {
     if (!props.event) return;
-    if (!window.confirm('Delete ALL submitted/approved scores for this event? This cannot be undone.')) {
-        return;
-    }
+    showDeleteAllModal.value = true;
+}
 
+async function confirmDeleteAll() {
+    if (!props.event) return;
     deleteAllLoading.value = true;
     try {
         const r = await fetch(`/api/v1/admin/events/${props.event.id}/scores/delete-all`, {
@@ -110,23 +181,26 @@ async function deleteAll() {
         }
     } finally {
         deleteAllLoading.value = false;
+        showDeleteAllModal.value = false;
     }
 }
 
-async function deleteScore(row: ScoreRow) {
-    if (!window.confirm('Delete this score? This will recalculate results and cannot be undone.')) {
-        return;
-    }
+function requestDeleteScore(row: ScoreRow) {
+    deleteOneTarget.value = row;
+    showDeleteOneModal.value = true;
+}
 
+async function confirmDeleteScore() {
+    if (!deleteOneTarget.value) return;
     deleteLoading.value = true;
     try {
-        const r = await fetch(`/api/v1/admin/scores/${row.id}`, {
+        const r = await fetch(`/api/v1/admin/scores/${deleteOneTarget.value.id}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: apiHeaders({ method: 'DELETE', contentType: false }),
         });
         if (r.ok) {
-            scores.value = scores.value.filter((s) => s.id !== row.id);
+            scores.value = scores.value.filter((s) => s.id !== deleteOneTarget.value!.id);
             toast.success('Score deleted.');
         } else {
             const json = await r.json().catch(() => ({}));
@@ -134,6 +208,8 @@ async function deleteScore(row: ScoreRow) {
         }
     } finally {
         deleteLoading.value = false;
+        showDeleteOneModal.value = false;
+        deleteOneTarget.value = null;
     }
 }
 
@@ -145,6 +221,7 @@ onMounted(() => { if (props.event) fetchScores(); });
     <Head title="Score Review - Admin" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
+            <!-- Header -->
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-semibold text-white">Score Review</h1>
                 <div v-if="event" class="flex items-center gap-3">
@@ -152,7 +229,7 @@ onMounted(() => { if (props.event) fetchScores(); });
                         type="button"
                         class="rounded-full bg-red-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(239,68,68,0.5)] transition hover:bg-red-600 disabled:opacity-60"
                         :disabled="deleteAllLoading || scores.length === 0"
-                        @click="deleteAll"
+                        @click="requestDeleteAll"
                     >
                         {{ deleteAllLoading ? 'Deleting…' : 'Delete All' }}
                     </button>
@@ -167,14 +244,41 @@ onMounted(() => { if (props.event) fetchScores(); });
                 </div>
             </div>
 
+            <!-- Tab switcher -->
+            <div v-if="event" class="flex gap-1 border-b border-slate-700">
+                <button
+                    type="button"
+                    class="px-5 py-2.5 text-sm font-medium transition"
+                    :class="activeTab === 'detailed'
+                        ? 'border-b-2 border-[#F23892] text-[#F23892]'
+                        : 'text-slate-400 hover:text-white'"
+                    @click="activeTab = 'detailed'"
+                >
+                    Detailed View
+                </button>
+                <button
+                    type="button"
+                    class="px-5 py-2.5 text-sm font-medium transition"
+                    :class="activeTab === 'summary'
+                        ? 'border-b-2 border-[#38F298] text-[#38F298]'
+                        : 'text-slate-400 hover:text-white'"
+                    @click="activeTab = 'summary'"
+                >
+                    Summary View
+                </button>
+            </div>
+
             <p v-if="!event" class="text-slate-400">No event selected.</p>
             <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">Loading…</div>
-            <div v-else class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-900/80">
+
+            <!-- ============ DETAILED VIEW ============ -->
+            <div v-else-if="activeTab === 'detailed'" class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-900/80">
                 <table class="min-w-full text-left text-sm text-slate-200">
                     <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase">
                         <tr>
                             <th class="px-4 py-3">Judge</th>
                             <th class="px-4 py-3">Contestant</th>
+                            <th class="px-4 py-3">Category</th>
                             <th class="px-4 py-3">Criterion</th>
                             <th class="px-4 py-3">Score</th>
                             <th class="px-4 py-3">Status</th>
@@ -185,6 +289,10 @@ onMounted(() => { if (props.event) fetchScores(); });
                         <tr v-for="s in scores" :key="s.id" class="border-b border-slate-800/70">
                             <td class="px-4 py-3">{{ s.judge_name }}</td>
                             <td class="px-4 py-3">{{ contestantLabel(s) }}</td>
+                            <td class="px-4 py-3">
+                                <span class="text-slate-300">{{ s.category_name }}</span>
+                                <span class="ml-1 text-xs text-slate-500">({{ s.category_weight }}%)</span>
+                            </td>
                             <td class="px-4 py-3">{{ s.criterion_name }} (max {{ s.max_score }})</td>
                             <td class="px-4 py-3">{{ s.score }}</td>
                             <td class="px-4 py-3">
@@ -212,7 +320,7 @@ onMounted(() => { if (props.event) fetchScores(); });
                                     <button
                                         type="button"
                                         class="text-red-400 hover:text-red-300 hover:underline"
-                                        @click="deleteScore(s)"
+                                        @click="requestDeleteScore(s)"
                                     >
                                         Delete
                                     </button>
@@ -224,6 +332,108 @@ onMounted(() => { if (props.event) fetchScores(); });
                 <p v-if="scores.length === 0" class="p-6 text-center text-slate-400">No submitted scores to review.</p>
             </div>
 
+            <!-- ============ SUMMARY VIEW ============ -->
+            <div v-else-if="activeTab === 'summary'" class="space-y-4">
+                <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-900/80">
+                    <table class="min-w-full text-left text-sm">
+                        <thead class="border-b border-slate-700 bg-slate-800/50">
+                            <tr>
+                                <th class="px-4 py-3 text-xs font-medium uppercase text-slate-400">#</th>
+                                <th class="px-4 py-3 text-xs font-medium uppercase text-slate-400">Contestant</th>
+                                <th
+                                    v-for="cat in categories"
+                                    :key="cat.id"
+                                    class="px-4 py-3 text-center text-xs font-medium uppercase text-slate-400"
+                                >
+                                    {{ cat.name }}
+                                    <span class="ml-1 normal-case text-slate-500">({{ cat.weight }}%)</span>
+                                </th>
+                                <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-white">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                v-for="row in summaryRows"
+                                :key="row.contestant_id"
+                                class="border-b border-slate-800/70 transition hover:bg-slate-800/40"
+                            >
+                                <td class="px-4 py-3 text-slate-400">{{ row.contestant_number }}</td>
+                                <td class="px-4 py-3 font-medium text-white">{{ row.contestant_name }}</td>
+                                <td
+                                    v-for="cat in categories"
+                                    :key="cat.id"
+                                    class="px-4 py-3 text-center"
+                                >
+                                    <template v-if="row.categories[cat.id]">
+                                        <span class="text-slate-200">{{ fmt(row.categories[cat.id].score) }}</span>
+                                        <span class="text-slate-500">/{{ fmt(row.categories[cat.id].max) }}</span>
+                                    </template>
+                                    <span v-else class="text-slate-600">—</span>
+                                </td>
+                                <td class="px-4 py-3 text-center font-semibold text-[#38F298]">
+                                    {{ fmt(row.grandTotal) }}
+                                    <span class="font-normal text-slate-500">/{{ fmt(row.grandMax) }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p v-if="summaryRows.length === 0" class="p-6 text-center text-slate-400">No submitted scores to summarize.</p>
+                </div>
+
+                <!-- Per-contestant breakdown cards -->
+                <div v-for="row in summaryRows" :key="row.contestant_id" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
+                    <div class="mb-3 flex items-center justify-between">
+                        <h3 class="font-semibold text-white">
+                            {{ row.contestant_number }} — {{ row.contestant_name }}
+                        </h3>
+                        <span class="rounded-full bg-[#38F298]/20 px-3 py-1 text-xs font-semibold text-[#38F298]">
+                            Total: {{ fmt(row.grandTotal) }}/{{ fmt(row.grandMax) }}
+                        </span>
+                    </div>
+                    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        <div
+                            v-for="cat in categories"
+                            :key="cat.id"
+                            class="rounded-xl bg-slate-800/60 p-3"
+                        >
+                            <div class="mb-1.5 flex items-center justify-between">
+                                <span class="text-sm font-medium text-slate-300">{{ cat.name }}</span>
+                                <span class="rounded-full bg-[#F23892]/20 px-2 py-0.5 text-xs font-medium text-[#F23892]">{{ cat.weight }}%</span>
+                            </div>
+                            <div v-if="row.categories[cat.id]" class="flex items-baseline gap-1">
+                                <span class="text-2xl font-bold text-white">{{ fmt(row.categories[cat.id].score) }}</span>
+                                <span class="text-sm text-slate-500">/{{ fmt(row.categories[cat.id].max) }}</span>
+                            </div>
+                            <span v-else class="text-sm text-slate-600">No scores</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <DecisionModal
+            :open="showDeleteAllModal"
+            title="Delete all scores?"
+            message="Delete ALL submitted/approved scores for this event? This cannot be undone."
+            confirm-label="Delete All"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="deleteAllLoading"
+            @confirm="confirmDeleteAll"
+            @cancel="showDeleteAllModal = false"
+        />
+
+        <DecisionModal
+            :open="showDeleteOneModal"
+            title="Delete this score?"
+            :message="deleteOneTarget ? `Delete the score by ${deleteOneTarget.judge_name} for ${deleteOneTarget.contestant_name} (${deleteOneTarget.criterion_name})? This cannot be undone.` : ''"
+            confirm-label="Delete"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="deleteLoading"
+            @confirm="confirmDeleteScore"
+            @cancel="showDeleteOneModal = false; deleteOneTarget = null"
+        />
     </AppLayout>
 </template>

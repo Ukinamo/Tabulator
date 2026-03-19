@@ -55,12 +55,14 @@ Route::prefix('v1')->group(function (): void {
             Route::put('scores/{score}', [ScoreController::class, 'update']);
             Route::post('events/{event}/scores/submit', [ScoreController::class, 'submitAll']);
             Route::get('events/{event}/my-scores', [ScoreController::class, 'myScores']);
+            Route::post('verify-admin-password', [ScoreController::class, 'verifyAdminPassword']);
         });
 
         // MC
         Route::middleware('role:mc')->prefix('mc')->group(function (): void {
             Route::get('results', [ResultRevealController::class, 'index']);
             Route::post('results/reveal', [ResultRevealController::class, 'reveal']);
+            Route::post('results/clear', [ResultRevealController::class, 'clearRevealed']);
             Route::get('events/{event}/results', [ResultRevealController::class, 'indexForEvent']);
             Route::post('events/{event}/results/reveal', [ResultRevealController::class, 'revealForEvent']);
         });

@@ -14,8 +14,8 @@ import { store } from '@/routes/register';
 
 <template>
     <AuthBase
-        title="Create an account"
-        description="Set up access for new judges, MCs, and organizers."
+        title="Register as a Judge"
+        description="Create your judge account to start scoring contestants."
     >
         <Head title="Register" />
 
@@ -89,7 +89,7 @@ import { store } from '@/routes/register';
                     data-test="register-user-button"
                 >
                     <Spinner v-if="processing" />
-                    Create account
+                    Create judge account
                 </Button>
             </div>
 

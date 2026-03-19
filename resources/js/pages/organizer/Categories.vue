@@ -37,6 +37,7 @@ const deleteTarget = ref<Category | null>(null);
 const showDeleteModal = ref(false);
 const deleteLoading = ref(false);
 const deliverLoading = ref(false);
+const showDeliverModal = ref(false);
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Organizer', href: '/organizer/dashboard' },
@@ -60,7 +61,7 @@ async function fetchCategories() {
     }
 }
 
-async function deliverToJudges() {
+function requestDeliver() {
     if (!props.event) return;
 
     if (totalWeight.value !== 100) {
@@ -68,10 +69,11 @@ async function deliverToJudges() {
         return;
     }
 
-    if (!window.confirm('Submit this scoring system for judges? Categories and weights should be final.')) {
-        return;
-    }
+    showDeliverModal.value = true;
+}
 
+async function confirmDeliver() {
+    if (!props.event) return;
     deliverLoading.value = true;
     try {
         const r = await fetch(`/api/v1/organizer/events/${props.event.id}/open-scoring`, {
@@ -87,6 +89,7 @@ async function deliverToJudges() {
         }
     } finally {
         deliverLoading.value = false;
+        showDeliverModal.value = false;
     }
 }
 
@@ -192,7 +195,7 @@ onMounted(() => { if (props.event) fetchCategories(); });
                         type="button"
                         class="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 shadow-[0_0_8px_rgba(15,23,42,0.4)] transition hover:bg-slate-600 disabled:opacity-60"
                         :disabled="deliverLoading || categories.length === 0 || totalWeight !== 100"
-                        @click="deliverToJudges"
+                        @click="requestDeliver"
                     >
                         {{ deliverLoading ? 'Submitting…' : 'Submit scoring to admins' }}
                     </button>
@@ -269,6 +272,18 @@ onMounted(() => { if (props.event) fetchCategories(); });
                 </div>
             </Transition>
         </Teleport>
+
+        <DecisionModal
+            :open="showDeliverModal"
+            title="Submit scoring system?"
+            message="Submit this scoring system for judges? Categories and weights should be final."
+            confirm-label="Submit"
+            cancel-label="Cancel"
+            variant="primary"
+            :loading="deliverLoading"
+            @confirm="confirmDeliver"
+            @cancel="showDeliverModal = false"
+        />
 
         <DecisionModal
             :open="showDeleteModal"
