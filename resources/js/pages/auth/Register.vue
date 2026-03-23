@@ -83,7 +83,7 @@ import { store } from '@/routes/register';
 
                 <Button
                     type="submit"
-                    class="mt-2 w-full bg-[#F23892] hover:bg-[#d0206e]"
+                    class="neon-btn-primary mt-2 w-full border-0 hover:opacity-95"
                     tabindex="5"
                     :disabled="processing"
                     data-test="register-user-button"

@@ -88,18 +88,18 @@ async function confirmDeliver() {
         <div class="flex flex-col gap-6 p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-xl font-semibold text-white">Score Gateway</h1>
-                    <p v-if="event" class="mt-1 text-sm text-slate-400">
+                    <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Score Gateway</h1>
+                    <p v-if="event" class="mt-1 text-sm text-[#594048]">
                         Review event details and scoring system before sending to judges.
                     </p>
-                    <p v-else class="mt-1 text-sm text-slate-400">
+                    <p v-else class="mt-1 text-sm text-[#594048]">
                         No event in progress. Ask the organizer to submit a scoring system.
                     </p>
                 </div>
                 <button
                     v-if="event"
                     type="button"
-                    class="rounded-full bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] disabled:opacity-60"
+                    class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60"
                     :disabled="deliverLoading"
                     @click="requestDeliver"
                 >
@@ -108,82 +108,82 @@ async function confirmDeliver() {
             </div>
 
             <div v-if="event" class="grid gap-4 md:grid-cols-2">
-                <section class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
-                    <h2 class="text-sm font-semibold text-slate-200">Event details</h2>
-                    <dl class="mt-3 space-y-2 text-sm text-slate-300">
+                <section class="neon-card border border-[#e8e6f5] p-5">
+                    <h2 class="text-sm font-semibold text-[#0e193d]">Event details</h2>
+                    <dl class="mt-3 space-y-2 text-sm text-[#594048]">
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Name</dt>
-                            <dd class="font-medium text-white">{{ event.name }}</dd>
+                            <dt class="text-[#4a5e86]">Name</dt>
+                            <dd class="font-medium text-[#0e193d]">{{ event.name }}</dd>
                         </div>
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Date</dt>
-                            <dd>{{ event.event_date }}</dd>
+                            <dt class="text-[#4a5e86]">Date</dt>
+                            <dd class="text-[#0e193d]">{{ event.event_date }}</dd>
                         </div>
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Venue</dt>
-                            <dd>{{ event.venue || '—' }}</dd>
+                            <dt class="text-[#4a5e86]">Venue</dt>
+                            <dd class="text-[#0e193d]">{{ event.venue || '—' }}</dd>
                         </div>
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Status</dt>
-                            <dd class="capitalize">{{ event.status }}</dd>
+                            <dt class="text-[#4a5e86]">Status</dt>
+                            <dd class="capitalize text-[#0e193d]">{{ event.status }}</dd>
                         </div>
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Contestants</dt>
-                            <dd>{{ event.contestants.length }}</dd>
+                            <dt class="text-[#4a5e86]">Contestants</dt>
+                            <dd class="text-[#0e193d]">{{ event.contestants.length }}</dd>
                         </div>
                         <div class="flex justify-between gap-3">
-                            <dt class="text-slate-400">Total weight</dt>
-                            <dd :class="totalWeight === 100 ? 'text-[#38F298]' : 'text-amber-400'">
+                            <dt class="text-[#4a5e86]">Total weight</dt>
+                            <dd :class="totalWeight === 100 ? 'font-semibold text-[#006a3d]' : 'font-semibold text-amber-600'">
                                 {{ totalWeight }}%
                             </dd>
                         </div>
                     </dl>
                 </section>
 
-                <section class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
-                    <h2 class="text-sm font-semibold text-slate-200">Contestant list (read-only)</h2>
-                    <ul class="mt-3 space-y-1 text-sm text-slate-200">
+                <section class="neon-card border border-[#e8e6f5] p-5">
+                    <h2 class="text-sm font-semibold text-[#0e193d]">Contestant list (read-only)</h2>
+                    <ul class="mt-3 space-y-1 text-sm text-[#0e193d]">
                         <li
                             v-for="c in event.contestants"
                             :key="c.id"
-                            class="flex justify-between rounded-lg bg-slate-800/80 px-3 py-1.5"
+                            class="flex justify-between rounded-xl bg-[#ebedff] px-3 py-1.5"
                         >
                             <span>{{ c.contestant_number }} — {{ c.name }}</span>
                         </li>
-                        <li v-if="event.contestants.length === 0" class="text-slate-400">
+                        <li v-if="event.contestants.length === 0" class="text-[#594048]">
                             No contestants for this event.
                         </li>
                     </ul>
                 </section>
             </div>
 
-            <section v-if="event" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
-                <h2 class="mb-3 text-sm font-semibold text-slate-200">Scoring system (read-only)</h2>
+            <section v-if="event" class="neon-card border border-[#e8e6f5] p-5">
+                <h2 class="mb-3 text-sm font-semibold text-[#0e193d]">Scoring system (read-only)</h2>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div
                         v-for="cat in event.categories"
                         :key="cat.id"
-                        class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4"
+                        class="neon-card-alt rounded-2xl border border-[#e4e7ff] p-4"
                     >
                         <div class="flex items-center justify-between">
-                            <h3 class="font-medium text-white">{{ cat.name }}</h3>
-                            <span class="rounded-full bg-[#BCD1FF]/20 px-3 py-1 text-xs text-[#BCD1FF]">
+                            <h3 class="font-medium text-[#0e193d]">{{ cat.name }}</h3>
+                            <span class="rounded-full bg-[#4a5e86]/12 px-3 py-1 text-xs font-medium text-[#4a5e86]">
                                 {{ cat.weight }}%
                             </span>
                         </div>
-                        <p v-if="cat.description" class="mt-1 text-xs text-slate-400">
+                        <p v-if="cat.description" class="mt-1 text-xs text-[#594048]">
                             {{ cat.description }}
                         </p>
-                        <ul class="mt-3 space-y-1.5 text-xs text-slate-200">
+                        <ul class="mt-3 space-y-1.5 text-xs text-[#0e193d]">
                             <li
                                 v-for="cr in cat.criteria"
                                 :key="cr.id"
-                                class="flex justify-between rounded-lg bg-slate-900/70 px-3 py-1.5"
+                                class="flex justify-between rounded-lg bg-white/80 px-3 py-1.5 shadow-sm"
                             >
                                 <span>{{ cr.name }}</span>
-                                <span class="text-slate-400">max {{ cr.max_score }}</span>
+                                <span class="text-[#594048]">max {{ cr.max_score }}</span>
                             </li>
-                            <li v-if="cat.criteria.length === 0" class="text-slate-500">
+                            <li v-if="cat.criteria.length === 0" class="text-[#594048]">
                                 No criteria defined.
                             </li>
                         </ul>

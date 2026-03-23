@@ -22,19 +22,19 @@ const medal = computed(() => {
 
 const cardClasses = computed(() => {
     if (medal.value) return `${medal.value.border} ${medal.value.shadow}`;
-    if (props.isNew) return 'border-[#38F298] shadow-[0_0_24px_rgba(56,242,152,0.35)]';
-    return 'border-[#BCD1FF]/30';
+    if (props.isNew) return 'border-[#57ffa6]/50 shadow-[0_0_24px_rgba(0,106,61,0.35)]';
+    return 'border-white/25';
 });
 
 const badgeClasses = computed(() => {
     if (medal.value) return medal.value.badge;
-    return 'bg-[#F23892] text-white';
+    return 'bg-gradient-to-br from-[#b40066] to-[#da2180] text-white';
 });
 </script>
 
 <template>
     <div
-        class="relative w-full max-w-2xl rounded-2xl border-2 bg-slate-900/90 px-6 py-5 shadow-xl transition"
+        class="relative w-full max-w-2xl rounded-2xl border-2 bg-white/[0.94] px-6 py-5 text-[#0e193d] shadow-xl backdrop-blur-md transition dark:bg-[#0e193d]/95 dark:text-white"
         :class="[cardClasses, { 'champion-glow': medal?.glow }]"
     >
         <!-- Trophy for champion -->
@@ -53,7 +53,7 @@ const badgeClasses = computed(() => {
                 <div>
                     <p
                         v-if="isNew && !medal"
-                        class="mb-1 text-xs font-medium uppercase tracking-wide text-[#38F298]"
+                        class="mb-1 text-xs font-medium uppercase tracking-wide text-[#006a3d] dark:text-[#57ffa6]"
                     >
                         Just revealed
                     </p>
@@ -88,7 +88,7 @@ const badgeClasses = computed(() => {
                 >
                     {{ Number(result.final_score).toFixed(4) }}
                 </p>
-                <p class="text-xs font-medium text-slate-400">final score</p>
+                <p class="text-xs font-medium text-[#594048] dark:text-slate-400">final score</p>
             </div>
         </div>
     </div>

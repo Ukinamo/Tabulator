@@ -179,7 +179,7 @@ onMounted(() => { if (props.event) fetchCategories(); });
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
             <div class="flex flex-col gap-1">
-                <h1 class="text-xl font-semibold text-white">Scoring categories</h1>
+                <h1 class="text-xl font-semibold text-[#0e193d]">Scoring categories</h1>
                 <p class="text-sm text-slate-400">
                     Customize the scoring system judges use. Add categories (e.g. Talent, Q&amp;A) and set their weight. Total must be 100%.
                 </p>
@@ -201,7 +201,7 @@ onMounted(() => { if (props.event) fetchCategories(); });
                     </button>
                     <button
                         type="button"
-                        class="rounded-xl bg-[#F23892] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
+                        class="rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(180,0,102,0.35)] transition hover:opacity-95"
                         @click="openCreate"
                     >
                         Add category
@@ -209,18 +209,18 @@ onMounted(() => { if (props.event) fetchCategories(); });
                 </div>
             </div>
             <p v-if="!event" class="text-slate-400">No event selected.</p>
-            <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">
+            <div v-else-if="loading" class="neon-card rounded-2xl shadow-[0_4px_24px_rgba(14,25,61,0.06)] p-8 text-center text-slate-400">
                 Loading…
             </div>
             <div v-else class="grid gap-4 md:grid-cols-2">
                 <div
                     v-for="c in categories"
                     :key="c.id"
-                    class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5"
+                    class="neon-card rounded-2xl shadow-[0_4px_24px_rgba(14,25,61,0.06)] p-5"
                 >
                     <div class="flex items-start justify-between gap-2">
                         <div class="min-w-0 flex-1">
-                            <h2 class="font-medium text-white">{{ c.name }}</h2>
+                            <h2 class="font-medium text-[#0e193d]">{{ c.name }}</h2>
                             <p class="mt-1 text-xs text-slate-400">{{ c.criteria_count }} criteria</p>
                         </div>
                         <span class="shrink-0 rounded-full bg-[#BCD1FF]/20 px-3 py-1 text-sm text-[#BCD1FF]">{{ c.weight }}%</span>
@@ -245,25 +245,25 @@ onMounted(() => { if (props.event) fetchCategories(); });
                     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
                     @click.self="showModal = false"
                 >
-                    <div class="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-                        <h2 class="mb-4 text-lg font-semibold text-white">{{ editing ? 'Edit category' : 'Add category' }}</h2>
+                    <div class="w-full max-w-md rounded-3xl border border-[#e0bec7]/30 bg-white p-6 shadow-[0_24px_48px_rgba(14,25,61,0.1)]">
+                        <h2 class="mb-4 text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit category' : 'Add category' }}</h2>
                         <p v-if="error" class="mb-3 rounded-xl bg-red-500/20 px-3 py-2 text-sm text-red-300">{{ error }}</p>
                         <form class="space-y-4" @submit.prevent="save">
                             <div>
                                 <label class="mb-1.5 block text-xs font-medium text-slate-400">Name</label>
-                                <input v-model="form.name" type="text" required class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" placeholder="e.g. Talent Portion" />
+                                <input v-model="form.name" type="text" required class="ig-input w-full" placeholder="e.g. Talent Portion" />
                             </div>
                             <div>
                                 <label class="mb-1.5 block text-xs font-medium text-slate-400">Weight (%)</label>
-                                <input v-model.number="form.weight" type="number" min="0" max="100" step="0.01" required class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" />
+                                <input v-model.number="form.weight" type="number" min="0" max="100" step="0.01" required class="ig-input w-full" />
                             </div>
                             <div>
                                 <label class="mb-1.5 block text-xs font-medium text-slate-400">Description (optional)</label>
-                                <textarea v-model="form.description" rows="2" class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" placeholder="Brief description" />
+                                <textarea v-model="form.description" rows="2" class="ig-input w-full" placeholder="Brief description" />
                             </div>
                             <div class="flex justify-end gap-3 pt-2">
-                                <button type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700" @click="showModal = false">Cancel</button>
-                                <button type="submit" class="rounded-xl bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60" :disabled="submitLoading">
+                                <button type="button" class="rounded-full bg-[#4a5e86]/10 px-4 py-2.5 text-sm font-medium text-[#4a5e86] transition hover:bg-[#4a5e86]/18" @click="showModal = false">Cancel</button>
+                                <button type="submit" class="neon-btn-primary rounded-full px-5 py-2.5 text-sm disabled:opacity-60" :disabled="submitLoading">
                                     {{ submitLoading ? 'Saving…' : (editing ? 'Update' : 'Add') }}
                                 </button>
                             </div>

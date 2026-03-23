@@ -36,7 +36,7 @@ function onCancel() {
     <Dialog :open="open" @update:open="(v: boolean) => !v && onCancel()">
         <DialogContent
             :show-close-button="false"
-            class="max-w-[340px] rounded-3xl border-0 p-0 shadow-2xl dark:bg-slate-900"
+            class="max-w-[340px] rounded-3xl border border-[#e8e6f5] p-0 shadow-2xl dark:border-[#2a3558] dark:bg-[#0e193d]"
             @pointer-down-outside="onCancel"
             @escape-key-down="onCancel"
         >
@@ -55,7 +55,7 @@ function onCancel() {
                     :class="
                         variant === 'danger'
                             ? 'text-red-500 dark:text-red-400'
-                            : 'text-[#F23892] dark:text-pink-400'
+                            : 'text-[#b40066] dark:text-[#da2180]'
                     "
                     :disabled="loading"
                     @click="onConfirm"

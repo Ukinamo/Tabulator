@@ -151,35 +151,35 @@ watch([categories, selectedCategoryId], () => { if (selectedCategoryId.value) fe
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
             <div class="flex flex-col gap-1">
-                <h1 class="text-xl font-semibold text-white">Scoring criteria</h1>
-                <p class="text-sm text-slate-400">
+                <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Scoring criteria</h1>
+                <p class="text-sm text-[#594048]">
                     Define the criteria judges score within each category (e.g. Stage Presence, max 30 pts). Judges will see these on their scoresheet.
                 </p>
             </div>
             <div v-if="event" class="flex flex-wrap items-center gap-3">
-                <label class="text-sm text-slate-400">Category:</label>
+                <label class="text-sm text-[#594048]">Category:</label>
                 <select
                     v-model="selectedCategoryId"
-                    class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30"
+                    class="ig-input rounded-full border-[#e0d8e8] bg-white px-4 py-2 text-[#0e193d] focus:border-[#b40066] focus:ring-[#b40066]/25"
                 >
                     <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }} ({{ cat.weight }}%)</option>
                 </select>
                 <button
                     v-if="selectedCategoryId"
                     type="button"
-                    class="rounded-xl bg-[#F23892] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
+                    class="neon-btn-primary px-4 py-2 text-sm"
                     @click="openCreate"
                 >
                     Add criterion
                 </button>
             </div>
-            <p v-if="!event" class="text-slate-400">No event selected.</p>
-            <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">
+            <p v-if="!event" class="text-[#594048]">No event selected.</p>
+            <div v-else-if="loading" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">
                 Loading…
             </div>
-            <div v-else class="overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/80">
-                <table class="min-w-full text-left text-sm text-slate-200">
-                    <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase tracking-wide text-slate-400">
+            <div v-else class="neon-card overflow-hidden border border-[#e8e6f5]">
+                <table class="min-w-full text-left text-sm text-[#0e193d]">
+                    <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff] text-xs uppercase tracking-wide text-[#594048]">
                         <tr>
                             <th class="px-5 py-4">Name</th>
                             <th class="px-5 py-4">Max score</th>
@@ -187,19 +187,19 @@ watch([categories, selectedCategoryId], () => { if (selectedCategoryId.value) fe
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="c in criteria" :key="c.id" class="border-b border-slate-800/70 transition hover:bg-slate-800/30">
-                            <td class="px-5 py-4 font-medium text-white">{{ c.name }}</td>
+                        <tr v-for="c in criteria" :key="c.id" class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/60">
+                            <td class="px-5 py-4 font-medium">{{ c.name }}</td>
                             <td class="px-5 py-4">
-                                <span class="rounded-full bg-[#F23892]/20 px-2.5 py-1 text-xs font-medium text-[#F23892]">{{ c.max_score }} pts</span>
+                                <span class="rounded-full bg-[#b40066]/12 px-2.5 py-1 text-xs font-medium text-[#b40066]">{{ c.max_score }} pts</span>
                             </td>
                             <td class="px-5 py-4">
-                                <button type="button" class="mr-2 text-[#BCD1FF] hover:underline" @click="openEdit(c)">Edit</button>
-                                <button type="button" class="text-red-400 hover:underline" @click="openDelete(c)">Delete</button>
+                                <button type="button" class="mr-2 text-[#4a5e86] hover:underline" @click="openEdit(c)">Edit</button>
+                                <button type="button" class="text-red-600 hover:underline" @click="openDelete(c)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <p v-if="criteria.length === 0" class="p-8 text-center text-slate-400">
+                <p v-if="criteria.length === 0" class="p-8 text-center text-[#594048]">
                     No criteria in {{ selectedCategory?.name ?? 'this category' }}. Add criteria so judges can score them.
                 </p>
             </div>
@@ -213,25 +213,25 @@ watch([categories, selectedCategoryId], () => { if (selectedCategoryId.value) fe
                     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
                     @click.self="showModal = false"
                 >
-                    <div class="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-                        <h2 class="mb-4 text-lg font-semibold text-white">{{ editing ? 'Edit criterion' : 'Add criterion' }}</h2>
-                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/20 px-3 py-2 text-sm text-red-300">{{ error }}</p>
+                    <div class="neon-glass-panel w-full max-w-md rounded-3xl border border-[#e8e6f5] p-6 shadow-2xl">
+                        <h2 class="mb-4 font-headline text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit criterion' : 'Add criterion' }}</h2>
+                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/15 px-3 py-2 text-sm text-red-700">{{ error }}</p>
                         <form class="space-y-4" @submit.prevent="save">
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Name</label>
-                                <input v-model="form.name" type="text" required class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" placeholder="e.g. Stage Presence" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Name</label>
+                                <input v-model="form.name" type="text" required class="ig-input w-full rounded-xl" placeholder="e.g. Stage Presence" />
                             </div>
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Max score (pts)</label>
-                                <input v-model.number="form.max_score" type="number" min="0" step="0.01" required class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Max score (pts)</label>
+                                <input v-model.number="form.max_score" type="number" min="0" step="0.01" required class="ig-input w-full rounded-xl" />
                             </div>
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Description (optional)</label>
-                                <textarea v-model="form.description" rows="2" class="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-white focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30" placeholder="Brief description" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Description (optional)</label>
+                                <textarea v-model="form.description" rows="2" class="ig-input w-full rounded-xl" placeholder="Brief description" />
                             </div>
                             <div class="flex justify-end gap-3 pt-2">
-                                <button type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700" @click="showModal = false">Cancel</button>
-                                <button type="submit" class="rounded-xl bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60" :disabled="submitLoading">
+                                <button type="button" class="rounded-full border border-[#e0d8e8] bg-white px-4 py-2.5 text-sm font-medium text-[#0e193d] transition hover:bg-[#f3f2ff]" @click="showModal = false">Cancel</button>
+                                <button type="submit" class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60" :disabled="submitLoading">
                                     {{ submitLoading ? 'Saving…' : (editing ? 'Update' : 'Add') }}
                                 </button>
                             </div>

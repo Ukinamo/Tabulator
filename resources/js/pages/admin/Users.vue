@@ -131,7 +131,7 @@ onMounted(fetchUsers);
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-xl font-semibold text-white">Users</h1>
+                <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Users</h1>
                 <button
                     type="button"
                     class="ig-btn-primary px-5 py-2.5 text-sm text-white"
@@ -141,14 +141,14 @@ onMounted(fetchUsers);
                 </button>
             </div>
 
-            <div v-if="loading" class="ig-card flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/80 p-10 text-slate-400">
-                <span class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#F23892] border-t-transparent" />
+            <div v-if="loading" class="neon-card flex items-center justify-center gap-2 border border-[#e8e6f5] p-10 text-[#594048]">
+                <span class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#b40066] border-t-transparent" />
                 <span>Loading…</span>
             </div>
 
-            <div v-else class="ig-card overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/80">
-                <table class="min-w-full text-left text-sm text-slate-200">
-                    <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase tracking-wide text-slate-400">
+            <div v-else class="neon-card overflow-hidden border border-[#e8e6f5]">
+                <table class="min-w-full text-left text-sm text-[#0e193d]">
+                    <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff] text-xs uppercase tracking-wide text-[#594048]">
                         <tr>
                             <th class="px-5 py-4">Name</th>
                             <th class="px-5 py-4">Email</th>
@@ -158,23 +158,23 @@ onMounted(fetchUsers);
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="u in users" :key="u.id" class="border-b border-slate-800/70 transition hover:bg-slate-800/30">
-                            <td class="px-5 py-4 font-medium text-white">{{ u.name }}</td>
-                            <td class="px-5 py-4 text-slate-300">{{ u.email }}</td>
+                        <tr v-for="u in users" :key="u.id" class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/60">
+                            <td class="px-5 py-4 font-medium">{{ u.name }}</td>
+                            <td class="px-5 py-4 text-[#594048]">{{ u.email }}</td>
                             <td class="px-5 py-4">
-                                <span class="rounded-full bg-[#BCD1FF]/20 px-2.5 py-1 text-xs font-medium text-[#BCD1FF]">{{ u.role }}</span>
+                                <span class="rounded-full bg-[#4a5e86]/12 px-2.5 py-1 text-xs font-medium text-[#4a5e86]">{{ u.role }}</span>
                             </td>
                             <td class="px-5 py-4">
-                                <span :class="u.is_active ? 'text-[#38F298]' : 'text-slate-500'">{{ u.is_active ? 'Active' : 'Inactive' }}</span>
+                                <span :class="u.is_active ? 'font-medium text-[#006a3d]' : 'text-[#594048]'">{{ u.is_active ? 'Active' : 'Inactive' }}</span>
                             </td>
                             <td class="px-5 py-4">
-                                <button type="button" class="mr-3 text-sm font-medium text-[#BCD1FF] hover:underline" @click="openEdit(u)">Edit</button>
-                                <button type="button" class="text-sm font-medium text-red-400 hover:underline" @click="openDelete(u)">Delete</button>
+                                <button type="button" class="mr-3 text-sm font-medium text-[#b40066] hover:underline" @click="openEdit(u)">Edit</button>
+                                <button type="button" class="text-sm font-medium text-red-600 hover:underline" @click="openDelete(u)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <p v-if="!loading && users.length === 0" class="p-8 text-center text-slate-400">No users yet.</p>
+                <p v-if="!loading && users.length === 0" class="p-8 text-center text-[#594048]">No users yet.</p>
             </div>
         </div>
 
@@ -186,40 +186,40 @@ onMounted(fetchUsers);
                     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
                     @click.self="showModal = false"
                 >
-                    <div class="ig-modal w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
-                        <h2 class="mb-5 text-lg font-semibold text-white">{{ editing ? 'Edit User' : 'Create User' }}</h2>
-                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/20 px-3 py-2 text-sm text-red-300">{{ error }}</p>
+                    <div class="neon-glass-panel w-full max-w-md rounded-3xl border border-[#e8e6f5] p-6 shadow-2xl">
+                        <h2 class="mb-5 font-headline text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit User' : 'Create User' }}</h2>
+                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/15 px-3 py-2 text-sm text-red-700">{{ error }}</p>
                         <form class="space-y-4" @submit.prevent="save">
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Name</label>
-                                <input v-model="form.name" type="text" required class="ig-input w-full dark:bg-slate-800 dark:text-white" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Name</label>
+                                <input v-model="form.name" type="text" required class="ig-input w-full" />
                             </div>
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Email</label>
-                                <input v-model="form.email" type="email" required :readonly="!!editing" class="ig-input w-full dark:bg-slate-800 dark:text-white" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Email</label>
+                                <input v-model="form.email" type="email" required :readonly="!!editing" class="ig-input w-full" />
                             </div>
                             <div v-if="!editing">
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Password</label>
-                                <input v-model="form.password" type="password" class="ig-input w-full dark:bg-slate-800 dark:text-white" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Password</label>
+                                <input v-model="form.password" type="password" class="ig-input w-full" />
                             </div>
                             <div v-if="!editing">
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Confirm Password</label>
-                                <input v-model="form.password_confirmation" type="password" class="ig-input w-full dark:bg-slate-800 dark:text-white" />
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Confirm Password</label>
+                                <input v-model="form.password_confirmation" type="password" class="ig-input w-full" />
                             </div>
                             <div v-if="!editing">
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Role</label>
-                                <select v-model="form.role" class="ig-input w-full dark:bg-slate-800 dark:text-white">
+                                <label class="mb-1.5 block text-xs font-medium text-[#594048]">Role</label>
+                                <select v-model="form.role" class="ig-input w-full">
                                     <option value="admin">Judge</option>
                                     <option value="mc">MC</option>
                                     <option value="organizer">Organizer</option>
                                 </select>
                             </div>
                             <div class="flex items-center gap-2">
-                                <input v-model="form.is_active" type="checkbox" class="h-4 w-4 rounded border-slate-600 text-[#F23892] focus:ring-[#F23892]" />
-                                <label class="text-sm text-slate-300">Active</label>
+                                <input v-model="form.is_active" type="checkbox" class="h-4 w-4 rounded border-[#e0d8e8] text-[#b40066] focus:ring-[#b40066]" />
+                                <label class="text-sm text-[#0e193d]">Active</label>
                             </div>
                             <div class="flex justify-end gap-3 pt-2">
-                                <button type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700" @click="showModal = false">Cancel</button>
+                                <button type="button" class="rounded-full border border-[#e0d8e8] bg-white px-4 py-2.5 text-sm font-medium text-[#0e193d] transition hover:bg-[#f3f2ff]" @click="showModal = false">Cancel</button>
                                 <button type="submit" class="ig-btn-primary px-5 py-2.5 text-sm text-white disabled:opacity-60" :disabled="submitLoading">
                                     <span v-if="submitLoading" class="inline-flex items-center gap-2">
                                         <span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />

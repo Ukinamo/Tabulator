@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Neon Auditor - Categories &amp; Criteria</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #faf8ff;
+      }
+      h1, h2, h3 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary-fixed-dim">
+<!-- SIDE NAV BAR (Left Anchor) -->
+<aside class="h-screen w-[220px] fixed left-0 top-0 overflow-y-auto bg-[#0e193d] dark:bg-[#07091a] flex flex-col py-6 gap-2 z-50 shadow-2xl shadow-black/50">
+<!-- Brand / Header -->
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="event_note">event_note</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-white tracking-tight leading-tight">Luzon Events</h2>
+<p class="text-[10px] text-slate-400 font-label uppercase tracking-widest">Super Admin</p>
+</div>
+</div>
+<button class="w-full py-2 px-4 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="campaign">campaign</span>
+                Broadcast Mode
+            </button>
+</div>
+<!-- Primary Navigation Tabs -->
+<nav class="flex-1 flex flex-col gap-1">
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2.5 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium tracking-tight">Overview</span>
+</a>
+<a class="bg-[#b40066] text-white rounded-full mx-2 px-4 py-2.5 flex items-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(180,0,102,0.4)]" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" data-weight="fill" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-sm font-medium tracking-tight">Live Tabulation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2.5 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="gavel">gavel</span>
+<span class="text-sm font-medium tracking-tight">Judge Management</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2.5 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="text-sm font-medium tracking-tight">Score Validation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2.5 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium tracking-tight">Event Settings</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2.5 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full group" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-sm font-medium tracking-tight">Audit Logs</span>
+</a>
+</nav>
+<!-- Footer Navigation -->
+<div class="mt-auto px-2 flex flex-col gap-1">
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm font-medium tracking-tight">Help Center</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="text-sm font-medium tracking-tight">Logout</span>
+</a>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-[220px] min-h-screen">
+<!-- TOP NAV BAR (Horizontal Anchor) -->
+<header class="flex justify-between items-center w-full px-8 py-4 sticky top-0 z-40 bg-white shadow-sm dark:bg-slate-900">
+<div class="flex items-center gap-8">
+<div class="text-xl font-black text-[#b40066] dark:text-[#da2180] tracking-tight">The Neon Auditor</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] transition-colors duration-200 text-sm font-medium" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] transition-colors duration-200 text-sm font-medium" href="#">Events</a>
+<a class="text-[#b40066] font-bold border-b-2 border-[#b40066] pb-1 text-sm" href="#">Categories</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] transition-colors duration-200 text-sm font-medium" href="#">Results</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-500" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden ring-2 ring-primary/10">
+<img alt="User profile" data-alt="Round user avatar profile placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUmDGjhJ1B3lF-9eW1wBPEWisottXIk70rC282o0e5ePia0NBJf6xU3RJjfr_iIQLAuAiw-xcyq4DAtTB29B6P6Y5rqgdPfJVoRtmXhiuiMRN9UUsJwXN0VBpQb0Kk00g2BuekSAVMOFa9kXMb2_M4BqtYg-gIV6mTBPo5jbAPfKeLDRLvbRZ456lAjYYDhgAnuj5wlRR9sUQLIolnaSTAb2gJIwaUYWo6G2RS4c67xIs71A_kFrI9lTb6wTFPmhKAzeS8HC6q7SV_"/>
+</div>
+<button class="bg-primary hover:opacity-90 text-white px-6 py-2 rounded-full text-sm font-bold shadow-sm transition-all active:scale-95">
+                    Create Event
+                </button>
+</div>
+</header>
+<!-- CONTENT CANVAS -->
+<div class="p-8 max-w-6xl mx-auto space-y-8">
+<!-- SECTION HEADER & WEIGHT SUMMARY -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+<div>
+<h1 class="text-4xl font-extrabold tracking-tight text-on-background">Categories &amp; Criteria</h1>
+<p class="text-secondary mt-1">Define the judging parameters for the Grand Coronation Night.</p>
+</div>
+<!-- Weight Summary Bar -->
+<div class="bg-surface-container-low px-6 py-3 rounded-2xl flex items-center gap-4">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold tracking-widest text-secondary">Configuration Status</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-lg font-bold text-on-background">Total Weight: <span class="text-tertiary">100%</span></span>
+</div>
+</div>
+<div class="h-10 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-xs font-bold text-tertiary tracking-tight">Ready for Judging</span>
+</div>
+</div>
+</div>
+<!-- CATEGORY LISTING -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="category">category</span>
+                        Active Categories
+                    </h2>
+<span class="text-xs font-label text-secondary">3 CATEGORIES TOTAL</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Category Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary opacity-50"></div>
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="text-lg font-bold">Poise and Bearing</h3>
+<span class="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">40% Weight</span>
+<span class="bg-secondary-fixed text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="list">list</span>
+                                        3 Criteria
+                                    </span>
+</div>
+<p class="text-sm text-secondary max-w-2xl">Assessment of the candidate's confidence, stage presence, and overall elegance during the evening gown segment.</p>
+</div>
+<div class="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/20 rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Progress Visualizer -->
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<span>Relative Weight</span>
+<span>40 / 100</span>
+</div>
+<div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 40%"></div>
+</div>
+</div>
+</div>
+<!-- Category Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary opacity-50"></div>
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="text-lg font-bold">Intelligence</h3>
+<span class="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">40% Weight</span>
+<span class="bg-secondary-fixed text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="list">list</span>
+                                        2 Criteria
+                                    </span>
+</div>
+<p class="text-sm text-secondary max-w-2xl">Articulation, depth of answer, and relevance of the response during the Question and Answer portion.</p>
+</div>
+<div class="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/20 rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<span>Relative Weight</span>
+<span>40 / 100</span>
+</div>
+<div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 40%"></div>
+</div>
+</div>
+</div>
+<!-- Category Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary opacity-50"></div>
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="text-lg font-bold">Beauty of Face</h3>
+<span class="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-tighter">20% Weight</span>
+<span class="bg-secondary-fixed text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="list">list</span>
+                                        2 Criteria
+                                    </span>
+</div>
+<p class="text-sm text-secondary max-w-2xl">Facial harmony, grooming, and photographic appeal across all competition segments.</p>
+</div>
+<div class="flex gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-error-container/20 rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<span>Relative Weight</span>
+<span>20 / 100</span>
+</div>
+<div class="w-full h-2 bg-surface-container-low rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<!-- Add Category Button -->
+<button class="w-full border-2 border-dashed border-primary/30 text-primary font-bold py-6 rounded-2xl flex items-center justify-center gap-2 hover:bg-primary/5 hover:border-primary transition-all group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="add_circle">add_circle</span>
+                        Add New Category
+                    </button>
+</div>
+</section>
+<!-- CRITERIA SECTION -->
+<section class="space-y-6 pt-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="rule">rule</span>
+                            Criteria Breakdown
+                        </h2>
+</div>
+<!-- Category Selector Dropdown -->
+<div class="relative max-w-sm">
+<label class="block text-[10px] font-bold uppercase tracking-widest text-secondary mb-2 px-1">Manage Criteria For:</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 text-sm font-bold shadow-sm focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option>Poise and Bearing</option>
+<option>Intelligence</option>
+<option>Beauty of Face</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-[38px] text-secondary pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Expandable Criteria List -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm">
+<div class="divide-y divide-surface-container-low">
+<!-- Criterion 1 -->
+<div class="p-5 flex items-center gap-4 group hover:bg-surface-container-low transition-colors">
+<div class="cursor-grab active:cursor-grabbing text-slate-300 group-hover:text-slate-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Stage Presence &amp; Confidence</h4>
+<p class="text-xs text-secondary italic">Does the candidate command the attention of the audience?</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-xs font-black tracking-tighter">
+                                    MAX 50 PTS
+                                </div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Criterion 2 -->
+<div class="p-5 flex items-center gap-4 group hover:bg-surface-container-low transition-colors">
+<div class="cursor-grab text-slate-300 group-hover:text-slate-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Grace and Fluidity of Movement</h4>
+<p class="text-xs text-secondary italic">Refinement in walking and transitions.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-xs font-black tracking-tighter">
+                                    MAX 30 PTS
+                                </div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Criterion 3 -->
+<div class="p-5 flex items-center gap-4 group hover:bg-surface-container-low transition-colors">
+<div class="cursor-grab text-slate-300 group-hover:text-slate-400">
+<span class="material-symbols-outlined" data-icon="drag_indicator">drag_indicator</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Overall Impression</h4>
+<p class="text-xs text-secondary italic">Final holistic impact of the segment.</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-xs font-black tracking-tighter">
+                                    MAX 20 PTS
+                                </div>
+<div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+<button class="p-2 hover:bg-white rounded-full transition-colors text-secondary hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full py-4 text-sm font-bold text-secondary hover:text-primary hover:bg-surface-container-low transition-all border-t border-surface-container-low flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        Add Criterion to Poise and Bearing
+                    </button>
+</div>
+</section>
+</div>
+</main>
+<!-- FLOATING ACTION (CONTEXTUAL) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-full bg-primary text-white shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl" data-icon="save" data-weight="fill" style="font-variation-settings: 'FILL' 1;">save</span>
+</button>
+</div>
+</body></html>

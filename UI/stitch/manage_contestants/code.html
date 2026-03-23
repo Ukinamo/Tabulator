@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manage Contestants | The Neon Auditor</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf8ff;
+        }
+        h1, h2, h3 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-x-hidden">
+<!-- Sidebar (Authority: SideNavBar JSON) -->
+<aside class="bg-[#0e193d] h-screen w-[180px] fixed left-0 top-0 overflow-y-auto flex flex-col py-6 gap-2 shadow-2xl shadow-black/50 z-50">
+<div class="px-4 mb-8">
+<div class="flex items-center gap-2 mb-1">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="star">star</span>
+</div>
+<h2 class="text-lg font-bold text-white tracking-tight">Luzon Events</h2>
+</div>
+<p class="text-[10px] text-slate-400 font-label tracking-widest uppercase">Super Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium tracking-tight">Overview</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+<span class="text-sm font-medium tracking-tight">Live Tabulation</span>
+</a>
+<!-- Active State -->
+<a class="bg-[#b40066] text-white rounded-full mx-2 px-4 py-2 flex items-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(180,0,102,0.4)]" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="gavel" data-weight="fill" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span class="text-sm font-medium tracking-tight">Judge Management</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="fact_check">fact_check</span>
+<span class="text-sm font-medium tracking-tight">Score Validation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span class="text-sm font-medium tracking-tight">Event Settings</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="history">history</span>
+<span class="text-sm font-medium tracking-tight">Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto px-2 space-y-1 border-t border-white/5 pt-4">
+<button class="w-full bg-primary-container/20 text-primary-fixed text-[10px] font-bold py-2 rounded-lg mb-4 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="podcasts">podcasts</span>
+                Broadcast Mode
+            </button>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span>
+<span class="text-sm font-medium">Help Center</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[180px] min-h-screen p-8 bg-surface">
+<!-- Header Section -->
+<header class="flex justify-between items-center mb-10">
+<div>
+<h1 class="text-4xl font-black text-on-surface tracking-tight">Manage Contestants</h1>
+<p class="text-secondary font-medium mt-1">Luzon Regional Qualifiers 2024</p>
+</div>
+<button class="bg-[#b40066] hover:bg-primary-container text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-lg shadow-primary/20 transition-all active:scale-95 font-headline font-bold">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+                Add Contestant
+            </button>
+</header>
+<!-- Stats Bar (Bento Minimal) -->
+<div class="grid grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<p class="text-secondary text-xs font-label uppercase tracking-widest mb-1">Total Entries</p>
+<p class="text-3xl font-black text-on-surface">42</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<p class="text-secondary text-xs font-label uppercase tracking-widest mb-1">Active</p>
+<p class="text-3xl font-black text-tertiary">38</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<p class="text-secondary text-xs font-label uppercase tracking-widest mb-1">Categories</p>
+<p class="text-3xl font-black text-on-surface">04</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<p class="text-secondary text-xs font-label uppercase tracking-widest mb-1">Waitlist</p>
+<p class="text-3xl font-black text-primary">04</p>
+</div>
+</div>
+<!-- High-Fidelity Table Container -->
+<div class="bg-surface-container-lowest rounded-3xl overflow-hidden shadow-xl shadow-on-surface/5 border border-outline-variant/5">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-8 py-5 text-xs font-label text-secondary uppercase tracking-widest">#</th>
+<th class="px-6 py-5 text-xs font-label text-secondary uppercase tracking-widest">Contestant Photo</th>
+<th class="px-6 py-5 text-xs font-label text-secondary uppercase tracking-widest">Full Name</th>
+<th class="px-6 py-5 text-xs font-label text-secondary uppercase tracking-widest">Category</th>
+<th class="px-6 py-5 text-xs font-label text-secondary uppercase tracking-widest">Status</th>
+<th class="px-8 py-5 text-xs font-label text-secondary uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1 -->
+<tr class="group bg-white hover:bg-[#F9FBFF] transition-colors">
+<td class="px-8 py-5">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-tight">01</span>
+</td>
+<td class="px-6 py-5">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md" data-alt="Female contestant headshot with neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf0OU-qnb3u-7kBWAQ5qX3-7UPc8NP56aReZIxwgyw0aixmBaFcBgb-g-yTqm0cxk1NdNrdiZF5ujDH9Uxu7KZEO3wZJcb2lYe-H4giAzycjLY4QP-ZH-qbtc0YF6yy0HBzkCzIn-gzufxYEfSb1_2t87AglIYV2cMi7Gf3ipJCBIJGrQcdS_waVj4E0xeCdUkYCYz0xIuNDScGc9EeTH1nK3_nkGPpmonAkwk2M7KfxZfcp_PnxDl8o9esFPHocNsMG0xM-eGjGFh"/>
+</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface text-base">Elena Rodriguez</div>
+<div class="text-xs text-secondary">Manila, PH</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-secondary">Vocal Solo</span>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#38F298]/20 text-[#006a3d] px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider flex items-center w-fit gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#006a3d]"></span>
+                                    Active
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="edit">edit</span>
+</button>
+<button class="p-2 rounded-full hover:bg-error/10 text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Alternating Background) -->
+<tr class="group bg-[#F9FBFF] hover:bg-primary-fixed/30 transition-colors">
+<td class="px-8 py-5">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-tight">02</span>
+</td>
+<td class="px-6 py-5">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md" data-alt="Male contestant professional headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAa6qy_TXYhfylc9NonrVD689XIq_kzXd27DfZN0xeVaT0GCdT5SHIJdNVzXb-PZT0ITm0cCA2yb-nBXRes1K0_Ap-igB-evpgrrbXdWZY6HoczGUMg3RyXRZbZj-5mczJ0wRvd6CuBjfpCPaD2rw_CfNkjz_bpB8VoLb3ln28WOBEAUANcB-AXcqlOvp3gA3hslTlH5hBhP3LkWHwRP4XgHVIZh1LAIfSXDdBBtvtC1BWV4OSlQOC2HqtdzuRdPL3yFAaZ7SsWVXcM"/>
+</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface text-base">Marcus Chen</div>
+<div class="text-xs text-secondary">Davao City</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-secondary">Contemporary Dance</span>
+</td>
+<td class="px-6 py-5">
+<span class="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider flex items-center w-fit gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                    Inactive
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="edit">edit</span>
+</button>
+<button class="p-2 rounded-full hover:bg-error/10 text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group bg-white hover:bg-[#F9FBFF] transition-colors">
+<td class="px-8 py-5">
+<span class="bg-primary-fixed text-on-primary-fixed px-3 py-1 rounded-full text-xs font-bold tracking-tight">03</span>
+</td>
+<td class="px-6 py-5">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md" data-alt="Young female contestant headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcHOVhkf1CS7Ura_LIlSOrjKMsO6Ctc3xwH1M5gXa2v_4VTlME33_DF5GbNStqV_nsNmecrGnUzcbvIB6YNNCDr3fyK9lMDo4325kNuCgTF5M7Lorh7LCvTmihUwHC7kBY2h-kHjQchRvTveHjCPu4-LWEQYmEiew2ABfShjL26PAuFwlLxLyjplsANReZmohDaWlr6eOvR-LlO0teYOdchAyv5K6sMgPns8r4zxRbnmrYg4c6liZdh4zP1OiJPcDnM0lQls-sl67H"/>
+</td>
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface text-base">Sophia Almeda</div>
+<div class="text-xs text-secondary">Cebu City</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-secondary">Instrumental Solo</span>
+</td>
+<td class="px-6 py-5">
+<span class="bg-[#38F298]/20 text-[#006a3d] px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider flex items-center w-fit gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#006a3d]"></span>
+                                    Active
+                                </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 rounded-full hover:bg-primary/10 text-primary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="edit">edit</span>
+</button>
+<button class="p-2 rounded-full hover:bg-error/10 text-error transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Minimal -->
+<div class="px-8 py-4 bg-surface-container-low/30 border-t border-outline-variant/5 flex items-center justify-between">
+<span class="text-xs text-secondary font-medium">Showing 1 to 3 of 42 contestants</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full flex items-center justify-center border border-outline-variant/20 hover:bg-white text-secondary transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center bg-primary text-white shadow-md shadow-primary/20 text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center border border-outline-variant/20 hover:bg-white text-secondary transition-all text-xs font-bold">2</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center border border-outline-variant/20 hover:bg-white text-secondary transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Slide-over Side Panel (Add Contestant Form) -->
+<div class="fixed inset-0 z-[100] overflow-hidden pointer-events-none">
+<div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm pointer-events-auto"></div>
+<div class="absolute inset-y-0 right-0 max-w-full flex">
+<div class="w-screen max-w-md pointer-events-auto transform translate-x-0 transition duration-500 ease-in-out">
+<div class="h-full flex flex-col bg-white shadow-2xl rounded-l-3xl overflow-hidden border-l border-outline-variant/20">
+<div class="p-8 border-b border-outline-variant/10">
+<div class="flex items-center justify-between">
+<h2 class="text-2xl font-black text-on-surface tracking-tight">Add Contestant</h2>
+<button class="p-2 rounded-full hover:bg-surface-container-low text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<p class="text-secondary text-sm mt-1">Register a new participant for the current event.</p>
+</div>
+<div class="flex-1 p-8 overflow-y-auto space-y-8">
+<!-- Photo Upload Section -->
+<div class="space-y-3">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Contestant Photo</label>
+<div class="flex items-center gap-6">
+<div class="w-24 h-24 rounded-2xl bg-surface-container-low border-2 border-dashed border-outline-variant/50 flex flex-col items-center justify-center group cursor-pointer hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-primary/50 text-3xl group-hover:scale-110 transition-transform" data-icon="add_a_photo">add_a_photo</span>
+</div>
+<div class="flex-1">
+<p class="text-xs text-secondary leading-relaxed">Upload a clear professional headshot. JPEG or PNG, max 2MB.</p>
+<button class="mt-2 text-primary text-xs font-bold hover:underline">Choose file</button>
+</div>
+</div>
+</div>
+<!-- Form Fields -->
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Full Name</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface font-medium placeholder:text-secondary/40" placeholder="e.g. Maria Clara" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Age</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface font-medium" placeholder="18" type="number"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Gender</label>
+<select class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface font-medium">
+<option>Female</option>
+<option>Male</option>
+<option>Non-binary</option>
+</select>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Category</label>
+<select class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface font-medium">
+<option>Vocal Solo</option>
+<option>Contemporary Dance</option>
+<option>Instrumental Solo</option>
+<option>Digital Arts</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-widest text-secondary">Origin (City/Province)</label>
+<input class="w-full px-4 py-3 rounded-lg bg-surface-container-low border-none focus:ring-2 focus:ring-primary/20 text-on-surface font-medium placeholder:text-secondary/40" placeholder="e.g. Batangas City" type="text"/>
+</div>
+</div>
+</div>
+<div class="p-8 border-t border-outline-variant/10 bg-surface-container-lowest flex gap-4">
+<button class="flex-1 bg-primary text-white py-4 rounded-full font-headline font-bold text-base shadow-lg shadow-primary/25 active:scale-95 transition-all">Save Contestant</button>
+<button class="px-8 py-4 rounded-full bg-surface-container-high text-on-surface font-bold text-base hover:bg-surface-container-highest transition-colors">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

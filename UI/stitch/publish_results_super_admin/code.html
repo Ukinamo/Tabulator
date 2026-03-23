@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Final Results — The Neon Auditor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-[#f4f7ff] text-on-surface min-h-screen flex">
+<!-- SideNavBar Anchor -->
+<aside class="bg-[#0e193d] h-screen w-[180px] fixed left-0 top-0 overflow-y-auto flex flex-col py-6 gap-2 shadow-2xl shadow-black/50 z-50">
+<div class="px-4 mb-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-black text-lg">L</div>
+<div class="flex flex-col">
+<span class="text-white text-sm font-bold tracking-tight">Luzon Events</span>
+<span class="text-slate-400 text-[10px] uppercase tracking-wider">Super Admin</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="text-xs font-medium tracking-wide">Overview</span>
+</a>
+<a class="bg-[#b40066] text-white rounded-full mx-2 px-4 py-2 flex items-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(180,0,102,0.4)]" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
+<span class="text-xs font-medium tracking-wide">Live Tabulation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="gavel">gavel</span>
+<span class="text-xs font-medium tracking-wide">Judge Management</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="fact_check">fact_check</span>
+<span class="text-xs font-medium tracking-wide">Score Validation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="text-xs font-medium tracking-wide">Event Settings</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="history">history</span>
+<span class="text-xs font-medium tracking-wide">Audit Logs</span>
+</a>
+</nav>
+<div class="mt-auto px-2 flex flex-col gap-1">
+<button class="bg-primary/20 text-primary-fixed-dim text-[10px] font-bold py-2 rounded-full mx-2 mb-4 border border-primary/30 uppercase tracking-widest">
+                Broadcast Mode
+            </button>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="help">help</span>
+<span class="text-xs font-medium">Help Center</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span class="text-xs font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-[180px] p-8 pb-32">
+<!-- Top Navigation -->
+<header class="flex justify-between items-center w-full px-6 py-3 sticky top-0 z-40 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm mb-8">
+<div class="flex items-center gap-8">
+<h1 class="text-xl font-black text-[#b40066] tracking-tight">The Neon Auditor</h1>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 hover:text-[#b40066] text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 hover:text-[#b40066] text-sm font-medium transition-colors" href="#">Events</a>
+<a class="text-slate-500 hover:text-[#b40066] text-sm font-medium transition-colors" href="#">Judges</a>
+<a class="text-[#b40066] font-bold border-b-2 border-[#b40066] pb-1 text-sm" href="#">Results</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img alt="User profile" data-alt="Professional user profile avatar headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7z3koJvZqmbOgyy94Ff0R9FdDeG_-jUaV6WwDg640zpLTxZhqj2HMkSzNgpzVK21-pbL8ckc0HJiynKuJsuWB1FLQLqHtuMNBXzKkjECRzVYhxvCkYWDAUJeHflTAAdnWXL5wyrhA1ild8uiM_ISFXf-FdF4SigK4YppFSEiK11BDdMGjt_V5fZJoDX4isJxOdS_g4Eusu-A_QIA-mrWUZxsCwj4kqRkskBZQnf8t828y2v8z9KO4QRzX7wSnP-rVpwq_CJncjQYN"/>
+</div>
+</div>
+</header>
+<!-- Page Header & Status -->
+<div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-4xl font-extrabold tracking-tight text-on-surface mb-2">Final Results</h2>
+<p class="text-secondary font-medium">Official Tabulation for Luzon Grand Pageant 2024</p>
+</div>
+<!-- Status Banner -->
+<div class="bg-[#38F298] px-6 py-3 rounded-full flex items-center gap-3 shadow-lg shadow-[#38F298]/20 border border-white/50">
+<span class="material-symbols-outlined text-[#006a3d]" data-icon="campaign" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="text-[#006a3d] font-bold text-sm tracking-wide">Results Published — MC Reveal Active</span>
+</div>
+</div>
+<!-- Ranked Results Bento Grid / Table Container -->
+<section class="bg-surface-container-low rounded-3xl p-2 shadow-sm">
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.1em] text-secondary">Rank</th>
+<th class="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.1em] text-secondary">Contestant No.</th>
+<th class="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.1em] text-secondary">Contestant Name</th>
+<th class="px-8 py-5 text-[10px] font-bold uppercase tracking-[0.1em] text-secondary text-right">Final Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Rank 1: Gold -->
+<tr class="bg-[#FFF9E6] hover:bg-[#FFF4D1] transition-colors group">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-[#FFD700] flex items-center justify-center text-white font-black shadow-md">1</span>
+<span class="material-symbols-outlined text-[#FFD700]" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</td>
+<td class="px-8 py-6 font-bold text-on-surface">#012</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden border-2 border-white">
+<img alt="Contestant" data-alt="Contestant portrait image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFIZpP-aBcT9qvRFkfxjlHMTq2wp66HNKDHCUjUXf4bK-Fskcs6gJqYtvh_2s2OtMg-NaruQB401uemz1bjYtyYv6fb7iPQSl77teOr4N02rgaJWTAitWhOKvADVzT3LDYBsjRzmttF7YOzlaiXbA5DStQDk_UvC6njh7ZXbwwn8CW1xBxtxAKme66-e-2Tf7c98kOVkNrLN0nIaQ8WYRrlVGUIFBFQaZ96yFHzpkYBidksiZsIhSMsP7jS4fNBmArxf9o7cm4Gf8O"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Elena Rodriguez</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="text-2xl font-black text-on-surface font-headline tracking-tight">98.4520</span>
+</td>
+</tr>
+<!-- Rank 2: Silver -->
+<tr class="bg-[#F8F9FA] hover:bg-[#F1F3F5] transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-[#C0C0C0] flex items-center justify-center text-white font-black shadow-md">2</span>
+<span class="material-symbols-outlined text-[#9E9E9E]" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</td>
+<td class="px-8 py-6 font-bold text-on-surface">#007</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden border-2 border-white">
+<img alt="Contestant" data-alt="Contestant portrait image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY9OYkx2THCF6wpY_X9A1XdZU1ei3gjAfqHMGUuUDXLbZXIBUAnvhbEnHzcfbIQYDErQkyysZHoROIDztC5cRtKi_WCpxoK1B-p4x4MqCHoQtL1aP0zwSwiJ7FiNuPTUtXsnzzcIX2_vOgQIKNe061bvpnOoV4xK3hN36apwAPYhn7AFb60nBMgFORaOuc0FgZLzb6j0oFtgueRcofoeQJrFC_GB7H5FkD89prXaxpjOu4gm7-lpIo8HxpyTiAPrX6MLOSh3tPrI34"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Sofia Chen</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="text-2xl font-black text-on-surface font-headline tracking-tight">97.8845</span>
+</td>
+</tr>
+<!-- Rank 3: Bronze -->
+<tr class="bg-[#FFF4ED] hover:bg-[#FFE8D9] transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-[#CD7F32] flex items-center justify-center text-white font-black shadow-md">3</span>
+<span class="material-symbols-outlined text-[#A0522D]" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</td>
+<td class="px-8 py-6 font-bold text-on-surface">#024</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden border-2 border-white">
+<img alt="Contestant" data-alt="Contestant portrait image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGK4UPqELHysyyhd5WkseI1kxgsNuDYL2v7tsMPe5BzgnDuaeeVGupPPi0Z0SEwnHaNgeNM-3GRUM5mB7Q1SWIi9NO5RQnVg7P4lT_c19FDndJ_lS9gTy0BL63ydRFeene-XGeP8uVh6_2KPwCqkrdeLR9tBeFQFmgR4TKZtMTKokee1aQDr1afB7SgE5f-sRGH6DH5GqH1nmNN36F-fNHwXjSpalZbB6beNLbCBfj0Xh3yVpRFtx6At_2RWwg0AASqZpw1n3aMQCr"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Amara Okafor</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="text-2xl font-black text-on-surface font-headline tracking-tight">96.1022</span>
+</td>
+</tr>
+<!-- Ranks 4-5: White -->
+<tr class="bg-white hover:bg-slate-50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold">4</span>
+</div>
+</td>
+<td class="px-8 py-6 font-bold text-on-surface">#015</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+<img alt="Contestant" data-alt="Contestant portrait image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFsZc9JtbqChEUiGXj7I9A8E-0bT7hhTK_qQg3OUo8WdxU1SG50dZ5msj-5YqIYDHvQMbK_ZMWjOb30RKVWpQ-OlWTJtRP8QrQP59BHbPK0eIPKxAkHE1dPp0gJvC7ym6E7JPWV6zDVuLeEDdHQkMMg376g2hU5IIDkSW5ylMJzhCZrLyXHazOl7q3KA8p1eaidicBKxZbWz5UVZ5hlmG7wzXWG01pIQKJg3czAog0daKoe5DQLyPn2xHkR3H81FaVN-ax2KuKDR-y"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Isabella Vance</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="text-2xl font-bold text-on-surface font-headline tracking-tight">94.5000</span>
+</td>
+</tr>
+<tr class="bg-white hover:bg-slate-50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold">5</span>
+</div>
+</td>
+<td class="px-8 py-6 font-bold text-on-surface">#003</td>
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+<img alt="Contestant" data-alt="Contestant portrait image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8gwUGnbYmDEwd3Olm7JiFBeSvqeavfuyzdy5tl9OoLWxhZBg4Ze6keckaGP38KFZkpWbT_BRo18Zk4yGzsPSmfs73LstFE3qUmWOMXubTO0uUyAj8j9CJxZyQ-IwfeG8FrRLcRKtcBf_KmpFuh5AtsI7I96kaE862KK6NcxPaPhZV0J5w8fTgvi0SG2Vd13qEnuVsJJlL-E2IxCvBXoEW4LQlZGfGRIvm1MxYreWT10reHnLScdGlWEPOST_qe6xmNRedqWJEiB25"/>
+</div>
+<span class="font-headline font-bold text-lg text-on-surface">Maria Santos</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="text-2xl font-bold text-on-surface font-headline tracking-tight">93.2198</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-[180px] right-0 p-8 bg-gradient-to-t from-[#f4f7ff] via-[#f4f7ff] to-transparent pointer-events-none">
+<div class="max-w-4xl mx-auto flex justify-center pointer-events-auto">
+<button class="bg-primary hover:bg-primary-container text-white px-12 py-5 rounded-full font-headline text-xl font-extrabold shadow-2xl shadow-primary/40 transform active:scale-95 transition-all flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl" data-icon="publish">publish</span>
+                    Publish Results
+                </button>
+</div>
+</div>
+</main>
+<!-- Confirmation Modal Overlay -->
+<div class="fixed inset-0 z-[100] bg-on-surface/60 backdrop-blur-sm flex items-center justify-center p-4">
+<div class="bg-white rounded-[2.5rem] max-w-lg w-full p-10 shadow-2xl relative overflow-hidden">
+<!-- Modal Background Glow -->
+<div class="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative">
+<div class="w-16 h-16 bg-primary-fixed rounded-2xl flex items-center justify-center text-primary mb-8">
+<span class="material-symbols-outlined text-4xl" data-icon="emergency_share" style="font-variation-settings: 'FILL' 1;">emergency_share</span>
+</div>
+<h3 class="text-3xl font-black text-on-surface mb-4 tracking-tight">Ready to Go Live?</h3>
+<p class="text-secondary text-lg leading-relaxed mb-10">
+                    Once published, the MC can begin the reveal on the stage screens. <span class="text-primary font-bold">This cannot be undone</span> and will lock all scores for the current event segment.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex-1 order-2 sm:order-1 px-8 py-4 rounded-full bg-surface-container-highest text-on-surface font-bold hover:bg-surface-container-high transition-colors">
+                        Cancel
+                    </button>
+<button class="flex-1 order-1 sm:order-2 px-8 py-4 rounded-full bg-primary text-white font-bold shadow-lg shadow-primary/30 hover:bg-primary-container transition-all">
+                        Confirm &amp; Publish
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>
