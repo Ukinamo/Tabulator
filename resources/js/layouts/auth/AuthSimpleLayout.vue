@@ -13,7 +13,7 @@ defineProps<{
 const showDemoCredentials = ref(false);
 
 const demoCredentials = [
-    { role: 'Super Admin', email: 'superadmin@tabulation.com', password: 'admin123' },
+    { role: 'Super Admin', email: 'super@admin.com', password: 'admin123' },
     { role: 'Judge', email: 'judge1@tabulation.com', password: 'judge123' },
     { role: 'MC', email: 'mc@tabulation.com', password: 'mc123' },
     { role: 'Organizer', email: 'organizer@tabulation.com', password: 'organizer123' },

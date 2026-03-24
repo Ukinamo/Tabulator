@@ -10,7 +10,8 @@ class EventSeeder extends Seeder
 {
     public function run(): void
     {
-        $superAdmin = User::where('email', 'superadmin@tabulation.com')->firstOrFail();
+        // Resolve by role so the super admin email can change in UserSeeder without breaking this seeder.
+        $superAdmin = User::where('role', User::ROLE_SUPER_ADMIN)->firstOrFail();
 
         Event::firstOrCreate(
             ['name' => 'Buwan ng Wika 2025 Talent Search'],
