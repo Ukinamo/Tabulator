@@ -219,24 +219,24 @@ async function confirmDelete() {
 
         <Teleport to="body">
             <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" @click.self="showModal = false">
-                <div class="neon-glass-panel w-full max-w-md rounded-2xl border border-[#e8e6f5] p-6 shadow-2xl">
-                    <h2 class="mb-4 font-headline text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit Contestant' : 'Add Contestant' }}</h2>
+                <div class="neon-glass-panel w-full max-w-md rounded-2xl border border-border p-6 shadow-2xl">
+                    <h2 class="mb-4 font-headline text-lg font-semibold text-foreground">{{ editing ? 'Edit Contestant' : 'Add Contestant' }}</h2>
                     <p v-if="error" class="mb-3 text-sm text-red-600">{{ error }}</p>
                     <form class="space-y-3" @submit.prevent="save">
                         <div>
-                            <label class="block text-xs text-[#594048]">Number</label>
+                            <label class="block text-xs text-muted-foreground">Number</label>
                             <input v-model="form.contestant_number" type="text" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-[#594048]">Name</label>
+                            <label class="block text-xs text-muted-foreground">Name</label>
                             <input v-model="form.name" type="text" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-[#594048]">Bio</label>
+                            <label class="block text-xs text-muted-foreground">Bio</label>
                             <textarea v-model="form.bio" rows="2" class="ig-input mt-1 w-full rounded-xl"></textarea>
                         </div>
                         <div>
-                            <label class="block text-xs text-[#594048]">Photo</label>
+                            <label class="block text-xs text-muted-foreground">Photo</label>
                             <div class="mt-1 flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <input
@@ -248,7 +248,7 @@ async function confirmDelete() {
                                     />
                                     <button
                                         type="button"
-                                        class="rounded-full border border-[#e0d8e8] bg-white px-3 py-2 text-sm text-[#0e193d] transition hover:bg-[#f3f2ff]"
+                                        class="rounded-full border border-border bg-card px-3 py-2 text-sm text-foreground transition hover:bg-muted"
                                         :disabled="photoUploading"
                                         @click="photoInput?.click()"
                                     >
@@ -257,7 +257,7 @@ async function confirmDelete() {
                                     <button
                                         v-if="form.photo_url"
                                         type="button"
-                                        class="rounded-full border border-[#e0d8e8] bg-[#f3f2ff] px-3 py-2 text-sm text-[#594048] transition hover:bg-[#ebedff]"
+                                        class="rounded-full border border-border bg-muted px-3 py-2 text-sm text-muted-foreground transition hover:bg-accent"
                                         @click="clearPhoto"
                                     >
                                         Remove
@@ -267,17 +267,17 @@ async function confirmDelete() {
                                     v-if="form.photo_url"
                                     :src="fullPhotoUrl(form.photo_url)"
                                     alt="Contestant photo"
-                                    class="h-24 w-24 rounded-lg border border-[#e8e6f5] object-cover"
+                                    class="h-24 w-24 rounded-lg border border-border object-cover"
                                     @error="hideBrokenPhoto"
                                 />
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
                             <input v-model="form.is_active" type="checkbox" class="rounded border-[#e0d8e8] text-[#b40066] focus:ring-[#b40066]" />
-                            <label class="text-sm text-[#0e193d]">Active</label>
+                            <label class="text-sm text-foreground">Active</label>
                         </div>
                         <div class="flex justify-end gap-2 pt-4">
-                            <button type="button" class="rounded-full border border-[#e0d8e8] bg-white px-4 py-2 text-sm text-[#0e193d] hover:bg-[#f3f2ff]" @click="showModal = false">Cancel</button>
+                            <button type="button" class="rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground hover:bg-muted" @click="showModal = false">Cancel</button>
                             <button type="submit" class="neon-btn-primary px-4 py-2 text-sm disabled:opacity-60" :disabled="submitLoading">
                                 {{ submitLoading ? 'Saving…' : (editing ? 'Update' : 'Add') }}
                             </button>

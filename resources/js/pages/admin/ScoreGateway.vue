@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { apiHeaders } from '@/lib/api';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -9,6 +9,8 @@ import type { BreadcrumbItem } from '@/types';
 
 const toast = useToast();
 const showDeliverModal = ref(false);
+const showClearModal = ref(false);
+const showRetrieveModal = ref(false);
 
 type Criterion = { id: number; name: string; max_score: number; description: string | null };
 type Category = {
@@ -33,6 +35,8 @@ type EventPayload = {
 const props = defineProps<{ event: EventPayload }>();
 
 const deliverLoading = ref(false);
+const clearLoading = ref(false);
+const retrieveLoading = ref(false);
 
 const breadcrumbs = computed<BreadcrumbItem[]>(() => [
     { title: 'Admin', href: '/admin/dashboard' },
@@ -71,13 +75,68 @@ async function confirmDeliver() {
         });
         const json = await r.json().catch(() => ({}));
         if (r.ok) {
-            toast.success('Scoring opened for judges.');
+            toast.success((json as { message?: string }).message || 'Scoring opened for judges.');
+            router.reload({ only: ['event'] });
         } else {
-            toast.error(json.message || 'Could not start scoring.');
+            toast.error((json as { message?: string }).message || 'Could not start scoring.');
         }
     } finally {
         deliverLoading.value = false;
         showDeliverModal.value = false;
+    }
+}
+
+function requestClear() {
+    if (!props.event) return;
+    showClearModal.value = true;
+}
+
+function requestRetrieve() {
+    if (!props.event) return;
+    showRetrieveModal.value = true;
+}
+
+async function confirmClear() {
+    if (!props.event) return;
+    clearLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/admin/events/${props.event.id}/clear-gateway`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'POST', contentType: false }),
+        });
+        const json = await r.json().catch(() => ({}));
+        if (r.ok) {
+            toast.success((json as { message?: string }).message || 'Score Gateway cleared.');
+            router.reload({ only: ['event'] });
+        } else {
+            toast.error((json as { message?: string }).message || 'Could not clear gateway.');
+        }
+    } finally {
+        clearLoading.value = false;
+        showClearModal.value = false;
+    }
+}
+
+async function confirmRetrieve() {
+    if (!props.event) return;
+    retrieveLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/admin/events/${props.event.id}/retrieve-scoring`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'POST', contentType: false }),
+        });
+        const json = await r.json().catch(() => ({}));
+        if (r.ok) {
+            toast.success((json as { message?: string }).message || 'Scoring retrieved from judges.');
+            router.reload({ only: ['event'] });
+        } else {
+            toast.error((json as { message?: string }).message || 'Could not retrieve scoring from judges.');
+        }
+    } finally {
+        retrieveLoading.value = false;
+        showRetrieveModal.value = false;
     }
 }
 </script>
@@ -96,15 +155,35 @@ async function confirmDeliver() {
                         No event in progress. Ask the organizer to submit a scoring system.
                     </p>
                 </div>
-                <button
+                <div
                     v-if="event"
-                    type="button"
-                    class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60"
-                    :disabled="deliverLoading"
-                    @click="requestDeliver"
+                    class="flex flex-shrink-0 flex-wrap items-center justify-end gap-3"
                 >
-                    {{ deliverLoading ? 'Delivering…' : 'Deliver to judges' }}
-                </button>
+                    <button
+                        type="button"
+                        class="rounded-full border border-[#e0bec7] bg-white px-5 py-2.5 text-sm font-semibold text-[#594048] shadow-sm transition hover:bg-[#f3f2ff] disabled:opacity-60 dark:border-white/15 dark:bg-[#0e193d]/80 dark:text-slate-200 dark:hover:bg-white/10"
+                        :disabled="clearLoading || deliverLoading || retrieveLoading"
+                        @click="requestClear"
+                    >
+                        {{ clearLoading ? 'Clearing…' : 'Clear all' }}
+                    </button>
+                    <button
+                        type="button"
+                        class="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted disabled:opacity-60"
+                        :disabled="deliverLoading || clearLoading || retrieveLoading || event?.status !== 'scoring'"
+                        @click="requestRetrieve"
+                    >
+                        {{ retrieveLoading ? 'Retrieving…' : 'Retrieve from judges' }}
+                    </button>
+                    <button
+                        type="button"
+                        class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60"
+                        :disabled="deliverLoading || clearLoading || retrieveLoading"
+                        @click="requestDeliver"
+                    >
+                        {{ deliverLoading ? 'Delivering…' : 'Deliver to judges' }}
+                    </button>
+                </div>
             </div>
 
             <div v-if="event" class="grid gap-4 md:grid-cols-2">
@@ -157,33 +236,33 @@ async function confirmDeliver() {
                 </section>
             </div>
 
-            <section v-if="event" class="neon-card border border-[#e8e6f5] p-5">
-                <h2 class="mb-3 text-sm font-semibold text-[#0e193d]">Scoring system (read-only)</h2>
+            <section v-if="event" class="neon-card border border-border p-5">
+                <h2 class="mb-3 text-sm font-semibold text-foreground">Scoring system (read-only)</h2>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div
                         v-for="cat in event.categories"
                         :key="cat.id"
-                        class="neon-card-alt rounded-2xl border border-[#e4e7ff] p-4"
+                        class="neon-card-alt rounded-2xl border border-border p-4"
                     >
                         <div class="flex items-center justify-between">
-                            <h3 class="font-medium text-[#0e193d]">{{ cat.name }}</h3>
-                            <span class="rounded-full bg-[#4a5e86]/12 px-3 py-1 text-xs font-medium text-[#4a5e86]">
+                            <h3 class="font-medium text-foreground">{{ cat.name }}</h3>
+                            <span class="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
                                 {{ cat.weight }}%
                             </span>
                         </div>
-                        <p v-if="cat.description" class="mt-1 text-xs text-[#594048]">
+                        <p v-if="cat.description" class="mt-1 text-xs text-muted-foreground">
                             {{ cat.description }}
                         </p>
-                        <ul class="mt-3 space-y-1.5 text-xs text-[#0e193d]">
+                        <ul class="mt-3 space-y-1.5 text-xs text-foreground">
                             <li
                                 v-for="cr in cat.criteria"
                                 :key="cr.id"
-                                class="flex justify-between rounded-lg bg-white/80 px-3 py-1.5 shadow-sm"
+                                class="flex justify-between rounded-lg bg-input px-3 py-1.5 shadow-sm"
                             >
                                 <span>{{ cr.name }}</span>
-                                <span class="text-[#594048]">max {{ cr.max_score }}</span>
+                                <span class="text-muted-foreground">max {{ cr.max_score }}</span>
                             </li>
-                            <li v-if="cat.criteria.length === 0" class="text-[#594048]">
+                            <li v-if="cat.criteria.length === 0" class="text-muted-foreground">
                                 No criteria defined.
                             </li>
                         </ul>
@@ -202,6 +281,30 @@ async function confirmDeliver() {
             :loading="deliverLoading"
             @confirm="confirmDeliver"
             @cancel="showDeliverModal = false"
+        />
+
+        <DecisionModal
+            :open="showClearModal"
+            title="Clear Score Gateway?"
+            message="This removes the event from the Score Gateway and returns it to the organizer for edits. If scoring was already open for judges, all judge scores and computed results for this event will be permanently removed."
+            confirm-label="Clear all"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="clearLoading"
+            @confirm="confirmClear"
+            @cancel="showClearModal = false"
+        />
+
+        <DecisionModal
+            :open="showRetrieveModal"
+            title="Retrieve scoring from judges?"
+            message="This will pull back the delivered scoring from judges and clear all judge scores/results for this event. The event will return to admin review."
+            confirm-label="Retrieve"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="retrieveLoading"
+            @confirm="confirmRetrieve"
+            @cancel="showRetrieveModal = false"
         />
     </AppLayout>
 </template>

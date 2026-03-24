@@ -39,4 +39,31 @@ class ProgressController extends Controller
             'status' => $event->status,
         ], 'Scoring system submitted to admins.');
     }
+
+    /**
+     * Organizer retrieves a previously submitted scoring system from admin review.
+     * This moves the event back to "setup".
+     */
+    public function retrieveScoring(Request $request, Event $event)
+    {
+        if ($event->status === 'published') {
+            return $this->error('Published events cannot be changed.', 422);
+        }
+
+        if ($event->status === 'scoring') {
+            return $this->error('Scoring is already open for judges and can no longer be retrieved by organizer.', 422);
+        }
+
+        if ($event->status !== 'ongoing') {
+            return $this->error('This scoring system is not currently submitted to admins.', 422);
+        }
+
+        $event->update(['status' => 'setup']);
+
+        return $this->respond([
+            'id' => $event->id,
+            'name' => $event->name,
+            'status' => $event->status,
+        ], 'Scoring system retrieved from admin review.');
+    }
 }

@@ -11,6 +11,10 @@ defineProps<{
 }>();
 
 const showDemoCredentials = ref(false);
+const demoAccessGranted = ref(false);
+const demoPasswordInput = ref('');
+const demoPasswordError = ref('');
+const SUPER_ADMIN_DEMO_PASSWORD = 'admin123';
 
 const demoCredentials = [
     { role: 'Super Admin', email: 'superadmin@tabulation.com', password: 'admin123' },
@@ -18,6 +22,32 @@ const demoCredentials = [
     { role: 'MC', email: 'mc@tabulation.com', password: 'mc123' },
     { role: 'Organizer', email: 'organizer@tabulation.com', password: 'organizer123' },
 ];
+
+function handleDemoCredentialsToggle() {
+    if (showDemoCredentials.value) {
+        showDemoCredentials.value = false;
+        demoAccessGranted.value = false;
+        demoPasswordInput.value = '';
+        demoPasswordError.value = '';
+        return;
+    }
+
+    showDemoCredentials.value = true;
+    demoAccessGranted.value = false;
+    demoPasswordInput.value = '';
+    demoPasswordError.value = '';
+}
+
+function unlockDemoCredentials() {
+    if (demoPasswordInput.value === SUPER_ADMIN_DEMO_PASSWORD) {
+        demoAccessGranted.value = true;
+        demoPasswordError.value = '';
+        return;
+    }
+
+    demoAccessGranted.value = false;
+    demoPasswordError.value = 'Invalid admin password.';
+}
 </script>
 
 <template>
@@ -63,23 +93,56 @@ const demoCredentials = [
                     <button
                         type="button"
                         class="flex w-full items-center justify-between text-left text-sm font-medium text-white"
-                        @click="showDemoCredentials = !showDemoCredentials"
+                        :aria-expanded="showDemoCredentials"
+                        aria-controls="demo-credentials-panel"
+                        @click="handleDemoCredentialsToggle"
                     >
                         <span>Demo credentials for testers</span>
                         <component :is="showDemoCredentials ? ChevronUp : ChevronDown" class="h-4 w-4 shrink-0 text-white/70" />
                     </button>
                     <div
+                        id="demo-credentials-panel"
                         v-show="showDemoCredentials"
                         class="mt-3 space-y-2 border-t border-white/20 pt-3 text-xs text-white/90"
                     >
-                        <p
-                            v-for="cred in demoCredentials"
-                            :key="cred.email"
-                            class="font-mono leading-relaxed"
+                        <form
+                            v-if="!demoAccessGranted"
+                            class="space-y-2"
+                            @submit.prevent="unlockDemoCredentials"
                         >
-                            <span class="font-semibold text-[#ffd9e3]">{{ cred.role }}:</span>
-                            {{ cred.email }} / {{ cred.password }}
-                        </p>
+                            <label class="block text-[11px] font-semibold uppercase tracking-wide text-white/85">
+                                Enter Super Admin password
+                            </label>
+                            <div class="flex items-center gap-2">
+                                <input
+                                    v-model="demoPasswordInput"
+                                    type="password"
+                                    autocomplete="off"
+                                    class="w-full rounded-lg border border-white/25 bg-white/10 px-2.5 py-2 text-xs text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/25"
+                                    placeholder="Admin password required"
+                                >
+                                <button
+                                    type="submit"
+                                    class="rounded-lg border border-white/30 bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/20"
+                                >
+                                    Unlock
+                                </button>
+                            </div>
+                            <p v-if="demoPasswordError" class="text-[11px] font-medium text-[#ffd166]">
+                                {{ demoPasswordError }}
+                            </p>
+                        </form>
+
+                        <template v-else>
+                            <p
+                                v-for="cred in demoCredentials"
+                                :key="cred.email"
+                                class="font-mono leading-relaxed"
+                            >
+                                <span class="font-semibold text-[#ffd9e3]">{{ cred.role }}:</span>
+                                {{ cred.email }} / {{ cred.password }}
+                            </p>
+                        </template>
                     </div>
                 </div>
             </div>

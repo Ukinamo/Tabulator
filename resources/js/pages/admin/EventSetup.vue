@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+import TabulatorDatePicker from '@/components/TabulatorDatePicker.vue';
 import { apiHeaders } from '@/lib/api';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useToast } from '@/composables/useToast';
@@ -94,10 +95,13 @@ async function save() {
                             <label class="block text-xs text-[#594048]">Venue</label>
                             <input v-model="form.venue" type="text" class="ig-input mt-1 w-full rounded-xl" />
                         </div>
-                        <div>
-                            <label class="block text-xs text-[#594048]">Event date</label>
-                            <input v-model="form.event_date" type="date" required class="ig-input mt-1 w-full rounded-xl" />
-                        </div>
+                        <TabulatorDatePicker
+                            id="event_date"
+                            v-model="form.event_date"
+                            label="Event date"
+                            name="event_date"
+                            required
+                        />
                         <p v-if="message" class="text-sm" :class="message === 'Saved.' ? 'font-medium text-[#006a3d]' : 'text-red-600'">{{ message }}</p>
                         <button type="submit" class="neon-btn-primary px-6 py-2 text-sm disabled:opacity-60" :disabled="submitLoading">
                             {{ submitLoading ? 'Saving…' : 'Save' }}

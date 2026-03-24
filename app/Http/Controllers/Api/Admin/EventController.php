@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Result;
 use App\Models\Score;
 use App\Services\ResultPublishingService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class EventController extends Controller
@@ -47,7 +49,7 @@ class EventController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'venue' => ['nullable', 'string', 'max:255'],
-            'event_date' => ['required', 'date'],
+            'event_date' => ['required', 'date', 'after_or_equal:today'],
             'status' => ['required', 'string', Rule::in(['setup', 'ongoing', 'scoring', 'published'])],
         ]);
 
@@ -87,7 +89,7 @@ class EventController extends Controller
             'name' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'venue' => ['nullable', 'string', 'max:255'],
-            'event_date' => ['sometimes', 'date'],
+            'event_date' => ['sometimes', 'date', 'after_or_equal:today'],
             'status' => ['sometimes', Rule::in(['setup', 'ongoing', 'scoring', 'published'])],
         ]);
 
@@ -166,5 +168,69 @@ class EventController extends Controller
             'name' => $event->name,
             'status' => $event->status,
         ], 'Scoring opened for judges.');
+    }
+
+    /**
+     * Retrieve scoring from judges and return event to admin review.
+     * Clears all judge scores/results to avoid stale data after retrieval.
+     */
+    public function retrieveScoring(Request $request, Event $event)
+    {
+        if ($event->status === 'published') {
+            return $this->error('Published events cannot be changed.', 422);
+        }
+
+        if ($event->status !== 'scoring') {
+            return $this->error('Scoring is not currently open for judges.', 422);
+        }
+
+        DB::transaction(function () use ($event): void {
+            Score::where('event_id', $event->id)->delete();
+            Result::where('event_id', $event->id)->delete();
+            $event->update(['status' => 'ongoing']);
+        });
+
+        $event->refresh();
+
+        return $this->respond([
+            'id' => $event->id,
+            'name' => $event->name,
+            'status' => $event->status,
+        ], 'Scoring retrieved from judges.');
+    }
+
+    /**
+     * Remove the event from the Score Gateway: return it to organizer setup.
+     * If judges had already been given access, all scores and computed results for the event are cleared.
+     */
+    public function clearGateway(Request $request, Event $event)
+    {
+        if ($event->status === 'published') {
+            return $this->error('Published events cannot be cleared.', 422);
+        }
+
+        if (! in_array($event->status, ['ongoing', 'scoring'], true)) {
+            return $this->error('This event is not pending on the Score Gateway.', 422);
+        }
+
+        $wasScoring = $event->status === 'scoring';
+
+        DB::transaction(function () use ($event, $wasScoring): void {
+            if ($wasScoring) {
+                Score::where('event_id', $event->id)->delete();
+            }
+
+            Result::where('event_id', $event->id)->delete();
+
+            $event->update(['status' => 'setup']);
+        });
+
+        $event->refresh();
+
+        return $this->respond([
+            'id' => $event->id,
+            'name' => $event->name,
+            'status' => $event->status,
+        ], 'Event returned to organizer. Score Gateway data cleared.');
     }
 }

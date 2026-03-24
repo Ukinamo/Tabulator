@@ -543,13 +543,13 @@ const draftCount = computed(() => {
             <Dialog :open="showPasswordModal" @update:open="(v: boolean) => !v && cancelPasswordModal()">
                 <DialogContent
                     :show-close-button="false"
-                    class="max-w-[380px] rounded-3xl border border-[#e8e6f5] p-0 shadow-2xl dark:border-[#2a3558] dark:bg-[#0e193d]"
+                    class="max-w-[380px] rounded-3xl border border-border bg-card p-0 text-card-foreground shadow-2xl"
                     @pointer-down-outside="cancelPasswordModal"
                     @escape-key-down="cancelPasswordModal"
                 >
                     <div class="p-6">
-                        <h3 class="text-center font-headline text-lg font-semibold text-[#0e193d] dark:text-white">Unlock Contestant</h3>
-                        <p class="mt-2 text-center text-sm text-[#594048] dark:text-slate-400">
+                        <h3 class="text-center font-headline text-lg font-semibold text-foreground">Unlock Contestant</h3>
+                        <p class="mt-2 text-center text-sm text-muted-foreground">
                             This contestant's scores are locked. Enter the super-admin password to unlock and edit.
                         </p>
                         <div class="mt-4">
@@ -563,10 +563,10 @@ const draftCount = computed(() => {
                             <p v-if="passwordError" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ passwordError }}</p>
                         </div>
                     </div>
-                    <div class="flex flex-col border-t border-[#e8e6f5] dark:border-slate-700">
+                    <div class="flex flex-col border-t border-border">
                         <button
                             type="button"
-                            class="min-h-[48px] border-b border-[#e8e6f5] text-sm font-semibold text-[#b40066] transition active:opacity-80 dark:border-slate-700 dark:text-[#da2180]"
+                            class="min-h-[48px] border-b border-border text-sm font-semibold text-[#b40066] transition active:opacity-80"
                             :disabled="passwordLoading"
                             @click="confirmUnlock"
                         >
@@ -578,7 +578,7 @@ const draftCount = computed(() => {
                         </button>
                         <button
                             type="button"
-                            class="min-h-[48px] text-sm font-semibold text-[#594048] transition active:opacity-80 dark:text-slate-400"
+                            class="min-h-[48px] text-sm font-semibold text-muted-foreground transition active:opacity-80"
                             :disabled="passwordLoading"
                             @click="cancelPasswordModal"
                         >

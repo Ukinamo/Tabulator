@@ -19,10 +19,10 @@ const { isMobile, state, toggleSidebar } = useSidebar()
     variant="ghost"
     size="icon"
     :class="cn('h-7 w-7', props.class)"
+    aria-label="Toggle sidebar"
     @click="toggleSidebar"
   >
     <PanelLeftOpen v-if="isMobile || state === 'collapsed'" />
     <PanelLeftClose v-else />
-    <span class="sr-only">Toggle sidebar</span>
   </Button>
 </template>

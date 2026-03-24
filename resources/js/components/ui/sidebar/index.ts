@@ -36,7 +36,7 @@ export { default as SidebarTrigger } from "./SidebarTrigger.vue"
 export { useSidebar } from "./utils"
 
 export const sidebarMenuButtonVariants = cva(
-  "peer/menu-button mx-1 flex w-[calc(100%-0.5rem)] items-center gap-3 overflow-hidden rounded-full px-4 py-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:mx-0 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! group-data-[collapsible=icon]:rounded-lg! [&>span:last-child]:truncate [&>svg]:size-[1.15rem] [&>svg]:shrink-0",
+  "peer/menu-button mx-1 flex w-[calc(100%-0.5rem)] min-h-8 items-center gap-3 overflow-hidden rounded-full px-4 py-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-semibold data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:mx-0 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-2! group-data-[collapsible=icon]:rounded-lg! group-data-[collapsible=icon]:[&>span]:hidden [&>span:last-child]:min-w-0 [&>span:last-child]:flex-1 [&>span:last-child]:truncate [&>svg]:size-[1.15rem] [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -47,7 +47,7 @@ export const sidebarMenuButtonVariants = cva(
       size: {
         default: "h-8 text-sm",
         sm: "h-7 text-xs",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
+        lg: "h-12 text-sm group-data-[collapsible=icon]:h-8! group-data-[collapsible=icon]:p-0!",
       },
     },
     defaultVariants: {

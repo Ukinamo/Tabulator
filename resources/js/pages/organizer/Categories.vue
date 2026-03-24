@@ -19,7 +19,7 @@ type Category = {
     criteria_count: number;
 };
 
-type Props = { event: { id: number; name: string } | null };
+type Props = { event: { id: number; name: string; status: string } | null };
 
 const props = defineProps<Props>();
 
@@ -38,6 +38,9 @@ const showDeleteModal = ref(false);
 const deleteLoading = ref(false);
 const deliverLoading = ref(false);
 const showDeliverModal = ref(false);
+const retrieveLoading = ref(false);
+const showRetrieveModal = ref(false);
+const eventStatus = ref<string | null>(props.event?.status ?? null);
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Organizer', href: '/organizer/dashboard' },
@@ -84,12 +87,40 @@ async function confirmDeliver() {
         const json = await r.json().catch(() => ({}));
         if (r.ok) {
             toast.success('Scoring system submitted to admins.');
+            eventStatus.value = (json.data?.status as string | undefined) ?? 'ongoing';
         } else {
             toast.error(json.message || 'Could not submit scoring system.');
         }
     } finally {
         deliverLoading.value = false;
         showDeliverModal.value = false;
+    }
+}
+
+function requestRetrieve() {
+    if (!props.event) return;
+    showRetrieveModal.value = true;
+}
+
+async function confirmRetrieve() {
+    if (!props.event) return;
+    retrieveLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/organizer/events/${props.event.id}/retrieve-scoring`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'POST', contentType: false }),
+        });
+        const json = await r.json().catch(() => ({}));
+        if (r.ok) {
+            toast.success(json.message || 'Scoring system retrieved from admin review.');
+            eventStatus.value = (json.data?.status as string | undefined) ?? 'setup';
+        } else {
+            toast.error(json.message || 'Could not retrieve submitted scoring system.');
+        }
+    } finally {
+        retrieveLoading.value = false;
+        showRetrieveModal.value = false;
     }
 }
 
@@ -170,6 +201,10 @@ async function confirmDelete() {
     }
 }
 
+watch(() => props.event, (event) => {
+    eventStatus.value = event?.status ?? null;
+}, { immediate: true });
+
 watch(() => props.event?.id, (id) => { if (id) fetchCategories(); }, { immediate: true });
 onMounted(() => { if (props.event) fetchCategories(); });
 </script>
@@ -194,10 +229,18 @@ onMounted(() => { if (props.event) fetchCategories(); });
                     <button
                         type="button"
                         class="rounded-xl bg-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 shadow-[0_0_8px_rgba(15,23,42,0.4)] transition hover:bg-slate-600 disabled:opacity-60"
-                        :disabled="deliverLoading || categories.length === 0 || totalWeight !== 100"
+                        :disabled="deliverLoading || retrieveLoading || categories.length === 0 || totalWeight !== 100 || eventStatus === 'ongoing' || eventStatus === 'scoring'"
                         @click="requestDeliver"
                     >
                         {{ deliverLoading ? 'Submitting…' : 'Submit scoring to admins' }}
+                    </button>
+                    <button
+                        type="button"
+                        class="rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-muted disabled:opacity-60"
+                        :disabled="deliverLoading || retrieveLoading || eventStatus !== 'ongoing'"
+                        @click="requestRetrieve"
+                    >
+                        {{ retrieveLoading ? 'Retrieving…' : 'Retrieve scoring' }}
                     </button>
                     <button
                         type="button"
@@ -245,24 +288,24 @@ onMounted(() => { if (props.event) fetchCategories(); });
                     class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
                     @click.self="showModal = false"
                 >
-                    <div class="w-full max-w-md rounded-3xl border border-[#e0bec7]/30 bg-white p-6 shadow-[0_24px_48px_rgba(14,25,61,0.1)]">
-                        <h2 class="mb-4 text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit category' : 'Add category' }}</h2>
-                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/20 px-3 py-2 text-sm text-red-300">{{ error }}</p>
+                    <div class="neon-glass-panel w-full max-w-md rounded-3xl border border-border p-6 shadow-2xl">
+                        <h2 class="mb-4 text-lg font-semibold text-foreground">{{ editing ? 'Edit category' : 'Add category' }}</h2>
+                        <p v-if="error" class="mb-3 rounded-xl bg-red-500/15 px-3 py-2 text-sm text-red-700 dark:text-red-300">{{ error }}</p>
                         <form class="space-y-4" @submit.prevent="save">
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Name</label>
+                                <label class="mb-1.5 block text-xs font-medium text-muted-foreground">Name</label>
                                 <input v-model="form.name" type="text" required class="ig-input w-full" placeholder="e.g. Talent Portion" />
                             </div>
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Weight (%)</label>
+                                <label class="mb-1.5 block text-xs font-medium text-muted-foreground">Weight (%)</label>
                                 <input v-model.number="form.weight" type="number" min="0" max="100" step="0.01" required class="ig-input w-full" />
                             </div>
                             <div>
-                                <label class="mb-1.5 block text-xs font-medium text-slate-400">Description (optional)</label>
+                                <label class="mb-1.5 block text-xs font-medium text-muted-foreground">Description (optional)</label>
                                 <textarea v-model="form.description" rows="2" class="ig-input w-full" placeholder="Brief description" />
                             </div>
                             <div class="flex justify-end gap-3 pt-2">
-                                <button type="button" class="rounded-full bg-[#4a5e86]/10 px-4 py-2.5 text-sm font-medium text-[#4a5e86] transition hover:bg-[#4a5e86]/18" @click="showModal = false">Cancel</button>
+                                <button type="button" class="rounded-full border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted" @click="showModal = false">Cancel</button>
                                 <button type="submit" class="neon-btn-primary rounded-full px-5 py-2.5 text-sm disabled:opacity-60" :disabled="submitLoading">
                                     {{ submitLoading ? 'Saving…' : (editing ? 'Update' : 'Add') }}
                                 </button>
@@ -283,6 +326,18 @@ onMounted(() => { if (props.event) fetchCategories(); });
             :loading="deliverLoading"
             @confirm="confirmDeliver"
             @cancel="showDeliverModal = false"
+        />
+
+        <DecisionModal
+            :open="showRetrieveModal"
+            title="Retrieve submitted scoring?"
+            message="This will pull back the scoring system from admin review and return the event to setup so you can edit categories/weights."
+            confirm-label="Retrieve"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="retrieveLoading"
+            @confirm="confirmRetrieve"
+            @cancel="showRetrieveModal = false"
         />
 
         <DecisionModal

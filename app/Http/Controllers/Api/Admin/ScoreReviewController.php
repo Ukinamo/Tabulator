@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Result;
 use App\Models\Score;
+use App\Services\ResultPublishingService;
 use App\Services\ScoreService;
 use Illuminate\Http\Request;
 
@@ -12,6 +14,7 @@ class ScoreReviewController extends Controller
 {
     public function __construct(
         protected ScoreService $scoreService,
+        protected ResultPublishingService $publishing,
     ) {
     }
 
@@ -102,9 +105,15 @@ class ScoreReviewController extends Controller
                 'approved_at' => now(),
             ]);
 
-        $this->scoreService->recalculate($event);
+        try {
+            // Keep Score Review behavior aligned with MC expectation:
+            // once admin approves all, results become available to MC.
+            $this->publishing->publish($event, $request->user()->id);
+        } catch (\RuntimeException $e) {
+            return $this->error($e->getMessage(), 422);
+        }
 
-        return $this->respond(null, 'All scores approved.');
+        return $this->respond(null, 'All scores approved and published to MC.');
     }
 
     /**
@@ -123,6 +132,33 @@ class ScoreReviewController extends Controller
         $this->scoreService->recalculate($event);
 
         return $this->respond(null, 'All scores deleted.');
+    }
+
+    /**
+     * Retrieve published results from MC by unpublishing all event results.
+     */
+    public function retrieveFromMc(Request $request, Event $event)
+    {
+        if ($event->status !== 'published') {
+            return $this->error('Results are not yet published to MC.', 422);
+        }
+
+        Result::where('event_id', $event->id)->update([
+            'is_published' => false,
+            'is_revealed' => false,
+            'reveal_order' => null,
+            'published_at' => null,
+            'revealed_at' => null,
+        ]);
+
+        $event->update(['status' => 'scoring']);
+        $event->refresh();
+
+        return $this->respond([
+            'id' => $event->id,
+            'name' => $event->name,
+            'status' => $event->status,
+        ], 'Published scoring retrieved from MC.');
     }
 
     /**

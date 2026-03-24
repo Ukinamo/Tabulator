@@ -114,7 +114,9 @@
 
     .neon-glass-panel {
         backdrop-filter: blur(12px);
-        background-color: rgba(255, 255, 255, 0.92);
+        background-color: color-mix(in oklab, var(--card) 92%, transparent);
+        color: var(--card-foreground);
+        border-color: var(--border);
     }
 
     .neon-theatrical-bg {
@@ -194,16 +196,28 @@
     --radius-modal: 1.5rem;
     --shadow-soft: 0 2px 8px rgb(0 0 0 / 0.06);
     --shadow-card: 0 4px 20px rgb(0 0 0 / 0.08);
-    --sidebar-background: #0e193d;
-    --sidebar-foreground: #ebedff;
+    --sidebar-background: #ffffff;
+    --sidebar-foreground: #1f2a44;
     --sidebar-primary: #b40066;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: rgba(255, 255, 255, 0.1);
-    --sidebar-accent-foreground: #ffffff;
-    --sidebar-accent-foreground-inactive: #94a3b8;
-    --sidebar-border: rgba(255, 255, 255, 0.08);
+    --sidebar-accent: rgba(180, 0, 102, 0.08);
+    --sidebar-accent-foreground: #0e193d;
+    --sidebar-accent-foreground-inactive: #4b5563;
+    --sidebar-border: rgba(141, 111, 120, 0.2);
     --sidebar-ring: #da2180;
-    --sidebar: #0e193d;
+    --sidebar: #ffffff;
+
+    /* Theme-aware sidebar states */
+    --tab-sidebar-item-inactive: #4b5563;
+    --tab-sidebar-item-hover-bg: rgba(180, 0, 102, 0.08);
+    --tab-sidebar-item-hover-text: #0e193d;
+
+    /* Neon utilities in light mode */
+    --color-neon-bg: #faf8ff;
+    --color-neon-on: #0e193d;
+    --color-neon-muted: #594048;
+    --color-neon-card: #ffffff;
+    --color-neon-card-alt: #f3f2ff;
 }
 
 .dark {
@@ -240,6 +254,17 @@
     --sidebar-border: rgba(255, 255, 255, 0.08);
     --sidebar-ring: #da2180;
     --sidebar: #0e193d;
+
+    --tab-sidebar-item-inactive: #94a3b8;
+    --tab-sidebar-item-hover-bg: rgba(255, 255, 255, 0.1);
+    --tab-sidebar-item-hover-text: #ffffff;
+
+    /* Neon utilities in dark mode */
+    --color-neon-bg: #0b1020;
+    --color-neon-on: #e7ecff;
+    --color-neon-muted: #a8b1ce;
+    --color-neon-card: #121a31;
+    --color-neon-card-alt: #161f3a;
 }
 
 @layer base {
@@ -249,6 +274,122 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+/* @vuepic/vue-datepicker — Tabulator brand (see TabulatorDatePicker.vue) */
+.tabulator-datepicker {
+    --dp-font-family: var(--font-sans, inherit);
+    --dp-border-radius: 0.75rem;
+    --dp-cell-border-radius: 9999px;
+    --dp-primary-color: #b40066;
+    --dp-primary-disabled-color: rgb(180 0 102 / 0.45);
+    --dp-primary-text-color: #fff;
+    --dp-secondary-color: #f3f2ff;
+    --dp-border-color: rgb(141 111 120 / 0.25);
+    --dp-menu-border-width: 1px;
+    --dp-font-size: 0.875rem;
+    --dp-preview-font-size: 0.875rem;
+    --dp-time-font-size: 0.875rem;
+    --dp-action-row-padding: 0.625rem 0.75rem;
+    --dp-action-buttons-padding: 0.5rem;
+    --dp-action-button-height: 2.25rem;
+    --dp-row-margin: 0.5rem 0;
+    --dp-cell-size: 2.35rem;
+    --dp-month-year-row-height: 2.5rem;
+    --dp-month-year-row-button-size: 1.75rem;
+    --dp-button-height: 2.25rem;
+}
+
+.tabulator-datepicker .dp__input_wrap .dp__input {
+    border-radius: 0.75rem !important;
+    border: 1px solid rgb(141 111 120 / 0.25) !important;
+    background-color: #f3f2ff !important;
+    min-height: 2.75rem;
+    color: #0e193d;
+}
+
+.tabulator-datepicker .dp__input_wrap .dp__input:focus {
+    border-color: rgb(180 0 102 / 0.55) !important;
+    box-shadow: 0 0 0 3px rgb(180 0 102 / 0.15);
+    background-color: #fff !important;
+    outline: none;
+}
+
+.tabulator-datepicker .dp__menu {
+    border-radius: 1rem !important;
+    box-shadow: 0 24px 48px rgb(14 25 61 / 0.12) !important;
+    border: 1px solid #e8e6f5 !important;
+}
+
+.tabulator-datepicker .dp__action_row {
+    border-top: 1px solid #e8e6f5;
+}
+
+.tabulator-datepicker .dp__action_buttons .dp__action_button {
+    color: #4a5e86;
+    font-weight: 600;
+}
+
+.tabulator-datepicker .dp__action_buttons .dp__action_button:hover {
+    color: #b40066;
+    background: rgb(180 0 102 / 0.08);
+    border-radius: 0.5rem;
+}
+
+.tabulator-datepicker .tabulator-dp-day--today:not(.dp__active_date) {
+    box-shadow: inset 0 0 0 2px rgb(180 0 102 / 0.4);
+    color: #b40066;
+    font-weight: 600;
+}
+
+.dark .tabulator-datepicker {
+    --dp-background-color: #121a31;
+    --dp-text-color: #e7ecff;
+    --dp-hover-color: rgba(255, 255, 255, 0.08);
+    --dp-hover-text-color: #ffffff;
+    --dp-border-color: rgba(255, 255, 255, 0.12);
+    --dp-menu-border-color: rgba(255, 255, 255, 0.12);
+    --dp-secondary-color: #161f3a;
+}
+
+.dark .tabulator-datepicker .dp__input_wrap .dp__input {
+    background-color: #161f3a !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: #e7ecff !important;
+}
+
+.dark .tabulator-datepicker .dp__input_wrap .dp__input:focus {
+    background-color: #1a2546 !important;
+}
+
+.dark .tabulator-datepicker .dp__menu {
+    background: #121a31 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 24px 48px rgb(0 0 0 / 0.45) !important;
+}
+
+.dark .tabulator-datepicker .dp__action_row {
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark .tabulator-datepicker .dp__action_buttons .dp__action_button {
+    color: #c5d0f5;
+}
+
+.dark .tabulator-datepicker .dp__action_buttons .dp__action_button:hover {
+    color: #ffffff;
+    background: rgba(180, 0, 102, 0.2);
 }
 
 /* Instagram-style utilities */
@@ -283,15 +424,61 @@
     background-color: var(--tab-primary) !important;
     color: #ffffff !important;
     border-radius: 9999px !important;
-    box-shadow: 0 0 15px rgba(180, 0, 102, 0.4);
+    box-shadow: 0 0 10px rgba(180, 0, 102, 0.28);
     font-weight: 600;
     letter-spacing: 0.02em;
 }
 [data-sidebar="menu-button"]:not([data-active="true"]) {
-    color: #94a3b8;
+    color: var(--tab-sidebar-item-inactive);
     border-radius: 9999px;
 }
 [data-sidebar="menu-button"]:not([data-active="true"]):hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    background-color: var(--tab-sidebar-item-hover-bg);
+    color: var(--tab-sidebar-item-hover-text);
+}
+
+/* Global hardcoded-color rescue for dark mode (applies across pages) */
+.dark .text-\[\#0e193d\] { color: #e7ecff !important; }
+.dark .text-\[\#594048\] { color: #a8b1ce !important; }
+.dark .text-\[\#4a5e86\] { color: #b7c3eb !important; }
+.dark .bg-\[\#ffffff\] { background-color: #121a31 !important; }
+.dark .bg-\[\#ffffff\]\/90 { background-color: rgb(18 26 49 / 0.9) !important; }
+.dark .bg-white { background-color: #121a31 !important; }
+.dark .bg-white\/90 { background-color: rgb(18 26 49 / 0.9) !important; }
+.dark .bg-white\/95 { background-color: rgb(18 26 49 / 0.95) !important; }
+.dark .bg-\[\#ebedff\] { background-color: #1b274a !important; }
+.dark .bg-\[\#ebedff\]\/80 { background-color: rgb(27 39 74 / 0.8) !important; }
+.dark .bg-\[\#ebedff\]\/60 { background-color: rgb(27 39 74 / 0.6) !important; }
+.dark .bg-\[\#ebedff\]\/50 { background-color: rgb(27 39 74 / 0.5) !important; }
+.dark .bg-\[\#f3f2ff\] { background-color: #161f3a !important; }
+.dark .bg-\[\#f3f2ff\]\/80 { background-color: rgb(22 31 58 / 0.8) !important; }
+.dark .bg-\[\#f3f2ff\]\/60 { background-color: rgb(22 31 58 / 0.6) !important; }
+.dark .bg-\[\#f3f2ff\]\/50 { background-color: rgb(22 31 58 / 0.5) !important; }
+.dark .bg-\[\#e4e7ff\] { background-color: #1d2a4d !important; }
+.dark .bg-\[\#e0bec7\]\/40 { background-color: rgb(74 94 134 / 0.28) !important; }
+.dark .bg-\[\#4a5e86\]\/10 { background-color: rgb(74 94 134 / 0.26) !important; }
+.dark .bg-\[\#4a5e86\]\/12 { background-color: rgb(74 94 134 / 0.32) !important; }
+.dark .bg-\[\#4a5e86\]\/15 { background-color: rgb(74 94 134 / 0.36) !important; }
+.dark .bg-\[\#BCD1FF\]\/20 { background-color: rgb(188 209 255 / 0.2) !important; }
+.dark .bg-\[\#ffd166\]\/30 { background-color: rgb(255 209 102 / 0.2) !important; }
+.dark .border-\[\#e8e6f5\] { border-color: rgba(255, 255, 255, 0.12) !important; }
+.dark .border-\[\#e4e7ff\] { border-color: rgba(255, 255, 255, 0.14) !important; }
+.dark .border-\[\#ebedff\] { border-color: rgba(255, 255, 255, 0.12) !important; }
+.dark .border-\[\#e0bec7\]\/25 { border-color: rgba(255, 255, 255, 0.12) !important; }
+.dark .border-\[\#e0d8e8\] { border-color: rgba(255, 255, 255, 0.14) !important; }
+.dark .text-\[\#0e193d\],
+.dark .text-\[\#594048\],
+.dark .text-\[\#4a5e86\],
+.dark .text-\[\#BCD1FF\],
+.dark .text-slate-900,
+.dark .text-slate-800,
+.dark .text-slate-700 {
+    color: #e7ecff !important;
+}
+.dark .text-\[\#006a3d\] { color: #57ffa6 !important; }
+.dark .text-\[\#7a5f00\] { color: #ffd166 !important; }
+.dark .text-slate-600,
+.dark .text-slate-500,
+.dark .text-slate-400 {
+    color: #a8b1ce !important;
 }

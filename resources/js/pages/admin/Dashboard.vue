@@ -43,20 +43,19 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col">
-            <!-- Sticky white topbar -->
-            <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e0bec7]/25 bg-white/90 px-6 py-4 shadow-[0_1px_0_rgba(14,25,61,0.04)] backdrop-blur-sm">
+            <div class="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card/90 px-6 py-4 shadow-[0_1px_0_rgba(14,25,61,0.04)] backdrop-blur-sm">
                 <div>
-                    <h1 class="font-headline text-2xl font-bold tracking-tight text-[#0e193d]">
+                    <h1 class="font-headline text-2xl font-bold tracking-tight text-foreground">
                         Dashboard
                     </h1>
-                    <p v-if="event" class="mt-0.5 text-sm text-[#594048]">
+                    <p v-if="event" class="mt-0.5 text-sm text-muted-foreground">
                         {{ event.name }}
                     </p>
                 </div>
                 <div class="flex items-center gap-3">
                     <button
                         type="button"
-                        class="relative rounded-full p-2 text-[#4a5e86] hover:bg-[#f3f2ff]"
+                        class="relative rounded-full p-2 text-muted-foreground hover:bg-muted"
                         aria-label="Notifications"
                     >
                         <Bell class="h-5 w-5" />
@@ -77,42 +76,42 @@ const breadcrumbs: BreadcrumbItem[] = [
                     <div
                         class="stat-border-primary neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
+                        <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             Contestants
                         </p>
-                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-foreground">
                             {{ stats.total_contestants }}
                         </p>
                     </div>
                     <div
                         class="stat-border-secondary neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
+                        <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             Judges
                         </p>
-                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-foreground">
                             {{ stats.total_judges }}
                         </p>
                     </div>
                     <div
                         class="stat-border-accent neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
+                        <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             Categories
                         </p>
-                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-foreground">
                             {{ stats.total_categories }}
                         </p>
                     </div>
                     <div
                         class="stat-border-warning neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
+                        <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                             Scores Submitted
                         </p>
-                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-foreground">
                             {{ stats.submitted_scores }}
-                            <span class="text-lg font-medium text-[#594048]">
+                            <span class="text-lg font-medium text-muted-foreground">
                                 / {{ stats.required_scores }}
                             </span>
                         </p>
@@ -122,7 +121,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Judge progress with progress bars -->
                 <section class="neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]">
                     <div class="mb-4 flex items-center justify-between">
-                        <h2 class="font-headline text-lg font-semibold text-[#0e193d]">
+                        <h2 class="font-headline text-lg font-semibold text-foreground">
                             Judge progress
                         </h2>
                         <Link
@@ -135,7 +134,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
                     <div
                         v-if="judgeProgress.length === 0"
-                        class="py-8 text-center text-sm text-[#594048]"
+                        class="py-8 text-center text-sm text-muted-foreground"
                     >
                         No judges configured yet.
                     </div>
@@ -144,15 +143,15 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div
                             v-for="row in judgeProgress"
                             :key="row.judge_id"
-                            class="flex flex-wrap items-center gap-3 rounded-xl bg-[#f3f2ff] p-4"
+                            class="flex flex-wrap items-center gap-3 rounded-xl bg-muted p-4"
                         >
-                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e4e7ff] text-sm font-semibold text-[#4a5e86]">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
                                 {{ row.judge_name.split(' ').map((n) => n[0]).join('').slice(0, 2) }}
                             </div>
                             <div class="min-w-0 flex-1">
-                                <p class="font-medium text-[#0e193d]">{{ row.judge_name }}</p>
+                                <p class="font-medium text-foreground">{{ row.judge_name }}</p>
                                 <div class="mt-2 flex items-center gap-3">
-                                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-[#ebedff]">
+                                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-input">
                                         <div
                                             class="h-full rounded-full bg-[#006a3d] transition-all"
                                             :style="{
@@ -162,7 +161,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                             }"
                                         />
                                     </div>
-                                    <span class="text-sm text-[#594048]">
+                                    <span class="text-sm text-muted-foreground">
                                         {{ row.submitted_count }}/{{ row.total_count }}
                                     </span>
                                     <span
@@ -179,7 +178,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     </span>
                                     <span
                                         v-else
-                                        class="rounded-full bg-[#ebedff] px-2.5 py-1 text-xs font-medium text-[#594048]"
+                                        class="rounded-full bg-input px-2.5 py-1 text-xs font-medium text-muted-foreground"
                                     >
                                         Not started
                                     </span>
@@ -193,7 +192,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <div class="flex flex-wrap gap-3">
                     <Link
                         href="/admin/scores"
-                        class="inline-flex items-center rounded-full bg-[#4a5e86]/10 px-5 py-2.5 text-sm font-medium text-[#4a5e86] transition hover:bg-[#4a5e86]/18"
+                        class="inline-flex items-center rounded-full bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition hover:opacity-90"
                     >
                         View score grid
                     </Link>
@@ -206,7 +205,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     </Link>
                     <span
                         v-else
-                        class="inline-flex cursor-not-allowed items-center rounded-full bg-[#e0bec7]/40 px-5 py-2.5 text-sm font-semibold text-[#594048]"
+                        class="inline-flex cursor-not-allowed items-center rounded-full bg-muted px-5 py-2.5 text-sm font-semibold text-muted-foreground"
                     >
                         Publish results
                     </span>

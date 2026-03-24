@@ -118,7 +118,7 @@ const roleSubtitle = computed(() => {
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child class="rounded-2xl! hover:bg-white/5">
+                    <SidebarMenuButton size="lg" as-child class="rounded-2xl! hover:bg-sidebar-accent">
                         <Link :href="homeHref" class="gap-3">
                             <AppLogo :subtitle="roleSubtitle" />
                         </Link>

@@ -15,8 +15,10 @@ withDefaults(
     >
         <AppLogoIcon class="size-5 fill-current text-white" />
     </div>
-    <div class="ml-2 grid min-w-0 flex-1 text-left text-sm leading-tight">
-        <span class="truncate font-headline font-bold tracking-tight text-white">Tabulator</span>
-        <span v-if="subtitle" class="truncate text-[10px] font-medium text-slate-400">{{ subtitle }}</span>
+    <div
+        class="ml-2 grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+    >
+        <span class="truncate font-headline font-bold tracking-tight text-sidebar-foreground">Tabulator</span>
+        <span v-if="subtitle" class="truncate text-[10px] font-medium leading-tight text-sidebar-foreground/70">{{ subtitle }}</span>
     </div>
 </template>

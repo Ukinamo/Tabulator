@@ -9,6 +9,8 @@ const props = defineProps<{
 
 <template>
   <main
+    id="main-content"
+    tabindex="-1"
     data-slot="sidebar-inset"
     :class="cn(
       'bg-background relative flex w-full flex-1 flex-col',

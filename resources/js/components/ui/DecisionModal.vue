@@ -36,26 +36,26 @@ function onCancel() {
     <Dialog :open="open" @update:open="(v: boolean) => !v && onCancel()">
         <DialogContent
             :show-close-button="false"
-            class="max-w-[340px] rounded-3xl border border-[#e8e6f5] p-0 shadow-2xl dark:border-[#2a3558] dark:bg-[#0e193d]"
+            class="max-w-[340px] rounded-3xl border border-border bg-card p-0 text-card-foreground shadow-2xl"
             @pointer-down-outside="onCancel"
             @escape-key-down="onCancel"
         >
             <div class="p-6 text-center">
-                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">
+                <h3 class="text-lg font-semibold text-foreground">
                     {{ title }}
                 </h3>
-                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                <p class="mt-2 text-sm text-muted-foreground">
                     {{ message }}
                 </p>
             </div>
-            <div class="flex flex-col border-t border-slate-200 dark:border-slate-700">
+            <div class="flex flex-col border-t border-border">
                 <button
                     type="button"
-                    class="min-h-[48px] border-b border-slate-200 text-sm font-semibold transition active:opacity-80 dark:border-slate-700"
+                    class="min-h-[48px] border-b border-border text-sm font-semibold transition active:opacity-80"
                     :class="
                         variant === 'danger'
-                            ? 'text-red-500 dark:text-red-400'
-                            : 'text-[#b40066] dark:text-[#da2180]'
+                            ? 'text-red-500'
+                            : 'text-[#b40066]'
                     "
                     :disabled="loading"
                     @click="onConfirm"
@@ -69,7 +69,7 @@ function onCancel() {
                 <DialogClose>
                     <button
                         type="button"
-                        class="min-h-[48px] w-full text-sm font-semibold text-slate-600 dark:text-slate-300"
+                        class="min-h-[48px] w-full text-sm font-semibold text-muted-foreground"
                         :disabled="loading"
                     >
                         {{ cancelLabel }}

@@ -29,6 +29,8 @@ defineProps<{
 
         <div
             v-if="status"
+            role="status"
+            aria-live="polite"
             class="mb-4 text-center text-sm font-medium text-green-600"
         >
             {{ status }}

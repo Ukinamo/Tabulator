@@ -10,6 +10,7 @@ import type { BreadcrumbItem } from '@/types';
 const toast = useToast();
 const showDeleteAllModal = ref(false);
 const showDeleteOneModal = ref(false);
+const showRetrieveFromMcModal = ref(false);
 const deleteOneTarget = ref<ScoreRow | null>(null);
 
 type ScoreRow = {
@@ -39,6 +40,7 @@ const loading = ref(true);
 const approveAllLoading = ref(false);
 const deleteAllLoading = ref(false);
 const deleteLoading = ref(false);
+const retrieveFromMcLoading = ref(false);
 const activeTab = ref<'detailed' | 'summary'>('detailed');
 
 function contestantLabel(s: ScoreRow): string {
@@ -149,12 +151,41 @@ async function approveAll() {
         const r = await fetch(`/api/v1/admin/events/${props.event.id}/scores/approve-all`, { method: 'POST', credentials: 'include', headers: apiHeaders({ method: 'POST', contentType: false }) });
         if (r.ok) {
             await fetchScores();
-            toast.success('All scores approved.');
+            const json = await r.json().catch(() => ({}));
+            toast.success((json as { message?: string }).message || 'All scores approved and published to MC.');
         } else {
-            toast.error('Could not approve all.');
+            const json = await r.json().catch(() => ({}));
+            toast.error((json as { message?: string }).message || 'Could not approve all.');
         }
     } finally {
         approveAllLoading.value = false;
+    }
+}
+
+function requestRetrieveFromMc() {
+    if (!props.event) return;
+    showRetrieveFromMcModal.value = true;
+}
+
+async function confirmRetrieveFromMc() {
+    if (!props.event) return;
+    retrieveFromMcLoading.value = true;
+    try {
+        const r = await fetch(`/api/v1/admin/events/${props.event.id}/scores/retrieve-from-mc`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: apiHeaders({ method: 'POST', contentType: false }),
+        });
+        const json = await r.json().catch(() => ({}));
+        if (r.ok) {
+            await fetchScores();
+            toast.success((json as { message?: string }).message || 'Published scoring retrieved from MC.');
+        } else {
+            toast.error((json as { message?: string }).message || 'Could not retrieve from MC.');
+        }
+    } finally {
+        retrieveFromMcLoading.value = false;
+        showRetrieveFromMcModal.value = false;
     }
 }
 
@@ -227,8 +258,16 @@ onMounted(() => { if (props.event) fetchScores(); });
                 <div v-if="event" class="flex items-center gap-3">
                     <button
                         type="button"
+                        class="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted disabled:opacity-60"
+                        :disabled="retrieveFromMcLoading || approveAllLoading || deleteAllLoading"
+                        @click="requestRetrieveFromMc"
+                    >
+                        {{ retrieveFromMcLoading ? 'Retrieving…' : 'Retrieve from MC' }}
+                    </button>
+                    <button
+                        type="button"
                         class="rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 disabled:opacity-60"
-                        :disabled="deleteAllLoading || scores.length === 0"
+                        :disabled="deleteAllLoading || scores.length === 0 || retrieveFromMcLoading || approveAllLoading"
                         @click="requestDeleteAll"
                     >
                         {{ deleteAllLoading ? 'Deleting…' : 'Delete All' }}
@@ -236,7 +275,7 @@ onMounted(() => { if (props.event) fetchScores(); });
                     <button
                         type="button"
                         class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60"
-                        :disabled="approveAllLoading || scores.length === 0"
+                        :disabled="approveAllLoading || scores.length === 0 || retrieveFromMcLoading || deleteAllLoading"
                         @click="approveAll"
                     >
                         {{ approveAllLoading ? 'Processing…' : 'Approve All' }}
@@ -411,6 +450,18 @@ onMounted(() => { if (props.event) fetchScores(); });
             </div>
 
         </div>
+
+        <DecisionModal
+            :open="showRetrieveFromMcModal"
+            title="Retrieve from MC?"
+            message="This will remove the event's published results from MC and reset reveal progress, so scoring returns to admin control."
+            confirm-label="Retrieve"
+            cancel-label="Cancel"
+            variant="danger"
+            :loading="retrieveFromMcLoading"
+            @confirm="confirmRetrieveFromMc"
+            @cancel="showRetrieveFromMcModal = false"
+        />
 
         <DecisionModal
             :open="showDeleteAllModal"
