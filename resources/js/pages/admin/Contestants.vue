@@ -176,22 +176,22 @@ async function confirmDelete() {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-xl font-semibold text-white">Contestants</h1>
+                <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Contestants</h1>
                 <button
                     v-if="event"
                     type="button"
-                    class="rounded-full bg-[#F23892] px-4 py-2 text-sm font-semibold text-white"
+                    class="neon-btn-primary px-4 py-2 text-sm"
                     @click="openCreate"
                 >
                     Add Contestant
                 </button>
             </div>
 
-            <p v-if="!event" class="text-slate-400">No event selected.</p>
-            <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">Loading…</div>
-            <div v-else class="overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/80">
-                <table class="min-w-full text-left text-sm text-slate-200">
-                    <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase">
+            <p v-if="!event" class="text-[#594048]">No event selected.</p>
+            <div v-else-if="loading" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">Loading…</div>
+            <div v-else class="neon-card overflow-hidden border border-[#e8e6f5]">
+                <table class="min-w-full text-left text-sm text-[#0e193d]">
+                    <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff] text-xs uppercase text-[#594048]">
                         <tr>
                             <th class="px-4 py-3">#</th>
                             <th class="px-4 py-3">Name</th>
@@ -200,43 +200,43 @@ async function confirmDelete() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="c in contestants" :key="c.id" class="border-b border-slate-800/70">
+                        <tr v-for="c in contestants" :key="c.id" class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/50">
                             <td class="px-4 py-3">
-                                <span class="rounded-full bg-[#F23892]/30 px-2 py-0.5 text-[#F23892]">{{ c.contestant_number }}</span>
+                                <span class="rounded-full bg-[#b40066]/12 px-2 py-0.5 text-xs font-medium text-[#b40066]">{{ c.contestant_number }}</span>
                             </td>
                             <td class="px-4 py-3">{{ c.name }}</td>
                             <td class="px-4 py-3">{{ c.is_active ? 'Active' : 'Inactive' }}</td>
                             <td class="px-4 py-3">
-                                <button type="button" class="mr-2 text-[#BCD1FF] hover:underline" @click="openEdit(c)">Edit</button>
-                                <button type="button" class="text-red-400 hover:underline" @click="openDelete(c)">Delete</button>
+                                <button type="button" class="mr-2 text-[#4a5e86] hover:underline" @click="openEdit(c)">Edit</button>
+                                <button type="button" class="text-red-600 hover:underline" @click="openDelete(c)">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <p v-if="contestants.length === 0" class="p-6 text-center text-slate-400">No contestants yet.</p>
+                <p v-if="contestants.length === 0" class="p-6 text-center text-[#594048]">No contestants yet.</p>
             </div>
         </div>
 
         <Teleport to="body">
-            <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" @click.self="showModal = false">
-                <div class="w-full max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6">
-                    <h2 class="mb-4 text-lg font-semibold text-white">{{ editing ? 'Edit Contestant' : 'Add Contestant' }}</h2>
-                    <p v-if="error" class="mb-3 text-sm text-red-400">{{ error }}</p>
+            <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" @click.self="showModal = false">
+                <div class="neon-glass-panel w-full max-w-md rounded-2xl border border-[#e8e6f5] p-6 shadow-2xl">
+                    <h2 class="mb-4 font-headline text-lg font-semibold text-[#0e193d]">{{ editing ? 'Edit Contestant' : 'Add Contestant' }}</h2>
+                    <p v-if="error" class="mb-3 text-sm text-red-600">{{ error }}</p>
                     <form class="space-y-3" @submit.prevent="save">
                         <div>
-                            <label class="block text-xs text-slate-400">Number</label>
-                            <input v-model="form.contestant_number" type="text" required class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white" />
+                            <label class="block text-xs text-[#594048]">Number</label>
+                            <input v-model="form.contestant_number" type="text" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Name</label>
-                            <input v-model="form.name" type="text" required class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white" />
+                            <label class="block text-xs text-[#594048]">Name</label>
+                            <input v-model="form.name" type="text" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Bio</label>
-                            <textarea v-model="form.bio" rows="2" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white"></textarea>
+                            <label class="block text-xs text-[#594048]">Bio</label>
+                            <textarea v-model="form.bio" rows="2" class="ig-input mt-1 w-full rounded-xl"></textarea>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Photo</label>
+                            <label class="block text-xs text-[#594048]">Photo</label>
                             <div class="mt-1 flex flex-col gap-2">
                                 <div class="flex items-center gap-2">
                                     <input
@@ -248,7 +248,7 @@ async function confirmDelete() {
                                     />
                                     <button
                                         type="button"
-                                        class="rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-white transition hover:bg-slate-700"
+                                        class="rounded-full border border-[#e0d8e8] bg-white px-3 py-2 text-sm text-[#0e193d] transition hover:bg-[#f3f2ff]"
                                         :disabled="photoUploading"
                                         @click="photoInput?.click()"
                                     >
@@ -257,7 +257,7 @@ async function confirmDelete() {
                                     <button
                                         v-if="form.photo_url"
                                         type="button"
-                                        class="rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-700"
+                                        class="rounded-full border border-[#e0d8e8] bg-[#f3f2ff] px-3 py-2 text-sm text-[#594048] transition hover:bg-[#ebedff]"
                                         @click="clearPhoto"
                                     >
                                         Remove
@@ -267,18 +267,18 @@ async function confirmDelete() {
                                     v-if="form.photo_url"
                                     :src="fullPhotoUrl(form.photo_url)"
                                     alt="Contestant photo"
-                                    class="h-24 w-24 rounded-lg border border-slate-600 object-cover"
+                                    class="h-24 w-24 rounded-lg border border-[#e8e6f5] object-cover"
                                     @error="hideBrokenPhoto"
                                 />
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <input v-model="form.is_active" type="checkbox" class="rounded" />
-                            <label class="text-sm text-slate-300">Active</label>
+                            <input v-model="form.is_active" type="checkbox" class="rounded border-[#e0d8e8] text-[#b40066] focus:ring-[#b40066]" />
+                            <label class="text-sm text-[#0e193d]">Active</label>
                         </div>
                         <div class="flex justify-end gap-2 pt-4">
-                            <button type="button" class="rounded-lg bg-slate-700 px-4 py-2 text-sm text-white" @click="showModal = false">Cancel</button>
-                            <button type="submit" class="rounded-lg bg-[#F23892] px-4 py-2 text-sm font-semibold text-white" :disabled="submitLoading">
+                            <button type="button" class="rounded-full border border-[#e0d8e8] bg-white px-4 py-2 text-sm text-[#0e193d] hover:bg-[#f3f2ff]" @click="showModal = false">Cancel</button>
+                            <button type="submit" class="neon-btn-primary px-4 py-2 text-sm disabled:opacity-60" :disabled="submitLoading">
                                 {{ submitLoading ? 'Saving…' : (editing ? 'Update' : 'Add') }}
                             </button>
                         </div>

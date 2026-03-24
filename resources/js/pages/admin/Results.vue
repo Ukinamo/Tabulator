@@ -106,18 +106,18 @@ onMounted(() => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-xl font-semibold text-white">Results</h1>
+                <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Results</h1>
                 <template v-if="event && !isPublished">
                     <button
                         type="button"
-                        class="rounded-full bg-[#F23892] px-4 py-2 text-sm font-semibold text-white"
+                        class="neon-btn-primary px-4 py-2 text-sm disabled:opacity-60"
                         :disabled="publishLoading"
                         @click="openPublishModal"
                     >
                         {{ publishLoading ? 'Publishing…' : 'Publish Results' }}
                     </button>
                 </template>
-                <div v-else-if="event && isPublished" class="rounded-full bg-[#38F298]/20 px-4 py-2 text-sm font-medium text-[#38F298]">
+                <div v-else-if="event && isPublished" class="rounded-full bg-[#006a3d]/12 px-4 py-2 text-sm font-medium text-[#006a3d]">
                     Results Published
                 </div>
             </div>
@@ -133,13 +133,13 @@ onMounted(() => {
                 @cancel="closePublishModal"
             />
 
-            <p v-if="!event" class="text-slate-400">No event selected.</p>
-            <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">
+            <p v-if="!event" class="text-[#594048]">No event selected.</p>
+            <div v-else-if="loading" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">
                 Loading…
             </div>
-            <div v-else class="overflow-hidden rounded-2xl border border-slate-700 bg-slate-900/80">
-                <table class="min-w-full text-left text-sm text-slate-200">
-                    <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase">
+            <div v-else class="neon-card overflow-hidden border border-[#e8e6f5]">
+                <table class="min-w-full text-left text-sm text-[#0e193d]">
+                    <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff] text-xs uppercase text-[#594048]">
                         <tr>
                             <th class="px-4 py-3">Rank</th>
                             <th class="px-4 py-3">#</th>
@@ -148,17 +148,17 @@ onMounted(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="row in results" :key="row.id" class="border-b border-slate-800/70">
+                        <tr v-for="row in results" :key="row.id" class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/50">
                             <td class="px-4 py-3 font-medium">{{ row.rank }}</td>
                             <td class="px-4 py-3">
-                                <span class="rounded-full bg-[#F23892]/30 px-2 py-0.5 text-[#F23892]">{{ row.contestant_number }}</span>
+                                <span class="rounded-full bg-[#b40066]/12 px-2 py-0.5 text-xs font-medium text-[#b40066]">{{ row.contestant_number }}</span>
                             </td>
                             <td class="px-4 py-3">{{ row.contestant_name }}</td>
-                            <td class="px-4 py-3">{{ Number(row.final_score).toFixed(4) }}</td>
+                            <td class="px-4 py-3 tabular-nums font-medium">{{ Number(row.final_score).toFixed(4) }}</td>
                         </tr>
                     </tbody>
                 </table>
-                <p v-if="results.length === 0" class="p-6 text-center text-slate-400">No results yet. Approve scores and publish.</p>
+                <p v-if="results.length === 0" class="p-6 text-center text-[#594048]">No results yet. Approve scores and publish.</p>
             </div>
         </div>
     </AppLayout>

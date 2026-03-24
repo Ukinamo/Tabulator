@@ -44,27 +44,27 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col">
             <!-- Sticky white topbar -->
-            <div class="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4 dark:border-slate-700 dark:bg-slate-800">
+            <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#e0bec7]/25 bg-white/90 px-6 py-4 shadow-[0_1px_0_rgba(14,25,61,0.04)] backdrop-blur-sm">
                 <div>
-                    <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                    <h1 class="font-headline text-2xl font-bold tracking-tight text-[#0e193d]">
                         Dashboard
                     </h1>
-                    <p v-if="event" class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                    <p v-if="event" class="mt-0.5 text-sm text-[#594048]">
                         {{ event.name }}
                     </p>
                 </div>
                 <div class="flex items-center gap-3">
                     <button
                         type="button"
-                        class="relative rounded-full p-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700"
+                        class="relative rounded-full p-2 text-[#4a5e86] hover:bg-[#f3f2ff]"
                         aria-label="Notifications"
                     >
                         <Bell class="h-5 w-5" />
-                        <span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#F23892]" />
+                        <span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#b40066]" />
                     </button>
                     <span
                         v-if="event"
-                        class="rounded-full bg-[#F23892] px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white"
+                        class="rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white shadow-[0_0_12px_rgba(180,0,102,0.3)]"
                     >
                         {{ event.status }}
                     </span>
@@ -75,44 +75,44 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <!-- Stat cards with colored left borders -->
                 <section v-if="stats" class="grid gap-4 md:grid-cols-4">
                     <div
-                        class="stat-border-primary rounded-2xl border border-slate-700 bg-slate-800/80 p-5"
+                        class="stat-border-primary neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
                             Contestants
                         </p>
-                        <p class="mt-2 text-3xl font-bold text-white">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
                             {{ stats.total_contestants }}
                         </p>
                     </div>
                     <div
-                        class="stat-border-secondary rounded-2xl border border-slate-700 bg-slate-800/80 p-5"
+                        class="stat-border-secondary neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
                             Judges
                         </p>
-                        <p class="mt-2 text-3xl font-bold text-white">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
                             {{ stats.total_judges }}
                         </p>
                     </div>
                     <div
-                        class="stat-border-accent rounded-2xl border border-slate-700 bg-slate-800/80 p-5"
+                        class="stat-border-accent neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
                             Categories
                         </p>
-                        <p class="mt-2 text-3xl font-bold text-white">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
                             {{ stats.total_categories }}
                         </p>
                     </div>
                     <div
-                        class="stat-border-warning rounded-2xl border border-slate-700 bg-slate-800/80 p-5"
+                        class="stat-border-warning neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+                        <p class="text-xs font-medium uppercase tracking-wide text-[#594048]">
                             Scores Submitted
                         </p>
-                        <p class="mt-2 text-3xl font-bold text-white">
+                        <p class="mt-2 text-3xl font-bold tabular-nums text-[#0e193d]">
                             {{ stats.submitted_scores }}
-                            <span class="text-lg font-medium text-slate-400">
+                            <span class="text-lg font-medium text-[#594048]">
                                 / {{ stats.required_scores }}
                             </span>
                         </p>
@@ -120,14 +120,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                 </section>
 
                 <!-- Judge progress with progress bars -->
-                <section class="rounded-2xl border border-slate-700 bg-slate-800/80 p-5">
+                <section class="neon-card rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]">
                     <div class="mb-4 flex items-center justify-between">
-                        <h2 class="text-lg font-semibold text-white">
+                        <h2 class="font-headline text-lg font-semibold text-[#0e193d]">
                             Judge progress
                         </h2>
                         <Link
                             href="/admin/scores"
-                            class="rounded-full bg-[#F23892] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
+                            class="rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-4 py-2 text-sm font-semibold text-white shadow-[0_0_12px_rgba(180,0,102,0.35)] transition hover:opacity-95"
                         >
                             Review scores
                         </Link>
@@ -135,7 +135,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
                     <div
                         v-if="judgeProgress.length === 0"
-                        class="py-8 text-center text-sm text-slate-400"
+                        class="py-8 text-center text-sm text-[#594048]"
                     >
                         No judges configured yet.
                     </div>
@@ -144,17 +144,17 @@ const breadcrumbs: BreadcrumbItem[] = [
                         <div
                             v-for="row in judgeProgress"
                             :key="row.judge_id"
-                            class="flex flex-wrap items-center gap-3 rounded-xl bg-slate-900/50 p-4"
+                            class="flex flex-wrap items-center gap-3 rounded-xl bg-[#f3f2ff] p-4"
                         >
-                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#BCD1FF]/30 text-sm font-semibold text-[#BCD1FF]">
+                            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#e4e7ff] text-sm font-semibold text-[#4a5e86]">
                                 {{ row.judge_name.split(' ').map((n) => n[0]).join('').slice(0, 2) }}
                             </div>
                             <div class="min-w-0 flex-1">
-                                <p class="font-medium text-white">{{ row.judge_name }}</p>
+                                <p class="font-medium text-[#0e193d]">{{ row.judge_name }}</p>
                                 <div class="mt-2 flex items-center gap-3">
-                                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-slate-700">
+                                    <div class="h-2 flex-1 overflow-hidden rounded-full bg-[#ebedff]">
                                         <div
-                                            class="h-full rounded-full bg-[#38F298] transition-all"
+                                            class="h-full rounded-full bg-[#006a3d] transition-all"
                                             :style="{
                                                 width: row.total_count
                                                     ? `${(row.submitted_count / row.total_count) * 100}%`
@@ -162,24 +162,24 @@ const breadcrumbs: BreadcrumbItem[] = [
                                             }"
                                         />
                                     </div>
-                                    <span class="text-sm text-slate-300">
+                                    <span class="text-sm text-[#594048]">
                                         {{ row.submitted_count }}/{{ row.total_count }}
                                     </span>
                                     <span
                                         v-if="row.status === 'submitted'"
-                                        class="rounded-full bg-[#38F298]/20 px-2.5 py-1 text-xs font-medium text-[#38F298]"
+                                        class="rounded-full bg-[#006a3d]/12 px-2.5 py-1 text-xs font-medium text-[#006a3d]"
                                     >
                                         Submitted
                                     </span>
                                     <span
                                         v-else-if="row.status === 'in_progress'"
-                                        class="rounded-full bg-[#FFD166]/20 px-2.5 py-1 text-xs font-medium text-[#FFD166]"
+                                        class="rounded-full bg-[#ffd166]/30 px-2.5 py-1 text-xs font-medium text-[#7a5f00]"
                                     >
                                         In progress
                                     </span>
                                     <span
                                         v-else
-                                        class="rounded-full bg-slate-600/50 px-2.5 py-1 text-xs font-medium text-slate-400"
+                                        class="rounded-full bg-[#ebedff] px-2.5 py-1 text-xs font-medium text-[#594048]"
                                     >
                                         Not started
                                     </span>
@@ -193,20 +193,20 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <div class="flex flex-wrap gap-3">
                     <Link
                         href="/admin/scores"
-                        class="inline-flex items-center rounded-xl border border-slate-600 bg-slate-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700"
+                        class="inline-flex items-center rounded-full bg-[#4a5e86]/10 px-5 py-2.5 text-sm font-medium text-[#4a5e86] transition hover:bg-[#4a5e86]/18"
                     >
                         View score grid
                     </Link>
                     <Link
                         v-if="canPublish"
                         href="/admin/results"
-                        class="inline-flex items-center rounded-xl bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_18px_rgba(242,56,146,0.5)] transition hover:bg-[#d0206e]"
+                        class="inline-flex items-center rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_18px_rgba(180,0,102,0.35)] transition hover:opacity-95"
                     >
                         Publish results
                     </Link>
                     <span
                         v-else
-                        class="inline-flex cursor-not-allowed items-center rounded-xl bg-pink-500/50 px-5 py-2.5 text-sm font-semibold text-white"
+                        class="inline-flex cursor-not-allowed items-center rounded-full bg-[#e0bec7]/40 px-5 py-2.5 text-sm font-semibold text-[#594048]"
                     >
                         Publish results
                     </span>

@@ -68,38 +68,38 @@ async function save() {
     <Head title="Event Setup - Admin" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex flex-col gap-6 p-4">
-            <h1 class="text-xl font-semibold text-white">Event Setup</h1>
+            <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Event Setup</h1>
 
-            <div v-if="!event" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">
+            <div v-if="!event" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">
                 No event found. Create one via API or seed data.
             </div>
 
             <div v-else class="max-w-2xl space-y-6">
-                <div class="rounded-2xl border border-slate-700 bg-slate-900/80 p-6">
-                    <p class="mb-3 text-xs text-slate-400">Status (read-only)</p>
-                    <span class="inline-flex rounded-full bg-[#BCD1FF]/20 px-3 py-1 text-sm text-[#BCD1FF]">{{ event.status }}</span>
+                <div class="neon-card border border-[#e8e6f5] p-6">
+                    <p class="mb-3 text-xs text-[#594048]">Status (read-only)</p>
+                    <span class="inline-flex rounded-full bg-[#4a5e86]/12 px-3 py-1 text-sm font-medium text-[#4a5e86]">{{ event.status }}</span>
                 </div>
 
-                <div class="rounded-2xl border border-slate-700 bg-slate-900/80 p-6">
+                <div class="neon-card border border-[#e8e6f5] p-6">
                     <form class="space-y-4" @submit.prevent="save">
                         <div>
-                            <label class="block text-xs text-slate-400">Event name</label>
-                            <input v-model="form.name" type="text" required class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white" />
+                            <label class="block text-xs text-[#594048]">Event name</label>
+                            <input v-model="form.name" type="text" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Description</label>
-                            <textarea v-model="form.description" rows="2" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white"></textarea>
+                            <label class="block text-xs text-[#594048]">Description</label>
+                            <textarea v-model="form.description" rows="2" class="ig-input mt-1 w-full rounded-xl"></textarea>
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Venue</label>
-                            <input v-model="form.venue" type="text" class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white" />
+                            <label class="block text-xs text-[#594048]">Venue</label>
+                            <input v-model="form.venue" type="text" class="ig-input mt-1 w-full rounded-xl" />
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400">Event date</label>
-                            <input v-model="form.event_date" type="date" required class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-white" />
+                            <label class="block text-xs text-[#594048]">Event date</label>
+                            <input v-model="form.event_date" type="date" required class="ig-input mt-1 w-full rounded-xl" />
                         </div>
-                        <p v-if="message" class="text-sm" :class="message === 'Saved.' ? 'text-[#38F298]' : 'text-red-400'">{{ message }}</p>
-                        <button type="submit" class="rounded-full bg-[#F23892] px-6 py-2 text-sm font-semibold text-white" :disabled="submitLoading">
+                        <p v-if="message" class="text-sm" :class="message === 'Saved.' ? 'font-medium text-[#006a3d]' : 'text-red-600'">{{ message }}</p>
+                        <button type="submit" class="neon-btn-primary px-6 py-2 text-sm disabled:opacity-60" :disabled="submitLoading">
                             {{ submitLoading ? 'Saving…' : 'Save' }}
                         </button>
                     </form>

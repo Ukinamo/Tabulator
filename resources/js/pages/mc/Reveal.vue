@@ -38,7 +38,7 @@ function medalColor(rank: number): string {
     if (rank === 1) return '#FFD700';
     if (rank === 2) return '#C0C0C0';
     if (rank === 3) return '#CD7F32';
-    return '#BCD1FF';
+    return '#7eb8ff';
 }
 
 const fetchResults = async () => {
@@ -132,21 +132,21 @@ onMounted(async () => {
     <Head title="Live Results Reveal" />
 
     <AppShell variant="header">
-        <div class="flex h-screen flex-col bg-[#07091A] text-white">
+        <div class="neon-theatrical-bg flex h-screen flex-col text-white">
             <!-- Header -->
-            <header class="flex shrink-0 items-center justify-between px-6 py-4">
-                <h1 class="text-xl font-bold tracking-tight text-white">
+            <header class="flex shrink-0 items-center justify-between border-b border-white/10 px-6 py-4 backdrop-blur-sm">
+                <h1 class="font-headline text-xl font-bold tracking-tight text-white">
                     {{ eventTitle }} — Talent Search
                 </h1>
                 <div class="flex items-center gap-3">
-                    <span class="rounded-full bg-[#38F298]/20 px-3 py-1 text-xs font-medium text-[#38F298] ring-1 ring-[#38F298]/40">
+                    <span class="rounded-full bg-[#006a3d]/25 px-3 py-1 text-xs font-medium text-[#57ffa6] ring-1 ring-[#57ffa6]/35">
                         MC Mode
                     </span>
                     <Link
                         :href="'/logout'"
                         method="post"
                         as="button"
-                        class="rounded-xl border-2 border-[#BCD1FF] bg-transparent px-4 py-2 text-sm font-semibold text-[#BCD1FF] transition hover:bg-[#BCD1FF]/10"
+                        class="rounded-full border-2 border-white/30 bg-white/5 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur-sm transition hover:bg-white/10"
                     >
                         Logout
                     </Link>
@@ -158,7 +158,7 @@ onMounted(async () => {
                 <!-- ===== Left sidebar: Winner portraits in rank order ===== -->
                 <aside
                     v-if="revealedResults.length > 0"
-                    class="hidden-scrollbar flex w-48 shrink-0 flex-col gap-3 overflow-y-auto border-r border-slate-800/50 px-3 py-4"
+                    class="hidden-scrollbar flex w-48 shrink-0 flex-col gap-3 overflow-y-auto border-r border-white/10 px-3 py-4"
                 >
                     <p class="mb-1 text-center text-[10px] font-bold uppercase tracking-widest text-slate-500">
                         Top Winners
@@ -222,7 +222,7 @@ onMounted(async () => {
 
                     <p
                         v-if="isPublished && revealedResults.length > 0"
-                        class="text-sm text-[#BCD1FF]/80"
+                        class="text-sm text-[#57ffa6]/90"
                     >
                         {{ revealedResults.length }} of Top 5 revealed
                         <template v-if="hasMore"> — more remaining</template>
@@ -240,7 +240,7 @@ onMounted(async () => {
                 <!-- ===== Right sidebar: Consolation Prize ===== -->
                 <aside
                     v-if="isPublished && consolationList.length > 0"
-                    class="hidden-scrollbar flex w-64 shrink-0 flex-col border-l border-slate-800/50 px-3 py-4"
+                    class="hidden-scrollbar flex w-64 shrink-0 flex-col border-l border-white/10 px-3 py-4"
                 >
                     <p class="mb-3 text-center text-[10px] font-bold uppercase tracking-widest text-slate-500">
                         Consolation Prize Winners
@@ -272,7 +272,7 @@ onMounted(async () => {
                         <div
                             v-for="(c, idx) in consolationList"
                             :key="c.id"
-                            class="consolation-card flex items-center gap-3 rounded-xl border border-amber-500/20 bg-slate-900/80 px-3 py-3"
+                            class="consolation-card flex items-center gap-3 rounded-xl border border-amber-500/30 bg-white/10 px-3 py-3 backdrop-blur-sm"
                             :style="{ animationDelay: idx * 120 + 'ms' }"
                         >
                             <!-- Rank badge -->
@@ -306,11 +306,11 @@ onMounted(async () => {
             </div>
 
             <!-- Footer -->
-            <footer class="flex shrink-0 items-center justify-center gap-4 border-t border-slate-800/50 px-6 py-4">
+            <footer class="flex shrink-0 items-center justify-center gap-4 border-t border-white/10 px-6 py-4 backdrop-blur-sm">
                 <button
                     v-if="revealedResults.length > 0"
                     type="button"
-                    class="inline-flex items-center justify-center rounded-xl border-2 border-slate-500 bg-transparent px-8 py-4 text-lg font-semibold tracking-wide text-slate-300 transition hover:border-slate-400 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                    class="inline-flex items-center justify-center rounded-full border-2 border-white/35 bg-white/5 px-8 py-4 text-lg font-semibold tracking-wide text-white/85 backdrop-blur-sm transition hover:border-white/50 hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
                     :disabled="isClearing || isRevealing"
                     @click="requestClear"
                 >
@@ -318,7 +318,7 @@ onMounted(async () => {
                 </button>
                 <button
                     type="button"
-                    class="inline-flex items-center justify-center rounded-xl bg-[#F23892] px-12 py-4 text-lg font-semibold tracking-wide text-white shadow-[0_0_28px_rgba(242,56,146,0.6)] transition hover:bg-[#d0206e] hover:shadow-[0_0_32px_rgba(242,56,146,0.7)] disabled:cursor-not-allowed disabled:bg-pink-500/60 disabled:shadow-none"
+                    class="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-12 py-4 text-lg font-semibold tracking-wide text-white shadow-[0_0_28px_rgba(180,0,102,0.5)] transition hover:opacity-95 hover:shadow-[0_0_36px_rgba(180,0,102,0.55)] disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
                     :disabled="!hasMore || isRevealing"
                     @click="revealNext"
                 >

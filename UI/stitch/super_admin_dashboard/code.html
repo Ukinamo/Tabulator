@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Super Admin Dashboard - The Neon Auditor</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #F4F7FF; }
+        h1, h2, h3, .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- Sidebar Layout -->
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-[#0e193d] text-white h-screen w-[180px] fixed left-0 top-0 overflow-y-auto flex flex-col py-6 gap-2 shadow-2xl shadow-black/50 z-50">
+<!-- Header Identity -->
+<div class="px-6 mb-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm" data-icon="rocket_launch">rocket_launch</span>
+</div>
+<div>
+<p class="text-sm font-bold tracking-tight text-white leading-tight">Luzon Events</p>
+<p class="text-[10px] text-slate-400 font-medium">Super Admin</p>
+</div>
+</div>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-grow space-y-1">
+<!-- Active Item: Dashboard -->
+<a class="bg-[#b40066] text-white rounded-full mx-2 px-4 py-2 flex items-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(180,0,102,0.4)]" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="text-xs font-medium tracking-[0.05em]">Overview</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="analytics">analytics</span>
+<span class="text-xs font-medium tracking-[0.05em]">Live Tabulation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="gavel">gavel</span>
+<span class="text-xs font-medium tracking-[0.05em]">Judge Management</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="fact_check">fact_check</span>
+<span class="text-xs font-medium tracking-[0.05em]">Score Validation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="text-xs font-medium tracking-[0.05em]">Event Settings</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+<span class="text-xs font-medium tracking-[0.05em]">Audit Logs</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="px-4 my-4">
+<button class="w-full py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary-fixed hover:bg-white/10 transition-colors">
+                    Broadcast Mode
+                </button>
+</div>
+<!-- Footer Navigation -->
+<div class="mt-auto pt-4 space-y-1">
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span class="text-xs font-medium tracking-[0.05em]">Help Center</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors hover:bg-white/10 rounded-full" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span class="text-xs font-medium tracking-[0.05em]">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow ml-[180px] bg-[#F4F7FF]">
+<!-- TopNavBar -->
+<header class="bg-white/80 backdrop-blur-md flex justify-between items-center w-full px-8 py-4 sticky top-0 z-40">
+<div class="flex flex-col">
+<h1 class="text-2xl font-black text-[#b40066] leading-none tracking-tight">Dashboard</h1>
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1">Buwan ng Wika 2025 Talent Search</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-8 items-center text-sm font-bold">
+<a class="text-[#b40066] border-b-2 border-[#b40066] pb-1" href="#">Dashboard</a>
+<a class="text-slate-500 hover:text-[#b40066] transition-colors" href="#">Events</a>
+<a class="text-slate-500 hover:text-[#b40066] transition-colors" href="#">Judges</a>
+<a class="text-slate-500 hover:text-[#b40066] transition-colors" href="#">Results</a>
+</div>
+<div class="flex items-center gap-4 pl-6 border-l border-slate-200">
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors" data-icon="search">search</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors" data-icon="notifications">notifications</button>
+<img alt="User profile" class="w-8 h-8 rounded-full border-2 border-primary/20" data-alt="Admin user avatar circular photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGFm53Rqw_lZzZvPFF6vI999PE32hhzo3EP1jlvO4_nQk2ZoaPwUFcRsrSb3peuRnSxeZDmQibxf0EQER5rqClhJAWHf2-uZhsYUHwdhgxYkiDH2dZpeQUw1k10truZzLtAqsOKxYVfZ_vGgYjjIFinatpU3GtDOwz1BV8uDWDZ8SgWQiMwvsJYbuixX9rjiQy8awsVnD_s-gVMeQ9LAsrdFXyVmf-aKwZJyP4oQ44Z3Fppft1QN7QDH-GCSHgPvwnmacKM5BeLZx9"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 space-y-8">
+<!-- Stat Cards Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-[#F23892] shadow-sm hover:shadow-md transition-shadow">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Contestants</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-black text-on-surface">42</h3>
+<span class="material-symbols-outlined text-[#F23892]/30 text-4xl" data-icon="groups">groups</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-[#BCD1FF] shadow-sm hover:shadow-md transition-shadow">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Judges</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-black text-on-surface">08</h3>
+<span class="material-symbols-outlined text-[#BCD1FF] text-4xl" data-icon="gavel">gavel</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-[#38F298] shadow-sm hover:shadow-md transition-shadow">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Categories Configured</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-black text-on-surface">05</h3>
+<span class="material-symbols-outlined text-[#38F298]/30 text-4xl" data-icon="category">category</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-[#FFD166] shadow-sm hover:shadow-md transition-shadow">
+<p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Scores Submitted</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-black text-on-surface">184</h3>
+<span class="material-symbols-outlined text-[#FFD166]/30 text-4xl" data-icon="fact_check">fact_check</span>
+</div>
+</div>
+</div>
+<!-- Judge Progress Section -->
+<section class="bg-white rounded-2xl p-8 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h2 class="text-xl font-black text-on-surface">Judge Progress</h2>
+<p class="text-sm text-slate-500">Real-time status of score submissions by panel members.</p>
+</div>
+<button class="text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2 px-4 py-2 hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                            Live Sync
+                        </button>
+</div>
+<!-- Modern Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-separate border-spacing-y-4">
+<thead>
+<tr class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.1em]">
+<th class="px-4 pb-2">Judge</th>
+<th class="px-4 pb-2">Completion Status</th>
+<th class="px-4 pb-2 text-center">Submitted</th>
+<th class="px-4 pb-2 text-right">Status</th>
+</tr>
+</thead>
+<tbody>
+<!-- Row 1 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 rounded-l-2xl">
+<div class="flex items-center gap-3">
+<img alt="Judge 1" class="w-10 h-10 rounded-full border border-slate-200" data-alt="Male judge professional headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVngcr02Jf3umfjFF6SPRuOApy18aX1bfOTO2-wvCXrYnyu7fxSiuzAq1h5kjFAUnEjLDuQjv4pl5reg-0Gpp4an0G6eGgCbyDfSWW4sOr_0Ldmuxe93aLBxuiZFiDlpn6xv_tjZ63slAkvJYO2GerRPuML8NjRvLVO94QF8ibFGvmCxGQPETbjU1j-DKezEFKqOL-xLluFFAAXGLq5lLzPuOOHTbIc8q0Ru0R_hUO7lR6_IrzsBQVApRs8hEwFcIjYWAAdEg_PcHW"/>
+<div>
+<p class="text-sm font-bold text-on-surface">Dr. Ricardo Santos</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Chairman of Panel</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 w-1/3">
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-slate-400">
+<span>Progress</span>
+<span>100%</span>
+</div>
+<div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-[#BCD1FF] to-[#38F298] w-full"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center text-sm font-black text-on-surface">
+                                        23 / 23
+                                    </td>
+<td class="px-4 py-4 text-right rounded-r-2xl">
+<span class="bg-[#38F298]/10 text-[#006a3d] text-[10px] font-black uppercase px-3 py-1 rounded-full border border-[#38F298]/20">
+                                            Complete
+                                        </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 rounded-l-2xl">
+<div class="flex items-center gap-3">
+<img alt="Judge 2" class="w-10 h-10 rounded-full border border-slate-200" data-alt="Female judge headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAofxVnURWA7TSz9Fw-_GbtNPrjLgabrmiHFLgSs15b9rU7KyE6EmgdQ34XzMevhl5YA7iSlOfkY0blt2Btil512IA1BmVevf4xNX7BOdxXchNC_qw40cw3wOniMBoNvUMlvn702BuqPiMODm1l9xFM2XLTQ6xmOJxS3lMttq61o6VGysO85TcEOF2AIr7nCg88ElR1-JJQ62hbtRPt2LklPkskXNpk73nljk2B_vtXBmkE4o2mv0y-AneJFrNaFDhJj4_HmhSHE442"/>
+<div>
+<p class="text-sm font-bold text-on-surface">Prof. Maria Clara</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Vocal Technique Specialist</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 w-1/3">
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-slate-400">
+<span>Progress</span>
+<span>75%</span>
+</div>
+<div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-[#BCD1FF] to-[#38F298] w-3/4"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center text-sm font-black text-on-surface">
+                                        17 / 23
+                                    </td>
+<td class="px-4 py-4 text-right rounded-r-2xl">
+<span class="bg-[#FFD166]/10 text-[#8d6e00] text-[10px] font-black uppercase px-3 py-1 rounded-full border border-[#FFD166]/20">
+                                            In Progress
+                                        </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-surface-container-low/50 hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 rounded-l-2xl">
+<div class="flex items-center gap-3">
+<img alt="Judge 3" class="w-10 h-10 rounded-full border border-slate-200" data-alt="Male professional judge portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVjnfA5cWmRpQ4CynajDRtYrYgltdWS-ozYhLv3aOy1n1BEJwFKpo8l-1ageYRljyq540tPG3JmgUcu_xygsmLjFkeornc42_Y4uXUrRKkCE0yfoqRD5BDCRhwGiMMKfnx9Bno2JgPk7gOiI3iaObBbSAjFxk8iE246mKX2vQAiIkEDVaCX0ml0gkIUQ64Lpp_BP-T_HEIXWwFGX5K3ojivZhdL4E44j3CAc6IELjR4aApgxDMxyNyFQpdPdMCSOaiiozwReapDra7"/>
+<div>
+<p class="text-sm font-bold text-on-surface">James Wilson</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Performance Aesthetics</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 w-1/3">
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-slate-400">
+<span>Progress</span>
+<span>12%</span>
+</div>
+<div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-[#BCD1FF] to-[#38F298] w-[12%]"></div>
+</div>
+</div>
+</td>
+<td class="px-4 py-4 text-center text-sm font-black text-on-surface">
+                                        03 / 23
+                                    </td>
+<td class="px-4 py-4 text-right rounded-r-2xl">
+<span class="bg-[#F23892]/10 text-[#b40066] text-[10px] font-black uppercase px-3 py-1 rounded-full border border-[#F23892]/20">
+                                            Pending
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Footer Actions -->
+<div class="flex flex-col sm:flex-row justify-end items-center gap-4 py-6">
+<button class="w-full sm:w-auto px-10 py-4 rounded-full bg-surface-container-highest text-on-surface font-bold text-sm tracking-wide hover:brightness-95 transition-all">
+                        Review Scores
+                    </button>
+<button class="w-full sm:w-auto px-12 py-4 rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] text-white font-black text-sm uppercase tracking-[0.1em] shadow-lg shadow-[#b40066]/20 active:scale-95 transition-all">
+                        Publish Results
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<!-- Background Elements -->
+<div class="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] -z-10 rounded-full"></div>
+<div class="fixed bottom-0 left-[200px] w-[300px] h-[300px] bg-secondary-container/10 blur-[100px] -z-10 rounded-full"></div>
+</body></html>

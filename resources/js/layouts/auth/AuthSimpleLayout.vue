@@ -22,9 +22,12 @@ const demoCredentials = [
 
 <template>
     <div
-        class="flex min-h-svh flex-col items-center justify-center gap-6 bg-[#07091A] p-4 text-white md:p-10"
+        class="neon-stage-gradient relative flex min-h-svh flex-col items-center justify-center gap-6 p-4 text-[#0e193d] md:p-10"
     >
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(242,56,146,0.12)_0%,transparent_50%)]" />
+        <div class="pointer-events-none absolute inset-0 overflow-hidden">
+            <div class="absolute -left-[10%] -top-[10%] h-[40%] w-[40%] rounded-full bg-white/10 blur-3xl" />
+            <div class="absolute -bottom-[5%] -right-[5%] h-[30%] w-[30%] rounded-full bg-[#da2180]/20 blur-3xl" />
+        </div>
 
         <div class="relative w-full max-w-[420px]">
             <div class="flex flex-col gap-6">
@@ -34,47 +37,47 @@ const demoCredentials = [
                         class="flex flex-col items-center gap-2 font-medium"
                     >
                         <div
-                            class="mb-1 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F23892]/20 shadow-lg"
+                            class="mb-1 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 shadow-lg backdrop-blur-sm"
                         >
                             <AppLogoIcon
-                                class="size-7 fill-current text-[#F23892]"
+                                class="size-7 fill-current text-white"
                             />
                         </div>
                         <span class="sr-only">{{ title }}</span>
                     </Link>
                     <div class="space-y-1 text-center">
-                        <h1 class="text-2xl font-semibold tracking-tight text-white">
+                        <h1 class="font-headline text-2xl font-bold tracking-tight text-white">
                             {{ title }}
                         </h1>
-                        <p class="text-center text-sm text-slate-400">
+                        <p class="text-center text-sm text-white/85">
                             {{ description }}
                         </p>
                     </div>
                 </div>
                 <div
-                    class="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl backdrop-blur md:p-8"
+                    class="neon-glass-panel rounded-[1.25rem] p-6 shadow-[0_24px_48px_rgba(14,25,61,0.12)] md:p-8"
                 >
                     <slot />
                 </div>
-                <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-3 shadow-lg backdrop-blur">
+                <div class="rounded-2xl border border-white/20 bg-white/10 p-3 shadow-lg backdrop-blur-md">
                     <button
                         type="button"
-                        class="flex w-full items-center justify-between text-left text-sm font-medium text-slate-300"
+                        class="flex w-full items-center justify-between text-left text-sm font-medium text-white"
                         @click="showDemoCredentials = !showDemoCredentials"
                     >
                         <span>Demo credentials for testers</span>
-                        <component :is="showDemoCredentials ? ChevronUp : ChevronDown" class="h-4 w-4 shrink-0 text-slate-500" />
+                        <component :is="showDemoCredentials ? ChevronUp : ChevronDown" class="h-4 w-4 shrink-0 text-white/70" />
                     </button>
                     <div
                         v-show="showDemoCredentials"
-                        class="mt-3 space-y-2 border-t border-slate-700 pt-3 text-xs text-slate-400"
+                        class="mt-3 space-y-2 border-t border-white/20 pt-3 text-xs text-white/90"
                     >
                         <p
                             v-for="cred in demoCredentials"
                             :key="cred.email"
                             class="font-mono leading-relaxed"
                         >
-                            <span class="font-semibold text-slate-300">{{ cred.role }}:</span>
+                            <span class="font-semibold text-[#ffd9e3]">{{ cred.role }}:</span>
                             {{ cred.email }} / {{ cred.password }}
                         </p>
                     </div>

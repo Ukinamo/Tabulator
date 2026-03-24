@@ -45,10 +45,10 @@ const features = [
 ];
 
 const roles = [
-    { name: 'Super Admin', color: '#F23892', desc: 'Full system access, user management, event oversight' },
-    { name: 'Organizer', color: '#BCD1FF', desc: 'Event setup, categories, criteria, contestant management' },
-    { name: 'Judge', color: '#38F298', desc: 'Score contestants with validated input and auto-locking' },
-    { name: 'MC', color: '#FFD700', desc: 'Live result reveal ceremony with dramatic animations' },
+    { name: 'Super Admin', color: '#b40066', desc: 'Full system access, user management, event oversight' },
+    { name: 'Organizer', color: '#4a5e86', desc: 'Event setup, categories, criteria, contestant management' },
+    { name: 'Judge', color: '#006a3d', desc: 'Score contestants with validated input and auto-locking' },
+    { name: 'MC', color: '#da2180', desc: 'Live result reveal ceremony with dramatic animations' },
 ];
 
 const steps = [
@@ -62,37 +62,37 @@ const steps = [
 
 <template>
     <Head title="Event Tabulation System" />
-    <div class="min-h-screen bg-[#07091A] text-white">
+    <div class="min-h-screen bg-neon-bg text-neon-on antialiased">
         <!-- Navigation -->
-        <nav class="fixed top-0 z-50 w-full border-b border-slate-800/50 bg-[#07091A]/80 backdrop-blur-xl">
+        <nav class="fixed top-0 z-50 w-full border-b border-[#e0bec7]/30 bg-[#faf8ff]/85 backdrop-blur-xl">
             <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
                 <div class="flex items-center gap-3">
-                    <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F23892]/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#F23892]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#da2180]/15 shadow-[0_0_12px_rgba(180,0,102,0.2)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#b40066]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                     </div>
-                    <span class="text-lg font-bold tracking-tight">Tabulator</span>
+                    <span class="font-headline text-lg font-bold tracking-tight text-neon-on">Tabulator</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <Link
                         v-if="$page.props.auth.user"
                         :href="dashboard()"
-                        class="rounded-full bg-[#38F298]/10 px-5 py-2 text-sm font-medium text-[#38F298] ring-1 ring-[#38F298]/40 transition hover:bg-[#38F298]/20"
+                        class="rounded-full bg-[#006a3d]/10 px-5 py-2 text-sm font-medium text-[#006a3d] ring-1 ring-[#006a3d]/25 transition hover:bg-[#006a3d]/15"
                     >
                         Dashboard
                     </Link>
                     <template v-else>
                         <Link
                             :href="login()"
-                            class="rounded-full px-5 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/5 hover:text-white"
+                            class="rounded-full px-5 py-2 text-sm font-medium text-neon-secondary transition hover:bg-neon-card-alt hover:text-neon-on"
                         >
                             Log in
                         </Link>
                         <Link
                             v-if="canRegister"
                             :href="register()"
-                            class="rounded-full bg-[#BCD1FF]/10 px-5 py-2 text-sm font-medium text-[#BCD1FF] ring-1 ring-[#BCD1FF]/30 transition hover:bg-[#BCD1FF]/20"
+                            class="rounded-full bg-[#4a5e86]/10 px-5 py-2 text-sm font-medium text-[#4a5e86] ring-1 ring-[#4a5e86]/25 transition hover:bg-[#4a5e86]/15"
                         >
                             Register
                         </Link>
@@ -103,27 +103,27 @@ const steps = [
 
         <!-- Hero -->
         <section class="relative overflow-hidden pb-20 pt-32">
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(242,56,146,0.15)_0%,transparent_60%)]" />
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(56,242,152,0.08)_0%,transparent_50%)]" />
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(180,0,102,0.12)_0%,transparent_55%)]" />
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(0,106,61,0.08)_0%,transparent_45%)]" />
             <div class="relative mx-auto max-w-6xl px-6 text-center">
-                <div class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full bg-[#F23892]/10 px-4 py-1.5 text-xs font-medium text-[#F23892] ring-1 ring-[#F23892]/30">
-                    <span class="h-1.5 w-1.5 rounded-full bg-[#F23892]" />
+                <div class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full bg-[#ffd9e3]/80 px-4 py-1.5 text-xs font-medium text-[#b40066] ring-1 ring-[#b40066]/20">
+                    <span class="h-1.5 w-1.5 rounded-full bg-[#b40066]" />
                     Event Tabulation System
                 </div>
-                <h1 class="mx-auto max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+                <h1 class="font-headline mx-auto max-w-3xl text-4xl font-bold leading-tight tracking-tight text-neon-on sm:text-5xl lg:text-6xl">
                     Score, tabulate, and reveal winners
-                    <span class="bg-gradient-to-r from-[#F23892] to-[#BCD1FF] bg-clip-text text-transparent">
+                    <span class="bg-gradient-to-r from-[#b40066] to-[#4a5e86] bg-clip-text text-transparent">
                         in real time
                     </span>
                 </h1>
-                <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+                <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-neon-muted">
                     A complete scoring platform for pageants, talent shows, and competitions.
                     From organizer setup to dramatic live MC reveals — everything in one system.
                 </p>
                 <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
                     <Link
                         :href="login()"
-                        class="inline-flex items-center gap-2 rounded-full bg-[#F23892] px-8 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] hover:shadow-[0_0_40px_rgba(242,56,146,0.5)]"
+                        class="neon-btn-primary inline-flex items-center gap-2 px-8 py-3.5 text-sm"
                     >
                         Get Started
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -132,7 +132,7 @@ const steps = [
                     </Link>
                     <a
                         href="#features"
-                        class="inline-flex items-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
+                        class="inline-flex items-center gap-2 rounded-full bg-neon-secondary/10 px-8 py-3.5 text-sm font-semibold text-neon-secondary transition hover:bg-neon-secondary/15"
                     >
                         Learn More
                     </a>
@@ -141,42 +141,42 @@ const steps = [
         </section>
 
         <!-- How it works -->
-        <section class="border-t border-slate-800/50 py-20">
+        <section class="border-t border-[#e0bec7]/25 bg-neon-card-alt/50 py-20">
             <div class="mx-auto max-w-6xl px-6">
                 <div class="text-center">
-                    <p class="text-xs font-bold uppercase tracking-widest text-[#38F298]">Workflow</p>
-                    <h2 class="mt-2 text-3xl font-bold tracking-tight">How it works</h2>
-                    <p class="mt-3 text-slate-400">Five simple steps from event creation to winner reveal</p>
+                    <p class="text-xs font-bold uppercase tracking-widest text-[#006a3d]">Workflow</p>
+                    <h2 class="font-headline mt-2 text-3xl font-bold tracking-tight text-neon-on">How it works</h2>
+                    <p class="mt-3 text-neon-muted">Five simple steps from event creation to winner reveal</p>
                 </div>
                 <div class="mt-14 grid gap-6 md:grid-cols-5">
                     <div
                         v-for="step in steps"
                         :key="step.num"
-                        class="relative rounded-2xl border border-slate-800/80 bg-slate-900/40 p-5"
+                        class="neon-card relative rounded-2xl p-5 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
-                        <span class="text-3xl font-black text-[#F23892]/20">{{ step.num }}</span>
-                        <h3 class="mt-2 text-sm font-semibold text-white">{{ step.title }}</h3>
-                        <p class="mt-1.5 text-xs leading-relaxed text-slate-400">{{ step.desc }}</p>
+                        <span class="text-3xl font-black text-[#b40066]/15">{{ step.num }}</span>
+                        <h3 class="mt-2 text-sm font-semibold text-neon-on">{{ step.title }}</h3>
+                        <p class="mt-1.5 text-xs leading-relaxed text-neon-muted">{{ step.desc }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Features -->
-        <section id="features" class="border-t border-slate-800/50 py-20">
+        <section id="features" class="border-t border-[#e0bec7]/25 py-20">
             <div class="mx-auto max-w-6xl px-6">
                 <div class="text-center">
-                    <p class="text-xs font-bold uppercase tracking-widest text-[#F23892]">Features</p>
-                    <h2 class="mt-2 text-3xl font-bold tracking-tight">Everything you need</h2>
-                    <p class="mt-3 text-slate-400">Built for organizers, judges, admins, and MCs</p>
+                    <p class="text-xs font-bold uppercase tracking-widest text-[#b40066]">Features</p>
+                    <h2 class="font-headline mt-2 text-3xl font-bold tracking-tight text-neon-on">Everything you need</h2>
+                    <p class="mt-3 text-neon-muted">Built for organizers, judges, admins, and MCs</p>
                 </div>
                 <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     <div
                         v-for="f in features"
                         :key="f.title"
-                        class="group rounded-2xl border border-slate-800/80 bg-slate-900/40 p-6 transition hover:border-slate-700 hover:bg-slate-900/70"
+                        class="group neon-card rounded-2xl p-6 shadow-[0_4px_24px_rgba(14,25,61,0.06)] transition hover:shadow-[0_8px_32px_rgba(14,25,61,0.1)]"
                     >
-                        <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F23892]/10 text-[#F23892] transition group-hover:bg-[#F23892]/20">
+                        <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#ffd9e3]/80 text-[#b40066] transition group-hover:bg-[#ffd9e3]">
                             <!-- Clipboard -->
                             <svg v-if="f.icon === 'clipboard'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -202,26 +202,26 @@ const steps = [
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                             </svg>
                         </div>
-                        <h3 class="text-base font-semibold text-white">{{ f.title }}</h3>
-                        <p class="mt-2 text-sm leading-relaxed text-slate-400">{{ f.desc }}</p>
+                        <h3 class="text-base font-semibold text-neon-on">{{ f.title }}</h3>
+                        <p class="mt-2 text-sm leading-relaxed text-neon-muted">{{ f.desc }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Roles -->
-        <section class="border-t border-slate-800/50 py-20">
+        <section class="border-t border-[#e0bec7]/25 bg-neon-card-alt/40 py-20">
             <div class="mx-auto max-w-6xl px-6">
                 <div class="text-center">
-                    <p class="text-xs font-bold uppercase tracking-widest text-[#BCD1FF]">Multi-role</p>
-                    <h2 class="mt-2 text-3xl font-bold tracking-tight">Built for every role</h2>
-                    <p class="mt-3 text-slate-400">Each user has a purpose-built interface tailored to their responsibilities</p>
+                    <p class="text-xs font-bold uppercase tracking-widest text-[#4a5e86]">Multi-role</p>
+                    <h2 class="font-headline mt-2 text-3xl font-bold tracking-tight text-neon-on">Built for every role</h2>
+                    <p class="mt-3 text-neon-muted">Each user has a purpose-built interface tailored to their responsibilities</p>
                 </div>
                 <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <div
                         v-for="r in roles"
                         :key="r.name"
-                        class="rounded-2xl border border-slate-800/80 bg-slate-900/40 p-6"
+                        class="neon-card rounded-2xl p-6 shadow-[0_4px_24px_rgba(14,25,61,0.06)]"
                     >
                         <div
                             class="mb-4 inline-flex rounded-full px-3 py-1 text-xs font-bold"
@@ -229,28 +229,28 @@ const steps = [
                         >
                             {{ r.name }}
                         </div>
-                        <p class="text-sm leading-relaxed text-slate-400">{{ r.desc }}</p>
+                        <p class="text-sm leading-relaxed text-neon-muted">{{ r.desc }}</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- CTA -->
-        <section class="border-t border-slate-800/50 py-20">
+        <section class="border-t border-[#e0bec7]/25 py-20">
             <div class="mx-auto max-w-6xl px-6 text-center">
-                <h2 class="text-3xl font-bold tracking-tight">Ready to tabulate?</h2>
-                <p class="mt-3 text-slate-400">Set up your event and start scoring in minutes.</p>
+                <h2 class="font-headline text-3xl font-bold tracking-tight text-neon-on">Ready to tabulate?</h2>
+                <p class="mt-3 text-neon-muted">Set up your event and start scoring in minutes.</p>
                 <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
                     <Link
                         :href="login()"
-                        class="inline-flex items-center gap-2 rounded-full bg-[#F23892] px-8 py-3.5 text-sm font-semibold text-white shadow-[0_0_32px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e]"
+                        class="neon-btn-primary inline-flex items-center gap-2 px-8 py-3.5 text-sm"
                     >
                         Log in to start
                     </Link>
                     <Link
                         v-if="canRegister"
                         :href="register()"
-                        class="inline-flex items-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 text-sm font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
+                        class="inline-flex items-center gap-2 rounded-full bg-neon-secondary/10 px-8 py-3.5 text-sm font-semibold text-neon-secondary transition hover:bg-neon-secondary/15"
                     >
                         Create an account
                     </Link>
@@ -259,18 +259,18 @@ const steps = [
         </section>
 
         <!-- Footer -->
-        <footer class="border-t border-slate-800/50 py-8">
+        <footer class="border-t border-[#e0bec7]/25 py-8">
             <div class="mx-auto max-w-6xl px-6">
                 <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                    <div class="flex items-center gap-2 text-sm text-slate-500">
-                        <div class="flex h-6 w-6 items-center justify-center rounded-lg bg-[#F23892]/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#F23892]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <div class="flex items-center gap-2 text-sm text-neon-muted">
+                        <div class="flex h-6 w-6 items-center justify-center rounded-lg bg-[#ffd9e3]/80">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#b40066]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                             </svg>
                         </div>
                         Tabulator — Event Tabulation System
                     </div>
-                    <p class="text-xs text-slate-600">Built with Laravel, Vue.js & Inertia.js</p>
+                    <p class="text-xs text-neon-muted/80">Built with Laravel, Vue.js & Inertia.js</p>
                 </div>
             </div>
         </footer>

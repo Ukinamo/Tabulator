@@ -102,6 +102,15 @@ const homeHref = computed(() => {
 });
 
 const footerNavItems: NavItem[] = [];
+
+const roleSubtitle = computed(() => {
+    const r = page.props.auth?.user?.role;
+    if (r === 'super_admin') return 'Super Admin';
+    if (r === 'organizer') return 'Organizer';
+    if (r === 'admin') return 'Judge';
+    if (r === 'mc') return 'MC';
+    return '';
+});
 </script>
 
 <template>
@@ -109,9 +118,9 @@ const footerNavItems: NavItem[] = [];
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
-                        <Link :href="homeHref">
-                            <AppLogo />
+                    <SidebarMenuButton size="lg" as-child class="rounded-2xl! hover:bg-white/5">
+                        <Link :href="homeHref" class="gap-3">
+                            <AppLogo :subtitle="roleSubtitle" />
                         </Link>
                     </SidebarMenuButton>
                 </SidebarMenuItem>

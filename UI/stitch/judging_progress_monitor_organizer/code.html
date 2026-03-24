@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(180, 0, 102, 0.05);
+        }
+        
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(87, 255, 166, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(87, 255, 166, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(87, 255, 166, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(87, 255, 166, 0); }
+        }
+    </style>
+</head>
+<body class="bg-[#faf8ff] text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-[180px] fixed left-0 top-0 overflow-y-auto bg-[#0e193d] flex flex-col py-6 gap-2 z-50 shadow-2xl shadow-black/50">
+<div class="px-6 mb-8">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;"> theater_comedy </span>
+</div>
+<h2 class="text-lg font-bold text-white tracking-tight font-headline">Luzon Events</h2>
+<p class="text-[10px] text-slate-400 uppercase tracking-[0.05em] font-label">Super Admin</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+<span class="text-xs font-medium font-label tracking-wide">Overview</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined text-sm">analytics</span>
+<span class="text-xs font-medium font-label tracking-wide">Live Tabulation</span>
+</a>
+<a class="bg-[#b40066] text-white rounded-full mx-2 px-4 py-2 flex items-center gap-3 transition-all duration-300 shadow-[0_0_15px_rgba(180,0,102,0.4)]" href="#">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">gavel</span>
+<span class="text-xs font-bold font-label tracking-wide">Judge Management</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+<span class="text-xs font-medium font-label tracking-wide">Score Validation</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="text-xs font-medium font-label tracking-wide">Event Settings</span>
+</a>
+<a class="text-slate-400 hover:text-white mx-2 px-4 py-2 flex items-center gap-3 transition-colors rounded-full hover:bg-white/10 group" href="#">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="text-xs font-medium font-label tracking-wide">Audit Logs</span>
+</a>
+</nav>
+<div class="px-4 mt-auto space-y-4">
+<button class="w-full bg-primary-container text-white text-[10px] font-bold py-2 rounded-full uppercase tracking-wider hover:brightness-110 transition-all shadow-lg shadow-primary/20">
+                Broadcast Mode
+            </button>
+<div class="pt-4 border-t border-white/5 space-y-1">
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 text-xs font-medium font-label transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">help</span>
+<span>Help Center</span>
+</a>
+<a class="text-slate-400 hover:text-white px-4 py-2 flex items-center gap-3 text-xs font-medium font-label transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[180px] min-h-screen p-8">
+<!-- Header Section -->
+<header class="flex justify-between items-end mb-10">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-widest border border-tertiary/20">
+<span class="w-2 h-2 rounded-full bg-tertiary pulse-dot"></span>
+                        Live
+                    </div>
+<span class="text-xs text-secondary font-medium font-label">System synchronized 2s ago</span>
+</div>
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight font-headline">Judging Progress Monitor</h1>
+<p class="text-secondary mt-1 font-body">Real-time status of judge scoring submissions for <span class="text-primary font-semibold">Grand Finale 2024</span>.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-4 border-[#faf8ff] object-cover" data-alt="Male profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh11O9NajJvlXsyssEyONOHuywsFCvT8C-bdVlx5SY0XLqWIv7EuJZLzgvj4A0cyY3kljabDfj6xPGBIvGUrQzIWvtQ1hiDNrbZmzc3FVYlTsp3DOl5Tn4NlNc3d2_UDZyImrIfcr-BWz7ltuZ-JyG5fgYLvCllK1gUXM45-8Qtf06kAjJvLyd8LTjnOKYbZYDTI5QJqUDqpzetWLd1hYjLoYM8vwfueCiUTnrceJgoTDfhGNsNEswnlH6YX-hmPfXkGQbaD-BNmqt"/>
+<img class="w-10 h-10 rounded-full border-4 border-[#faf8ff] object-cover" data-alt="Female profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB8rgNCj2qyC1ayb_EU0tOdfFyV_aVgpgnikIQXPYkTTttR-QrpAM8Zcxd7ZKfhqp95iXBxO1nPWK1nywJd-cDpdjUlr15VpI7Qn52iVNZpAc0DogxHW5CRZbbGfgRSGQnflH4G5BoYwiuEPKL_NR9p5OMb6pOsFlw1RvjwOh7lj5DgFhRJfs_QXxftfu4ZGSVWGWmUwcgqBZUZsfYOvEVVUlXd-GoQvWdRq7UAq_-VxRdeOQWC034UJGJBsDkXQvs-_PRPVc5W4db"/>
+<img class="w-10 h-10 rounded-full border-4 border-[#faf8ff] object-cover" data-alt="Judge headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSC2lS1v3sImDRxjREbsp2FW211L3jMFVz12Mdx273KkV7u4DJ0aozUUzTzGI5YIHxetCFqbIK0suqvM6hbkrj2FRGP6ljedQ-NPl4B0AsQoaIkAtXjPmiQbveZQZKxMlNUpDZ9b-7_495PhukD3V8ERtYNj1s6OuKQJG_1oCt3LY2UuhzYzJUhpSTPlplUNO7ffQNZ-XtoA0fbb3LCgwnK9Qmn_IjdDw6uSls4i6dSOjynQmoDbuaNafcGIWYyr1Or4gqZqDy4_gU"/>
+<div class="w-10 h-10 rounded-full border-4 border-[#faf8ff] bg-surface-container-highest flex items-center justify-center text-[10px] font-bold text-on-secondary-container">+2</div>
+</div>
+<button class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-5 py-2.5 rounded-full font-bold text-sm shadow-sm hover:shadow-md transition-all border border-outline-variant/10">
+<span class="material-symbols-outlined text-lg">refresh</span>
+                    Manual Sync
+                </button>
+</div>
+</header>
+<!-- Summary Stats Bento -->
+<div class="grid grid-cols-12 gap-6 mb-8">
+<!-- Major Chip -->
+<div class="col-span-4 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10 flex items-center justify-between">
+<div>
+<p class="text-xs font-bold text-secondary uppercase tracking-widest font-label mb-1">Submissions</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black text-on-surface font-headline tracking-tighter">2 / 3</span>
+<span class="text-tertiary font-bold text-sm">66% Total</span>
+</div>
+<p class="text-xs text-secondary/70 mt-2">1 judge remaining</p>
+</div>
+<div class="relative w-20 h-20">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="40" cy="40" fill="transparent" r="34" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-tertiary" cx="40" cy="40" fill="transparent" r="34" stroke="currentColor" stroke-dasharray="213" stroke-dashoffset="72" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+</div>
+</div>
+<!-- Average Progress Chip -->
+<div class="col-span-3 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<p class="text-xs font-bold text-secondary uppercase tracking-widest font-label mb-4">Criteria Completion</p>
+<div class="flex items-end justify-between">
+<div>
+<div class="text-3xl font-black text-on-surface font-headline mb-1">84%</div>
+<div class="w-32 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 84%"></div>
+</div>
+</div>
+<span class="text-xs text-primary font-bold">+12% vs last hr</span>
+</div>
+</div>
+<!-- Active Judges -->
+<div class="col-span-5 bg-on-surface p-6 rounded-2xl shadow-xl shadow-black/10 relative overflow-hidden">
+<!-- Decorative Light Glow -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="relative z-10 flex items-center justify-between h-full">
+<div>
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest font-label mb-1">Judge Activity</p>
+<h3 class="text-2xl font-bold text-white font-headline">Currently Online</h3>
+<div class="flex gap-2 mt-3">
+<span class="px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-medium border border-white/5">Judge Marcus</span>
+<span class="px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-medium border border-white/5">Judge Sarah</span>
+</div>
+</div>
+<div class="text-right">
+<div class="text-4xl font-black text-tertiary-fixed font-headline">05</div>
+<div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Active Devices</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<section class="bg-surface-container-low rounded-[2rem] p-4">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/30">
+<th class="px-8 py-5 text-[10px] font-black text-secondary uppercase tracking-widest font-label">Judge</th>
+<th class="px-6 py-5 text-[10px] font-black text-secondary uppercase tracking-widest font-label text-center">Submitted</th>
+<th class="px-6 py-5 text-[10px] font-black text-secondary uppercase tracking-widest font-label text-center">Total Required</th>
+<th class="px-6 py-5 text-[10px] font-black text-secondary uppercase tracking-widest font-label">Completion Status</th>
+<th class="px-8 py-5 text-[10px] font-black text-secondary uppercase tracking-widest font-label text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<!-- Row 1: Completed -->
+<tr class="hover:bg-tertiary/5 transition-colors bg-[#38F29815]">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-2xl object-cover shadow-sm" data-alt="Judge Alexander Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ6Rzy6gkcnx-PpVec419xYXKqPGPYwU7s1cj7c6mcrgllCGVA0WKOF-rGNEk9mVWLkzdoA53dQlXUcGmWYUAtr0Ee7lJNRV6ABV7YFbwXMu8xixKIWeK2mSwZZmV8xPVS1njTMApnyq0rRCSB1QJ8KxPLeeoPpPibFwx2Ib_-UVJVb0CgNb1b6dc_OTbpP9zmCdaWFfRGmayp7l97d1owuVlp7Mim4lw7Xz0yONNSJ6yj9HvwHKaI2NmPxWM_o_TySyDSE1XEukWn"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-tertiary border-2 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[8px] text-white" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-on-surface font-headline">Alexander Wright</p>
+<p class="text-xs text-secondary/60 font-medium">Head of Panel</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-center font-black text-on-surface">15</td>
+<td class="px-6 py-6 text-center font-medium text-secondary">15</td>
+<td class="px-6 py-6">
+<div class="w-full max-w-[200px]">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-black text-tertiary">100%</span>
+</div>
+<div class="h-2 w-full bg-[#BCD1FF] rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Submitted
+                                </span>
+</td>
+</tr>
+<!-- Row 2: In Progress -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-2xl object-cover shadow-sm" data-alt="Judge Sarah Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlg3nsCw3Wsb0bn1K68iIuIz4GSjwfZL2HeRsvg0EbOLwrWklRcVYu9N87vQRlvF2334-6lOAKQkIN9LbF7FLSMiNLsDS1nVQGuSsb1FvGnX4O4pCrujzzB_HOjckNE3K3NOSTJLJDrQGzt3JHOjByIYpkwp-zymtxAMEPjunmnDagrm9nEZodA5Z_1OsH0akYRNmCh5ijXGvpFDuEgSesutS0uYiriQctLEjlJUGpDi_feCdfeyfVARmcofyRKpYe_GHpXEsftLoi"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#FFD166] border-2 border-white"></div>
+</div>
+<div>
+<p class="font-bold text-on-surface font-headline">Sarah Jenkins</p>
+<p class="text-xs text-secondary/60 font-medium">Technical Judge</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-center font-black text-on-surface">9</td>
+<td class="px-6 py-6 text-center font-medium text-secondary">15</td>
+<td class="px-6 py-6">
+<div class="w-full max-w-[200px]">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-black text-on-surface">60%</span>
+</div>
+<div class="h-2 w-full bg-[#BCD1FF] rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFD166]/10 text-[#CC9900] text-xs font-bold border border-[#FFD166]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#FFD166]"></span>
+                                    In Progress
+                                </span>
+</td>
+</tr>
+<!-- Row 3: Completed -->
+<tr class="hover:bg-tertiary/5 transition-colors bg-[#38F29815]">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4">
+<div class="relative">
+<img class="w-12 h-12 rounded-2xl object-cover shadow-sm" data-alt="Judge Marcus Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX1gZQaD7kiqj5rJWs0oL4vmjx3EvMHE1YHOq0qiW9xxCRmTbE0FRp4ig1e5It19pyWJYx7mgw73ILfqlWEBS-mBkjPJcLgGlw5hicq3tXtOiRLvCz13WutETWPfDE89Yl4gyCfMVoBebHP1iLKR1TAVudd0_rksbq7Pj9G5VqP0DQGN_xAN0gkyVkl3n3_d9OI2a7qRlVk_2kg55fDiUP1qHqrk2k5Hj7i3LE1xoPa9Ek96pydfdLtTmQni34_NznRRH9BRpB1DtT"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-tertiary border-2 border-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[8px] text-white" style="font-variation-settings: 'wght' 700;">check</span>
+</div>
+</div>
+<div>
+<p class="font-bold text-on-surface font-headline">Marcus Aurelius</p>
+<p class="text-xs text-secondary/60 font-medium">Artistic Judge</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-center font-black text-on-surface">15</td>
+<td class="px-6 py-6 text-center font-medium text-secondary">15</td>
+<td class="px-6 py-6">
+<div class="w-full max-w-[200px]">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-black text-tertiary">100%</span>
+</div>
+<div class="h-2 w-full bg-[#BCD1FF] rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 100%"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold border border-tertiary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Submitted
+                                </span>
+</td>
+</tr>
+<!-- Row 4: Not Started -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-4 opacity-75">
+<div class="relative">
+<div class="w-12 h-12 rounded-2xl bg-surface-container-high flex items-center justify-center text-secondary font-black font-headline">EL</div>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-slate-400 border-2 border-white"></div>
+</div>
+<div>
+<p class="font-bold text-on-surface font-headline">Elena Lopez</p>
+<p class="text-xs text-secondary/60 font-medium">Guest Judge</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-center font-black text-secondary">0</td>
+<td class="px-6 py-6 text-center font-medium text-secondary">15</td>
+<td class="px-6 py-6">
+<div class="w-full max-w-[200px]">
+<div class="flex justify-between items-center mb-1.5">
+<span class="text-[10px] font-black text-secondary/40">0%</span>
+</div>
+<div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+<div class="h-full bg-slate-300 rounded-full" style="width: 0%"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 text-xs font-bold border border-slate-200">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                                    Not Started
+                                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Control -->
+<div class="mt-6 flex justify-between items-center px-4">
+<p class="text-xs text-secondary font-medium">Displaying 4 of 4 registered judges for this session.</p>
+<div class="flex gap-2">
+<button class="bg-surface-container-lowest border border-outline-variant/20 p-2 rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface rotate-180">arrow_right_alt</span>
+</button>
+<button class="bg-surface-container-lowest border border-outline-variant/20 p-2 rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-on-surface">arrow_right_alt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Final Reminder Area -->
+<div class="mt-12 p-8 rounded-3xl bg-primary/5 border border-primary/10 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-white text-3xl">notification_important</span>
+</div>
+<div>
+<h4 class="text-xl font-bold text-on-surface font-headline">Submission Deadline Approaching</h4>
+<p class="text-secondary font-body">Once all judges submit, the final results will be locked and formatted for broadcast.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 rounded-full font-bold text-on-surface bg-white shadow-sm border border-outline-variant/10 hover:shadow-md transition-all">
+                    Send Nudges
+                </button>
+<button class="px-8 py-3 rounded-full font-bold text-white bg-gradient-to-br from-primary to-primary-container shadow-lg shadow-primary/20 hover:scale-105 transition-all">
+                    Finalize Result
+                </button>
+</div>
+</div>
+</main>
+</body></html>

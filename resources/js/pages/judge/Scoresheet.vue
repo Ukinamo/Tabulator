@@ -332,30 +332,30 @@ const draftCount = computed(() => {
     <Head title="Scoresheet - Judge" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex min-h-0 flex-col">
-            <!-- Deep navy topbar -->
-            <div class="flex shrink-0 items-center justify-between border-b border-slate-700 bg-[#0F1A3E] px-6 py-4">
+            <!-- Scoresheet header -->
+            <div class="flex shrink-0 items-center justify-between border-b border-[#e8e6f5] bg-white/95 px-6 py-4 shadow-[0_1px_0_rgba(14,25,61,0.04)] backdrop-blur-sm">
                 <div>
-                    <h1 class="text-xl font-semibold text-white">
+                    <h1 class="font-headline text-xl font-semibold text-[#0e193d]">
                         {{ event ? `${event.name} — Scoresheet` : 'Scoresheet' }}
                     </h1>
-                    <p class="mt-0.5 text-sm text-slate-300">{{ judgeName }}</p>
+                    <p class="mt-0.5 text-sm text-[#594048]">{{ judgeName }}</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span v-if="isSaving" class="flex items-center gap-1.5 text-xs text-amber-400">
-                        <span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-amber-400 border-t-transparent" />
+                    <span v-if="isSaving" class="flex items-center gap-1.5 text-xs text-amber-700">
+                        <span class="inline-block h-3 w-3 animate-spin rounded-full border-2 border-amber-600 border-t-transparent" />
                         Saving…
                     </span>
                     <button
                         v-if="event && !loading"
                         type="button"
-                        class="rounded-lg border border-slate-600 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white"
+                        class="rounded-full border border-[#e0d8e8] bg-[#f3f2ff] px-3 py-1.5 text-xs font-medium text-[#0e193d] transition hover:bg-[#ebedff]"
                         @click="fetchScoresheet"
                     >
                         Refresh list
                     </button>
                     <span
                         v-if="event && !loading"
-                        class="rounded-full bg-[#FFD166]/25 px-4 py-1.5 text-xs font-semibold text-[#FFD166]"
+                        class="rounded-full bg-[#ffd166]/35 px-4 py-1.5 text-xs font-semibold text-amber-900"
                     >
                         Draft — {{ draftCount.filled }}/{{ draftCount.total }}
                     </span>
@@ -363,23 +363,23 @@ const draftCount = computed(() => {
             </div>
 
             <div class="flex flex-1 flex-col gap-6 overflow-auto p-4">
-                <p v-if="!event" class="text-slate-400">No event selected.</p>
-                <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-800/80 p-8 text-center text-slate-400">Loading…</div>
+                <p v-if="!event" class="text-[#594048]">No event selected.</p>
+                <div v-else-if="loading" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">Loading…</div>
 
                 <template v-else>
                     <!-- Contestant tabs + Standby tab -->
-                    <div class="flex flex-wrap gap-1 border-b border-slate-700 pb-2">
+                    <div class="flex flex-wrap gap-1 border-b border-[#e8e6f5] pb-2">
                         <button
                             v-for="(block, i) in scoresheet"
                             :key="block.contestant.id"
                             type="button"
-                            class="rounded-t px-4 py-2 text-sm font-medium transition"
+                            class="rounded-full px-4 py-2 text-sm font-medium transition"
                             :class="[
                                 selectedContestantIndex === i
-                                    ? 'border-b-2 border-[#F23892] text-[#F23892]'
+                                    ? 'bg-[#b40066]/12 text-[#b40066] ring-2 ring-[#b40066]/25'
                                     : isContestantLocked(block.contestant.id)
-                                        ? 'text-slate-500 hover:text-slate-400'
-                                        : 'text-slate-400 hover:text-white',
+                                        ? 'text-[#594048]/60 hover:text-[#594048]'
+                                        : 'text-[#594048] hover:bg-[#ebedff]',
                             ]"
                             @click="onTabClick(i)"
                         >
@@ -390,10 +390,10 @@ const draftCount = computed(() => {
                         <button
                             v-if="scoresheet.length > 0"
                             type="button"
-                            class="rounded-t px-4 py-2 text-sm font-medium transition"
+                            class="rounded-full px-4 py-2 text-sm font-medium transition"
                             :class="isOnStandby
-                                ? 'border-b-2 border-[#38F298] text-[#38F298]'
-                                : 'text-slate-400 hover:text-white'"
+                                ? 'bg-[#006a3d]/12 text-[#006a3d] ring-2 ring-[#006a3d]/20'
+                                : 'text-[#594048] hover:bg-[#ebedff]'"
                             @click="goToStandby"
                         >
                             Standby
@@ -401,20 +401,20 @@ const draftCount = computed(() => {
                     </div>
 
                     <!-- Locked banner -->
-                    <div v-if="currentContestantLocked" class="rounded-xl border border-amber-600/50 bg-amber-900/30 px-4 py-3 text-sm text-amber-300">
+                    <div v-if="currentContestantLocked" class="rounded-xl border border-amber-400/50 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                         This contestant's scores are locked. To make changes, click the locked tab and enter the super-admin password.
                     </div>
 
                     <!-- ========== Standby view: score summary ========== -->
                     <div v-if="isOnStandby" class="space-y-6">
-                        <div class="rounded-2xl border border-slate-700 bg-slate-800/80 p-5">
-                            <h2 class="mb-1 text-lg font-semibold text-white">Score Summary</h2>
-                            <p class="mb-4 text-sm text-slate-400">Review your scores for all contestants before submitting.</p>
+                        <div class="neon-card border border-[#e8e6f5] p-5">
+                            <h2 class="mb-1 font-headline text-lg font-semibold text-[#0e193d]">Score Summary</h2>
+                            <p class="mb-4 text-sm text-[#594048]">Review your scores for all contestants before submitting.</p>
 
                             <div class="overflow-x-auto">
-                                <table class="w-full text-left text-sm">
+                                <table class="w-full text-left text-sm text-[#0e193d]">
                                     <thead>
-                                        <tr class="border-b border-slate-700 text-slate-400">
+                                        <tr class="border-b border-[#e8e6f5] text-[#594048]">
                                             <th class="pb-3 pr-4 font-medium">#</th>
                                             <th class="pb-3 pr-4 font-medium">Contestant</th>
                                             <th
@@ -423,37 +423,37 @@ const draftCount = computed(() => {
                                                 class="pb-3 pr-4 text-center font-medium"
                                             >
                                                 {{ cat.name }}
-                                                <span class="ml-1 text-xs text-slate-500">({{ cat.weight }}%)</span>
+                                                <span class="ml-1 text-xs text-[#594048]/80">({{ cat.weight }}%)</span>
                                             </th>
-                                            <th class="pb-3 text-center font-semibold text-white">Total</th>
+                                            <th class="pb-3 text-center font-semibold text-[#0e193d]">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr
                                             v-for="row in standbySummary"
                                             :key="row.contestant.id"
-                                            class="border-b border-slate-700/50"
+                                            class="border-b border-[#ebedff]"
                                         >
-                                            <td class="py-3 pr-4 text-slate-400">{{ row.contestant.number }}</td>
-                                            <td class="py-3 pr-4 font-medium text-white">{{ row.contestant.name }}</td>
+                                            <td class="py-3 pr-4 text-[#594048]">{{ row.contestant.number }}</td>
+                                            <td class="py-3 pr-4 font-medium">{{ row.contestant.name }}</td>
                                             <td
                                                 v-for="cat in row.categoryTotals"
                                                 :key="cat.name"
                                                 class="py-3 pr-4 text-center"
                                             >
-                                                <span class="text-slate-200">{{ fmt(cat.score) }}</span>
-                                                <span class="text-slate-500">/{{ fmt(cat.max) }}</span>
+                                                <span>{{ fmt(cat.score) }}</span>
+                                                <span class="text-[#594048]">/{{ fmt(cat.max) }}</span>
                                             </td>
-                                            <td class="py-3 text-center font-semibold text-[#38F298]">
+                                            <td class="py-3 text-center font-semibold text-[#006a3d]">
                                                 {{ fmt(row.grandTotal) }}
-                                                <span class="text-slate-500 font-normal">/{{ fmt(row.grandMax) }}</span>
+                                                <span class="font-normal text-[#594048]">/{{ fmt(row.grandMax) }}</span>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
 
-                            <p v-if="standbySummary.length === 0" class="mt-4 text-center text-slate-500">No scores yet.</p>
+                            <p v-if="standbySummary.length === 0" class="mt-4 text-center text-[#594048]">No scores yet.</p>
                         </div>
                     </div>
 
@@ -462,16 +462,16 @@ const draftCount = computed(() => {
                         <div
                             v-for="catBlock in current.categories"
                             :key="catBlock.category.id"
-                            class="rounded-2xl border border-slate-700 bg-slate-800/80 p-5"
+                            class="neon-card border border-[#e8e6f5] p-5"
                         >
                             <div class="mb-3 flex items-center justify-between">
-                                <h2 class="font-semibold text-white">
+                                <h2 class="font-semibold text-[#0e193d]">
                                     {{ catBlock.category.name }}
-                                    <span class="ml-2 rounded-full bg-[#F23892] px-2.5 py-0.5 text-xs font-medium text-white">
+                                    <span class="ml-2 rounded-full bg-gradient-to-r from-[#b40066] to-[#da2180] px-2.5 py-0.5 text-xs font-medium text-white">
                                         {{ catBlock.category.weight }}%
                                     </span>
                                 </h2>
-                                <span v-if="catBlock.criteria.length" class="text-xs text-slate-400">
+                                <span v-if="catBlock.criteria.length" class="text-xs text-[#594048]">
                                     Max: {{ catBlock.criteria.reduce((s, c) => s + c.max_score, 0) }} pts
                                 </span>
                             </div>
@@ -479,9 +479,9 @@ const draftCount = computed(() => {
                                 <div
                                     v-for="cr in catBlock.criteria"
                                     :key="cr.id"
-                                    class="flex items-center justify-between rounded-xl bg-slate-900/50 px-4 py-2.5"
+                                    class="flex items-center justify-between rounded-xl border border-[#ebedff] bg-[#f3f2ff]/60 px-4 py-2.5"
                                 >
-                                    <span class="text-slate-200">{{ cr.name }} <span class="text-slate-500">(max {{ cr.max_score }})</span></span>
+                                    <span class="text-[#0e193d]">{{ cr.name }} <span class="text-[#594048]">(max {{ cr.max_score }})</span></span>
                                     <input
                                         v-if="canEdit && !currentContestantLocked && cr.status === 'draft'"
                                         type="number"
@@ -489,36 +489,36 @@ const draftCount = computed(() => {
                                         :max="cr.max_score"
                                         step="0.01"
                                         :value="cr.current_score ?? ''"
-                                        class="score-input w-20 rounded-xl border-2 border-slate-600 bg-slate-800 px-3 py-1.5 text-center text-white transition focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30"
+                                        class="score-input ig-input w-20 rounded-xl border-2 px-3 py-1.5 text-center transition focus:border-[#b40066] focus:outline-none focus:ring-2 focus:ring-[#b40066]/25"
                                         @change="current && handleScoreInput(current.contestant.id, cr.id, cr.max_score, $event.target.value)"
                                         @blur="current && handleScoreInput(current.contestant.id, cr.id, cr.max_score, $event.target.value)"
                                     />
-                                    <span v-else class="font-medium text-[#38F298]">{{ cr.current_score ?? '—' }}</span>
+                                    <span v-else class="font-medium text-[#006a3d]">{{ cr.current_score ?? '—' }}</span>
                                 </div>
                             </div>
-                            <p v-if="catBlock.criteria.every(c => c.status !== 'draft')" class="mt-2 text-xs font-medium text-[#38F298]">Scored ✓</p>
+                            <p v-if="catBlock.criteria.every(c => c.status !== 'draft')" class="mt-2 text-xs font-medium text-[#006a3d]">Scored ✓</p>
                         </div>
                     </div>
 
-                    <p v-if="scoresheet.length === 0" class="text-slate-400">No contestants in this event.</p>
+                    <p v-if="scoresheet.length === 0" class="text-[#594048]">No contestants in this event.</p>
                 </template>
             </div>
 
             <!-- Sticky bottom bar -->
             <div
                 v-if="event && !loading && scoresheet.length > 0"
-                class="sticky bottom-0 flex shrink-0 items-center justify-end gap-3 border-t border-slate-700 bg-slate-900/95 px-6 py-4 backdrop-blur"
+                class="sticky bottom-0 flex shrink-0 items-center justify-end gap-3 border-t border-[#e8e6f5] bg-white/95 px-6 py-4 backdrop-blur-sm"
             >
                 <button
                     type="button"
-                    class="rounded-xl border border-slate-600 bg-slate-800 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700"
+                    class="rounded-full border border-[#e0d8e8] bg-white px-5 py-2.5 text-sm font-medium text-[#0e193d] transition hover:bg-[#f3f2ff]"
                     @click="fetchScoresheet"
                 >
                     Save draft
                 </button>
                 <button
                     type="button"
-                    class="rounded-xl bg-[#F23892] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_0_16px_rgba(242,56,146,0.45)] transition hover:bg-[#d0206e] disabled:opacity-60"
+                    class="neon-btn-primary px-6 py-2.5 text-sm disabled:opacity-60"
                     :disabled="!canEdit || submitAllLoading"
                     @click="showSubmitModal = true"
                 >
@@ -543,13 +543,13 @@ const draftCount = computed(() => {
             <Dialog :open="showPasswordModal" @update:open="(v: boolean) => !v && cancelPasswordModal()">
                 <DialogContent
                     :show-close-button="false"
-                    class="max-w-[380px] rounded-3xl border-0 p-0 shadow-2xl dark:bg-slate-900"
+                    class="max-w-[380px] rounded-3xl border border-[#e8e6f5] p-0 shadow-2xl dark:border-[#2a3558] dark:bg-[#0e193d]"
                     @pointer-down-outside="cancelPasswordModal"
                     @escape-key-down="cancelPasswordModal"
                 >
                     <div class="p-6">
-                        <h3 class="text-center text-lg font-semibold text-white">Unlock Contestant</h3>
-                        <p class="mt-2 text-center text-sm text-slate-400">
+                        <h3 class="text-center font-headline text-lg font-semibold text-[#0e193d] dark:text-white">Unlock Contestant</h3>
+                        <p class="mt-2 text-center text-sm text-[#594048] dark:text-slate-400">
                             This contestant's scores are locked. Enter the super-admin password to unlock and edit.
                         </p>
                         <div class="mt-4">
@@ -557,16 +557,16 @@ const draftCount = computed(() => {
                                 v-model="adminPassword"
                                 type="password"
                                 placeholder="Super-admin password"
-                                class="w-full rounded-xl border-2 border-slate-600 bg-slate-800 px-4 py-2.5 text-white placeholder-slate-500 transition focus:border-[#F23892] focus:outline-none focus:ring-2 focus:ring-[#F23892]/30"
+                                class="ig-input w-full rounded-xl border-2 px-4 py-2.5 transition focus:border-[#b40066] focus:ring-[#b40066]/25 dark:bg-[#1a2548] dark:text-white"
                                 @keyup.enter="confirmUnlock"
                             />
-                            <p v-if="passwordError" class="mt-2 text-sm text-red-400">{{ passwordError }}</p>
+                            <p v-if="passwordError" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ passwordError }}</p>
                         </div>
                     </div>
-                    <div class="flex flex-col border-t border-slate-700">
+                    <div class="flex flex-col border-t border-[#e8e6f5] dark:border-slate-700">
                         <button
                             type="button"
-                            class="min-h-[48px] border-b border-slate-700 text-sm font-semibold text-[#F23892] transition active:opacity-80"
+                            class="min-h-[48px] border-b border-[#e8e6f5] text-sm font-semibold text-[#b40066] transition active:opacity-80 dark:border-slate-700 dark:text-[#da2180]"
                             :disabled="passwordLoading"
                             @click="confirmUnlock"
                         >
@@ -578,7 +578,7 @@ const draftCount = computed(() => {
                         </button>
                         <button
                             type="button"
-                            class="min-h-[48px] text-sm font-semibold text-slate-400 transition active:opacity-80"
+                            class="min-h-[48px] text-sm font-semibold text-[#594048] transition active:opacity-80 dark:text-slate-400"
                             :disabled="passwordLoading"
                             @click="cancelPasswordModal"
                         >

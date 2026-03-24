@@ -223,11 +223,11 @@ onMounted(() => { if (props.event) fetchScores(); });
         <div class="flex flex-col gap-6 p-4">
             <!-- Header -->
             <div class="flex items-center justify-between">
-                <h1 class="text-xl font-semibold text-white">Score Review</h1>
+                <h1 class="font-headline text-xl font-semibold text-[#0e193d]">Score Review</h1>
                 <div v-if="event" class="flex items-center gap-3">
                     <button
                         type="button"
-                        class="rounded-full bg-red-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(239,68,68,0.5)] transition hover:bg-red-600 disabled:opacity-60"
+                        class="rounded-full bg-red-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 disabled:opacity-60"
                         :disabled="deleteAllLoading || scores.length === 0"
                         @click="requestDeleteAll"
                     >
@@ -235,7 +235,7 @@ onMounted(() => { if (props.event) fetchScores(); });
                     </button>
                     <button
                         type="button"
-                        class="rounded-full bg-[#F23892] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_12px_rgba(242,56,146,0.4)] transition hover:bg-[#d0206e] disabled:opacity-60"
+                        class="neon-btn-primary px-5 py-2.5 text-sm disabled:opacity-60"
                         :disabled="approveAllLoading || scores.length === 0"
                         @click="approveAll"
                     >
@@ -245,13 +245,13 @@ onMounted(() => { if (props.event) fetchScores(); });
             </div>
 
             <!-- Tab switcher -->
-            <div v-if="event" class="flex gap-1 border-b border-slate-700">
+            <div v-if="event" class="flex gap-1 border-b border-[#e8e6f5]">
                 <button
                     type="button"
                     class="px-5 py-2.5 text-sm font-medium transition"
                     :class="activeTab === 'detailed'
-                        ? 'border-b-2 border-[#F23892] text-[#F23892]'
-                        : 'text-slate-400 hover:text-white'"
+                        ? 'border-b-2 border-[#b40066] text-[#b40066]'
+                        : 'text-[#594048] hover:text-[#0e193d]'"
                     @click="activeTab = 'detailed'"
                 >
                     Detailed View
@@ -260,21 +260,21 @@ onMounted(() => { if (props.event) fetchScores(); });
                     type="button"
                     class="px-5 py-2.5 text-sm font-medium transition"
                     :class="activeTab === 'summary'
-                        ? 'border-b-2 border-[#38F298] text-[#38F298]'
-                        : 'text-slate-400 hover:text-white'"
+                        ? 'border-b-2 border-[#006a3d] text-[#006a3d]'
+                        : 'text-[#594048] hover:text-[#0e193d]'"
                     @click="activeTab = 'summary'"
                 >
                     Summary View
                 </button>
             </div>
 
-            <p v-if="!event" class="text-slate-400">No event selected.</p>
-            <div v-else-if="loading" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-8 text-center text-slate-400">Loading…</div>
+            <p v-if="!event" class="text-[#594048]">No event selected.</p>
+            <div v-else-if="loading" class="neon-card border border-[#e8e6f5] p-8 text-center text-[#594048]">Loading…</div>
 
             <!-- ============ DETAILED VIEW ============ -->
-            <div v-else-if="activeTab === 'detailed'" class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-900/80">
-                <table class="min-w-full text-left text-sm text-slate-200">
-                    <thead class="border-b border-slate-700 bg-slate-800/50 text-xs uppercase">
+            <div v-else-if="activeTab === 'detailed'" class="neon-card overflow-x-auto border border-[#e8e6f5]">
+                <table class="min-w-full text-left text-sm text-[#0e193d]">
+                    <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff] text-xs uppercase text-[#594048]">
                         <tr>
                             <th class="px-4 py-3">Judge</th>
                             <th class="px-4 py-3">Contestant</th>
@@ -286,12 +286,12 @@ onMounted(() => { if (props.event) fetchScores(); });
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="s in scores" :key="s.id" class="border-b border-slate-800/70">
+                        <tr v-for="s in scores" :key="s.id" class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/50">
                             <td class="px-4 py-3">{{ s.judge_name }}</td>
                             <td class="px-4 py-3">{{ contestantLabel(s) }}</td>
                             <td class="px-4 py-3">
-                                <span class="text-slate-300">{{ s.category_name }}</span>
-                                <span class="ml-1 text-xs text-slate-500">({{ s.category_weight }}%)</span>
+                                <span class="text-[#0e193d]">{{ s.category_name }}</span>
+                                <span class="ml-1 text-xs text-[#594048]">({{ s.category_weight }}%)</span>
                             </td>
                             <td class="px-4 py-3">{{ s.criterion_name }} (max {{ s.max_score }})</td>
                             <td class="px-4 py-3">{{ s.score }}</td>
@@ -299,9 +299,9 @@ onMounted(() => { if (props.event) fetchScores(); });
                                 <span
                                     class="rounded-full px-2.5 py-1 text-xs font-medium"
                                     :class="{
-                                        'bg-slate-600/80 text-slate-300': s.status === 'draft',
-                                        'bg-[#FFD166]/25 text-[#FFD166]': s.status === 'submitted',
-                                        'bg-[#38F298]/20 text-[#38F298]': s.status === 'approved',
+                                        'bg-[#4a5e86]/15 text-[#4a5e86]': s.status === 'draft',
+                                        'bg-[#ffd166]/30 text-amber-900': s.status === 'submitted',
+                                        'bg-[#006a3d]/15 text-[#006a3d]': s.status === 'approved',
                                     }"
                                 >
                                     {{ s.status }}
@@ -312,14 +312,14 @@ onMounted(() => { if (props.event) fetchScores(); });
                                     <button
                                         v-if="s.status !== 'approved'"
                                         type="button"
-                                        class="text-[#38F298] hover:underline"
+                                        class="font-medium text-[#006a3d] hover:underline"
                                         @click="approveOne(s.id)"
                                     >
                                         Approve
                                     </button>
                                     <button
                                         type="button"
-                                        class="text-red-400 hover:text-red-300 hover:underline"
+                                        class="text-red-600 hover:text-red-700 hover:underline"
                                         @click="requestDeleteScore(s)"
                                     >
                                         Delete
@@ -329,64 +329,64 @@ onMounted(() => { if (props.event) fetchScores(); });
                         </tr>
                     </tbody>
                 </table>
-                <p v-if="scores.length === 0" class="p-6 text-center text-slate-400">No submitted scores to review.</p>
+                <p v-if="scores.length === 0" class="p-6 text-center text-[#594048]">No submitted scores to review.</p>
             </div>
 
             <!-- ============ SUMMARY VIEW ============ -->
             <div v-else-if="activeTab === 'summary'" class="space-y-4">
-                <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-900/80">
-                    <table class="min-w-full text-left text-sm">
-                        <thead class="border-b border-slate-700 bg-slate-800/50">
+                <div class="neon-card overflow-x-auto border border-[#e8e6f5]">
+                    <table class="min-w-full text-left text-sm text-[#0e193d]">
+                        <thead class="border-b border-[#e8e6f5] bg-[#f3f2ff]">
                             <tr>
-                                <th class="px-4 py-3 text-xs font-medium uppercase text-slate-400">#</th>
-                                <th class="px-4 py-3 text-xs font-medium uppercase text-slate-400">Contestant</th>
+                                <th class="px-4 py-3 text-xs font-medium uppercase text-[#594048]">#</th>
+                                <th class="px-4 py-3 text-xs font-medium uppercase text-[#594048]">Contestant</th>
                                 <th
                                     v-for="cat in categories"
                                     :key="cat.id"
-                                    class="px-4 py-3 text-center text-xs font-medium uppercase text-slate-400"
+                                    class="px-4 py-3 text-center text-xs font-medium uppercase text-[#594048]"
                                 >
                                     {{ cat.name }}
-                                    <span class="ml-1 normal-case text-slate-500">({{ cat.weight }}%)</span>
+                                    <span class="ml-1 normal-case text-[#594048]/80">({{ cat.weight }}%)</span>
                                 </th>
-                                <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-white">Total</th>
+                                <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-[#0e193d]">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
                                 v-for="row in summaryRows"
                                 :key="row.contestant_id"
-                                class="border-b border-slate-800/70 transition hover:bg-slate-800/40"
+                                class="border-b border-[#ebedff] transition hover:bg-[#ebedff]/50"
                             >
-                                <td class="px-4 py-3 text-slate-400">{{ row.contestant_number }}</td>
-                                <td class="px-4 py-3 font-medium text-white">{{ row.contestant_name }}</td>
+                                <td class="px-4 py-3 text-[#594048]">{{ row.contestant_number }}</td>
+                                <td class="px-4 py-3 font-medium">{{ row.contestant_name }}</td>
                                 <td
                                     v-for="cat in categories"
                                     :key="cat.id"
                                     class="px-4 py-3 text-center"
                                 >
                                     <template v-if="row.categories[cat.id]">
-                                        <span class="text-slate-200">{{ fmt(row.categories[cat.id].score) }}</span>
-                                        <span class="text-slate-500">/{{ fmt(row.categories[cat.id].max) }}</span>
+                                        <span>{{ fmt(row.categories[cat.id].score) }}</span>
+                                        <span class="text-[#594048]">/{{ fmt(row.categories[cat.id].max) }}</span>
                                     </template>
-                                    <span v-else class="text-slate-600">—</span>
+                                    <span v-else class="text-[#594048]/50">—</span>
                                 </td>
-                                <td class="px-4 py-3 text-center font-semibold text-[#38F298]">
+                                <td class="px-4 py-3 text-center font-semibold text-[#006a3d]">
                                     {{ fmt(row.grandTotal) }}
-                                    <span class="font-normal text-slate-500">/{{ fmt(row.grandMax) }}</span>
+                                    <span class="font-normal text-[#594048]">/{{ fmt(row.grandMax) }}</span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <p v-if="summaryRows.length === 0" class="p-6 text-center text-slate-400">No submitted scores to summarize.</p>
+                    <p v-if="summaryRows.length === 0" class="p-6 text-center text-[#594048]">No submitted scores to summarize.</p>
                 </div>
 
                 <!-- Per-contestant breakdown cards -->
-                <div v-for="row in summaryRows" :key="row.contestant_id" class="rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
+                <div v-for="row in summaryRows" :key="row.contestant_id" class="neon-card border border-[#e8e6f5] p-5">
                     <div class="mb-3 flex items-center justify-between">
-                        <h3 class="font-semibold text-white">
+                        <h3 class="font-semibold text-[#0e193d]">
                             {{ row.contestant_number }} — {{ row.contestant_name }}
                         </h3>
-                        <span class="rounded-full bg-[#38F298]/20 px-3 py-1 text-xs font-semibold text-[#38F298]">
+                        <span class="rounded-full bg-[#006a3d]/12 px-3 py-1 text-xs font-semibold text-[#006a3d]">
                             Total: {{ fmt(row.grandTotal) }}/{{ fmt(row.grandMax) }}
                         </span>
                     </div>
@@ -394,17 +394,17 @@ onMounted(() => { if (props.event) fetchScores(); });
                         <div
                             v-for="cat in categories"
                             :key="cat.id"
-                            class="rounded-xl bg-slate-800/60 p-3"
+                            class="rounded-xl border border-[#ebedff] bg-[#f3f2ff]/80 p-3"
                         >
                             <div class="mb-1.5 flex items-center justify-between">
-                                <span class="text-sm font-medium text-slate-300">{{ cat.name }}</span>
-                                <span class="rounded-full bg-[#F23892]/20 px-2 py-0.5 text-xs font-medium text-[#F23892]">{{ cat.weight }}%</span>
+                                <span class="text-sm font-medium text-[#0e193d]">{{ cat.name }}</span>
+                                <span class="rounded-full bg-[#b40066]/12 px-2 py-0.5 text-xs font-medium text-[#b40066]">{{ cat.weight }}%</span>
                             </div>
                             <div v-if="row.categories[cat.id]" class="flex items-baseline gap-1">
-                                <span class="text-2xl font-bold text-white">{{ fmt(row.categories[cat.id].score) }}</span>
-                                <span class="text-sm text-slate-500">/{{ fmt(row.categories[cat.id].max) }}</span>
+                                <span class="text-2xl font-bold text-[#0e193d]">{{ fmt(row.categories[cat.id].score) }}</span>
+                                <span class="text-sm text-[#594048]">/{{ fmt(row.categories[cat.id].max) }}</span>
                             </div>
-                            <span v-else class="text-sm text-slate-600">No scores</span>
+                            <span v-else class="text-sm text-[#594048]">No scores</span>
                         </div>
                     </div>
                 </div>

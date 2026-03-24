@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MC Results Reveal - The Neon Auditor</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .theatrical-glow {
+        background: radial-gradient(circle at top, #b4006622 0%, #07091A 70%);
+      }
+      .glass-card {
+        background: rgba(14, 25, 61, 0.7);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mint-glow {
+        text-shadow: 0 0 15px rgba(87, 255, 166, 0.4);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #b40066 0%, #da2180 100%);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#07091a] text-white font-body min-h-screen selection:bg-primary selection:text-white">
+<!-- Theatrical Background & Header Suppression (Shell Filter Applied) -->
+<main class="relative theatrical-glow min-h-screen w-full flex flex-col items-center px-4 pt-12 pb-24 overflow-hidden">
+<!-- Branding Anchor (No Navigation Shell as per "Task-Focused" rule) -->
+<header class="text-center mb-12">
+<h2 class="font-headline font-black text-xs uppercase tracking-[0.2em] text-primary mb-2">Grand Finale</h2>
+<h1 class="font-headline font-extrabold text-3xl tracking-tight text-white">Luzon Events</h1>
+<p class="text-slate-400 text-sm mt-1 font-medium tracking-wide">Category: Creative Expression</p>
+</header>
+<!-- Centered Result Cards Stack (Mobile Optimized) -->
+<div class="w-full max-w-[343px] flex flex-col gap-6 relative z-10">
+<!-- Rank 1: The Winner (Theatrical Result Card) -->
+<div class="glass-card p-6 rounded-lg relative overflow-hidden ring-1 ring-primary/30">
+<div class="absolute -top-12 -right-12 w-24 h-24 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<span class="font-headline font-black text-5xl text-primary leading-none">01</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-primary font-bold mt-1">Champion</span>
+</div>
+<div class="text-right">
+<div class="font-headline font-bold text-3xl text-tertiary-fixed mint-glow">98.45</div>
+<div class="font-label text-[10px] uppercase tracking-widest text-slate-400 mt-1">Final Score</div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/5">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+<img alt="Contestant Avatar" class="w-full h-full object-cover" data-alt="Professional headshot of a female pageant contestant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcQOvb1xjoZI4vQYTcL3K_eG8qRCMOFQEXmB3J9CreVwkmcRKuG6oZDWAmz2mVqiOcZxTrFq0tQUnz43SfE5sV9PC8TsgjU-1C_eCuUuFU7nXq-iFW7Vm_WaEudzajikR8iK6mUhVOxCZsbCDcY2rYyICrvqJCua7ZuHP4J5B5E8TE1wuoUQFlqCL4qurormLONDraiGdSsftUg6Xoq8wZEKCAZSmTP72KgH5G7grwEdElIkMrAhTiBC4uZ0m9QqDZcYzkQ8Vh_z1Z"/>
+</div>
+<div>
+<div class="font-headline font-bold text-lg leading-tight">Elena Rodriguez</div>
+<div class="text-slate-400 text-xs font-medium">Candidate #12 • Manila Metro</div>
+</div>
+</div>
+</div>
+<!-- Rank 2: Runner Up -->
+<div class="glass-card p-6 rounded-lg opacity-90">
+<div class="flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<span class="font-headline font-black text-4xl text-slate-300 leading-none">02</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">1st Runner Up</span>
+</div>
+<div class="text-right">
+<div class="font-headline font-bold text-2xl text-tertiary-fixed/80">96.20</div>
+<div class="font-label text-[10px] uppercase tracking-widest text-slate-500 mt-1">Final Score</div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/5">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-700">
+<img alt="Contestant Avatar" class="w-full h-full object-cover" data-alt="Professional headshot of a male pageant contestant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjlC4O8Rotz7kXcQXovb0M8Zj2Dn3ZDFkdcCpYfFUk3e-JRL_G3a1gDBZFkDepghq683A7UdT5RInKt0D1pPnWBMIjRvRQ37wUq7dRubmxb3s-FPjx-ByL6XxQo_KB0FMzauRDG1TNyB8dBkqsC2m_NAnUShScsqqcxng-Zoy19gBdK1I3e_XC-rOeeFWzS7hMLesemrLAqZ0E5KZkfcKcg8-6blaVoL1jMV7CQNlq-fn7A08uF71sN5zVFwuTN2SMKAkmNtSaTiRp"/>
+</div>
+<div>
+<div class="font-headline font-bold text-base leading-tight">Marcus Vallen</div>
+<div class="text-slate-400 text-xs font-medium">Candidate #08 • Davao City</div>
+</div>
+</div>
+</div>
+<!-- Rank 3: 2nd Runner Up -->
+<div class="glass-card p-6 rounded-lg opacity-80">
+<div class="flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<span class="font-headline font-black text-4xl text-slate-400 leading-none">03</span>
+<span class="font-label text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-1">2nd Runner Up</span>
+</div>
+<div class="text-right">
+<div class="font-headline font-bold text-2xl text-tertiary-fixed/60">94.88</div>
+<div class="font-label text-[10px] uppercase tracking-widest text-slate-500 mt-1">Final Score</div>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-white/5">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-700">
+<img alt="Contestant Avatar" class="w-full h-full object-cover" data-alt="Professional headshot of a female pageant contestant smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgScjp1c4FHbLXJQmdR3ytrx7GxhlGB5RJGNpM6iWIf7ar5b1MJUUdGNAb_80WNfgYMdbJ-9NnFahNRY1KSb9beL8gnSFM-a-3JmAnrYNzk9oiZxiOgkKI0k8GtvwmsFyKlmeGtnGQLzl_Ewm5QLcC08xSSdaNH3_a9cH1kt5sS6wKbOYtIrVVhVe2Q4iKIFoXZjjiDCB9HxJjPb1k1vjo61Ig62pJK-aVDCsFaAzu8AXOF3Zq-twlPWfbqmRoJJX_vWn26CP_j_kc"/>
+</div>
+<div>
+<div class="font-headline font-bold text-base leading-tight">Sarah Chen</div>
+<div class="text-slate-400 text-xs font-medium">Candidate #15 • Cebu Province</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Floating Reveal Button at Bottom -->
+<div class="fixed bottom-0 left-0 right-0 p-6 flex justify-center bg-gradient-to-t from-[#07091a] to-transparent pointer-events-none">
+<button class="primary-gradient w-full max-w-[343px] py-4 rounded-full flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(180,0,102,0.4)] pointer-events-auto active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-white" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-headline font-bold text-white tracking-wide uppercase text-sm">Reveal Next Winner</span>
+</button>
+</div>
+<!-- Background Theatrical Elements (Abstract Patterns) -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-primary via-transparent to-transparent"></div>
+<div class="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+<div class="absolute -bottom-48 -left-48 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute -top-48 -right-48 w-96 h-96 bg-tertiary/5 blur-[120px] rounded-full"></div>
+</div>
+</main>
+<!-- Success Toast (Contextual FAB Suppression as per "Task-Focused" rule) -->
+<div class="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+<div class="bg-tertiary/10 backdrop-blur-md border border-tertiary/30 px-4 py-2 rounded-full flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-tertiary">Live Audit Sync: OK</span>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Judge Scoresheet — The Neon Auditor</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary": "#ffffff",
+              "primary": "#b40066",
+              "surface-tint": "#b80069",
+              "on-surface-variant": "#594048",
+              "surface-container-highest": "#dce1ff",
+              "on-secondary-fixed-variant": "#32476d",
+              "surface-dim": "#d1d8ff",
+              "outline-variant": "#e0bec7",
+              "surface-container": "#ebedff",
+              "on-tertiary-container": "#f6fff5",
+              "on-background": "#0e193d",
+              "on-tertiary-fixed": "#002110",
+              "primary-fixed-dim": "#ffb0cb",
+              "surface-container-low": "#f3f2ff",
+              "on-tertiary": "#ffffff",
+              "surface-container-high": "#e4e7ff",
+              "on-secondary-container": "#43587f",
+              "tertiary-fixed": "#57ffa6",
+              "inverse-surface": "#242e53",
+              "tertiary-fixed-dim": "#17e28a",
+              "surface-variant": "#dce1ff",
+              "tertiary-container": "#00864f",
+              "on-secondary-fixed": "#011b3f",
+              "surface": "#faf8ff",
+              "on-tertiary-fixed-variant": "#00522e",
+              "secondary-container": "#bacffd",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#8d004f",
+              "inverse-primary": "#ffb0cb",
+              "on-error-container": "#93000a",
+              "secondary": "#4a5e86",
+              "primary-fixed": "#ffd9e3",
+              "on-primary-fixed": "#3e001f",
+              "on-error": "#ffffff",
+              "inverse-on-surface": "#eff0ff",
+              "error-container": "#ffdad6",
+              "primary-container": "#da2180",
+              "secondary-fixed-dim": "#b2c7f4",
+              "on-surface": "#0e193d",
+              "error": "#ba1a1a",
+              "secondary-fixed": "#d7e2ff",
+              "background": "#faf8ff",
+              "surface-bright": "#faf8ff",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#fffbff",
+              "outline": "#8d6f78",
+              "tertiary": "#006a3d"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-slate-900 flex justify-between items-center w-full px-6 py-3 sticky top-0 z-50 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-8">
+<span class="text-xl font-black text-[#b40066] dark:text-[#da2180] font-headline">The Neon Auditor</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] font-medium transition-colors duration-200" href="#">Dashboard</a>
+<a class="text-[#b40066] font-bold border-b-2 border-[#b40066] pb-1" href="#">Events</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] font-medium transition-colors duration-200" href="#">Judges</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#b40066] font-medium transition-colors duration-200" href="#">Results</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors duration-200 flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile" data-alt="User avatar placeholder profile icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBAZwFeohAvcAWi6J73wiYQzk0CphzcBnzufxRD5YqTdKf7AM2cAFLiz6bAoiZgz8I15ulx2tvLIzyjuOxBQE1N6BEuT9qkO1EzWfeo8uUPsOuorpYf1s54uBhQRM2oKsIC5ViOVMSb7qmw8JXFnTv-pCv5Y_YjhorMqzCfdxo-svFvMY9zxeQEaInh6JTB3WTHEdDVCrQW5Uzt5wi_kSNIa3s_bVcZmdTR3JyzVc7kwRzlLl943kequtBTGKLN0oYLPCsUuPc95bT"/>
+</div>
+</div>
+</nav>
+<!-- Contestant Selector Tabs -->
+<div class="bg-white sticky top-[64px] z-40 border-b border-surface-container-high px-6">
+<div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar py-4">
+<!-- Completed Tab -->
+<button class="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-container-low text-secondary font-semibold transition-all">
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Contestant 01</span>
+</button>
+<button class="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-container-low text-secondary font-semibold">
+<span class="material-symbols-outlined text-tertiary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Contestant 02</span>
+</button>
+<!-- Active Tab -->
+<button class="flex-shrink-0 flex items-center gap-2 px-6 py-2.5 bg-white border-2 border-primary text-primary font-bold rounded-full shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Contestant 03</span>
+</button>
+<!-- Incomplete Tabs -->
+<button class="flex-shrink-0 px-5 py-2.5 text-slate-400 font-medium hover:text-secondary">
+<span>Contestant 04</span>
+</button>
+<button class="flex-shrink-0 px-5 py-2.5 text-slate-400 font-medium hover:text-secondary">
+<span>Contestant 05</span>
+</button>
+<button class="flex-shrink-0 px-5 py-2.5 text-slate-400 font-medium hover:text-secondary">
+<span>Contestant 06</span>
+</button>
+<button class="flex-shrink-0 px-5 py-2.5 text-slate-400 font-medium hover:text-secondary">
+<span>Contestant 07</span>
+</button>
+</div>
+</div>
+<!-- Main Content: Scoring Canvas -->
+<main class="flex-grow p-6 md:p-10 max-w-5xl mx-auto w-full mb-24">
+<header class="mb-8">
+<h1 class="text-3xl font-black font-headline text-on-surface tracking-tight">Technical Execution</h1>
+<p class="text-secondary mt-1">Scoring for Contestant #03 — Marcus Rodriguez</p>
+</header>
+<div class="grid gap-8">
+<!-- Category Card 1 -->
+<section class="bg-white rounded-xl shadow-sm border border-transparent overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-3">
+<h2 class="font-headline font-bold text-lg">Performance &amp; Stage Presence</h2>
+<span class="bg-primary px-3 py-1 rounded-full text-white text-xs font-bold uppercase tracking-widest">Weight: 40%</span>
+</div>
+<span class="text-sm font-label font-semibold text-secondary">Max: 100 pts</span>
+</div>
+<div class="p-6 space-y-6">
+<!-- Criterion Row -->
+<div class="flex items-center justify-between gap-4">
+<div class="flex-grow">
+<h3 class="font-semibold text-on-surface">Audience Engagement</h3>
+<p class="text-xs text-slate-500">Eye contact, charisma, and connection with the crowd.</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">MAX 25</span>
+<input class="w-20 px-3 py-2 border border-outline-variant rounded-lg text-center font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" max="25" min="0" type="number" value="22"/>
+</div>
+</div>
+<!-- Criterion Row -->
+<div class="flex items-center justify-between gap-4">
+<div class="flex-grow">
+<h3 class="font-semibold text-on-surface">Costume &amp; Grooming</h3>
+<p class="text-xs text-slate-500">Appropriateness and visual impact of attire.</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">MAX 25</span>
+<input class="w-20 px-3 py-2 border border-outline-variant rounded-lg text-center font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" max="25" min="0" placeholder="--" type="number"/>
+</div>
+</div>
+<!-- Criterion Row -->
+<div class="flex items-center justify-between gap-4">
+<div class="flex-grow">
+<h3 class="font-semibold text-on-surface">Emotional Delivery</h3>
+<p class="text-xs text-slate-500">Authenticity and conviction in the performance.</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">MAX 50</span>
+<input class="w-20 px-3 py-2 border border-outline-variant rounded-lg text-center font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" max="50" min="0" type="number" value="45"/>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-surface-container-high bg-slate-50 flex justify-end items-center">
+<span class="text-slate-500 font-label text-sm font-semibold">Subtotal:</span>
+<span class="ml-2 font-headline font-extrabold text-xl text-primary">67 <span class="text-slate-400 font-body font-normal text-sm">/ 100</span></span>
+</div>
+</section>
+<!-- Category Card 2 -->
+<section class="bg-white rounded-xl shadow-sm border border-transparent overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-low flex justify-between items-center">
+<div class="flex items-center gap-3">
+<h2 class="font-headline font-bold text-lg">Technical Proficiency</h2>
+<span class="bg-primary px-3 py-1 rounded-full text-white text-xs font-bold uppercase tracking-widest">Weight: 60%</span>
+</div>
+<span class="text-sm font-label font-semibold text-secondary">Max: 100 pts</span>
+</div>
+<div class="p-6 space-y-6">
+<!-- Criterion Row -->
+<div class="flex items-center justify-between gap-4">
+<div class="flex-grow">
+<h3 class="font-semibold text-on-surface">Vocal/Instrumental Accuracy</h3>
+<p class="text-xs text-slate-500">Pitch, tone, and technical precision.</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">MAX 50</span>
+<input class="w-20 px-3 py-2 border border-outline-variant rounded-lg text-center font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" max="50" min="0" type="number" value="48"/>
+</div>
+</div>
+<!-- Criterion Row -->
+<div class="flex items-center justify-between gap-4">
+<div class="flex-grow">
+<h3 class="font-semibold text-on-surface">Complex Maneuvers</h3>
+<p class="text-xs text-slate-500">Degree of difficulty and execution excellence.</p>
+</div>
+<div class="flex items-center gap-6">
+<span class="px-3 py-1 bg-surface-container rounded-full text-xs font-bold text-secondary">MAX 50</span>
+<input class="w-20 px-3 py-2 border border-outline-variant rounded-lg text-center font-bold text-primary focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" max="50" min="0" placeholder="--" type="number"/>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-surface-container-high bg-slate-50 flex justify-end items-center">
+<span class="text-slate-500 font-label text-sm font-semibold">Subtotal:</span>
+<span class="ml-2 font-headline font-extrabold text-xl text-primary">48 <span class="text-slate-400 font-body font-normal text-sm">/ 100</span></span>
+</div>
+</section>
+</div>
+</main>
+<!-- Sticky Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-[#E0E0E0] px-6 py-4 z-50">
+<div class="max-w-5xl mx-auto flex items-center justify-between">
+<div class="hidden sm:flex flex-col">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Overall Progress</span>
+<span class="text-on-surface font-semibold">12 of 20 Contestants Scored</span>
+</div>
+<div class="flex items-center gap-4 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-8 py-3 rounded-full border-2 border-primary text-primary font-bold hover:bg-primary-fixed transition-colors">
+                    Save Draft
+                </button>
+<button class="flex-1 sm:flex-none px-8 py-3 rounded-full bg-primary text-white font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    Submit All Scores
+                </button>
+</div>
+</div>
+</footer>
+</body></html>
